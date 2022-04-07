@@ -16,8 +16,36 @@ public class PlayerNameInputField : MonoBehaviour
 
     #region MonoBehavior Callbacks
     
-    private void Start () {
+    private void Start ()
+    {
+        GetPlayerPrefName();
+    }
+    
+    #endregion
 
+
+    #region Public Methods
+    
+    // sets the name of the player and saves it in the PlayerPrefs for future sessions
+    public void SetPlayerPrefName(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            Debug.LogError("Player Name is null or empty");
+            return;
+        }
+        PhotonNetwork.NickName = value;
+        PlayerPrefs.SetString(PlayerNamePrefKey, value);
+    }
+    
+    #endregion
+
+
+    #region Private Methods
+
+    // get the player's stored name based on PlayerPrefs
+    private void GetPlayerPrefName()
+    {
         string defaultName = "";
         InputField inputField = GetComponent<InputField>();
         if (inputField != null)
@@ -31,23 +59,6 @@ public class PlayerNameInputField : MonoBehaviour
         
         PhotonNetwork.NickName =  defaultName;
     }
-    
-    #endregion
 
-
-    #region Public Methods
-    
-    // sets the name of the player and saves it in the PlayerPrefs for future sessions
-    public void SetPlayerName(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            Debug.LogError("Player Name is null or empty");
-            return;
-        }
-        PhotonNetwork.NickName = value;
-        PlayerPrefs.SetString(PlayerNamePrefKey, value);
-    }
-    
     #endregion
 }

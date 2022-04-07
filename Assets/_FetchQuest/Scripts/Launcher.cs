@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -8,8 +9,13 @@ public class Launcher : MonoBehaviourPunCallbacks
     
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players " +
              "and a new room will be created.")]
-    [SerializeField]
-    private byte maxPlayersPerRoom = 4;
+    [SerializeField] private byte maxPlayersPerRoom = 4;
+    
+    [Tooltip("The UI Panel to let the user enter name, connect and play")]
+    [SerializeField] private GameObject controlPanel;
+    
+    [Tooltip("The UI Label to inform the user that the connection is in progress")]
+    [SerializeField] private GameObject progressLabel;
     
     #endregion
 
@@ -31,9 +37,16 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
+    private void Start()
+    {
+        // sets the proper display panel/label
+        progressLabel.SetActive(false);
+        controlPanel.SetActive(true);
+    }
+
     #endregion
 
-    
+
     #region MonoBahaviorPunCallbacks Callbacks
 
     public override void OnConnectedToMaster()
@@ -47,6 +60,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
+        
+        // sets the proper display panel/label
+        progressLabel.SetActive(false);
+        controlPanel.SetActive(true);
     }
     
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -71,6 +88,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     // start the connection process
     public void Connect()
     {
+        // sets the proper display panel/label
+        progressLabel.SetActive(true);
+        controlPanel.SetActive(false);
+        
         // join a random room if connected to server, otherwise connect to server
         if (PhotonNetwork.IsConnected)
         {
