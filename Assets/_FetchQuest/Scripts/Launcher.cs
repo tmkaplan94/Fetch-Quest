@@ -20,14 +20,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     private string _gameVersion = "1";
     
     #endregion
-
     
-    #region Properties
-    
-    
-    
-    #endregion
-
     
     #region MonoBehavior Callbacks
 
@@ -36,12 +29,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         // all clients in the same room will automatically sync level
         PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
-    private void Start()
-    {
-        // connect to server
-        Connect();
     }
 
     #endregion
@@ -95,13 +82,6 @@ public class Launcher : MonoBehaviourPunCallbacks
             PhotonNetwork.GameVersion = _gameVersion;
         }
     }
-    
-    #endregion
-
-    
-    #region Private Methods
-
-
     
     #endregion
 }
