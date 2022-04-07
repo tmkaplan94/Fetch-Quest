@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/gameplay_movement_Nathaniel.unity
+    path: Assets/_FetchQuest/Scenes/gameplay_movement_Nathaniel.unity
     guid: 499aee1370288a74a959d5c3ce4446f1
   m_configObjects: {}
