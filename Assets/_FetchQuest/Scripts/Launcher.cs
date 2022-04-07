@@ -82,7 +82,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     #region Public Methods
     
     // start the connection process
-    private void Connect()
+    public void Connect()
     {
         // join a random room if connected to server, otherwise connect to server
         if (PhotonNetwork.IsConnected)
