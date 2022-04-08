@@ -42,6 +42,10 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(cam.position + (cam.right * Input.GetAxis("Horizontal") + cam.forward * Input.GetAxis("Vertical")));
             move(Mathf.Sqrt(Mathf.Pow(Input.GetAxis("Horizontal"),2) + Mathf.Pow(Input.GetAxis("Vertical"),2)));
         }
+        else
+        {
+            mycontroller.Move(new Vector3(0, gravity, 0));
+        }
     }
 
 
