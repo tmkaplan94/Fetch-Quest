@@ -14,11 +14,13 @@ public class PlayerController : MonoBehaviour
         [SerializeField]
         float speed = 8f;
         float sprintspeed = 10f;
-        float gravity = 1f;
+        float gravity = -1f;
         float jumpSpeed = 10f;
 
     float energy = 10f;
 
+    public Transform cam;
+    Vector3 camY;
 
     Vector3 movedirection;
     CharacterController mycontroller;
@@ -33,7 +35,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move();
+        camY = new Vector3(cam.InverseTransformPoint(cam.position).x, 0, cam.InverseTransformPoint(cam.position).z);
+        cam.transform.position = transform.position;
+        if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            transform.LookAt(cam.position + (cam.right * Input.GetAxis("Horizontal") + cam.forward * Input.GetAxis("Vertical")));
+            move(Mathf.Sqrt(Mathf.Pow(Input.GetAxis("Horizontal"),2) + Mathf.Pow(Input.GetAxis("Vertical"),2)));
+        }
     }
 
 
@@ -46,12 +54,12 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// move
     /// </summary>
-    void move()
+    void move(float momentum)
     {
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        if (mycontroller.isGrounded)
+        /*if (mycontroller.isGrounded)
         {
             movedirection = new Vector3(moveX, 0, moveZ);
             movedirection = transform.TransformDirection(movedirection);
@@ -68,16 +76,18 @@ public class PlayerController : MonoBehaviour
                 movedirection *= speed;
             }
 
-        }
+        }*/
 
         movedirection.y -= gravity;
+        movedirection = cam.forward * moveZ + cam.right * moveX;
 
         Animation walk = this.gameObject.GetComponent<Animation>();
         if (walk != null)
         {
             walk.Play();
         }
-        mycontroller.Move(movedirection * Time.deltaTime);
+        mycontroller.Move(new Vector3(movedirection.x * speed * Time.deltaTime, gravity, movedirection.z * speed * Time.deltaTime));
+        //mycontroller.Move(new Vector3((transform.forward.x * momentum * speed * Time.deltaTime), movedirection.y, (transform.forward.z * momentum * speed * Time.deltaTime)));
 
     }
 
