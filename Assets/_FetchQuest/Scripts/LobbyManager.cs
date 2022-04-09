@@ -3,7 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class LobbyScene : MonoBehaviourPunCallbacks
+public class LobbyManager : MonoBehaviourPunCallbacks
 {
     #region Private Serialized Fields
     
