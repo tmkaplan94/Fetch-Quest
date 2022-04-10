@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCamera : MonoBehaviour
+public class PlayerCameraNathaniel : MonoBehaviour
 {
     public float sensitivityOfMouse;
     [SerializeField]

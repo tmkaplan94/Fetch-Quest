@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerNathaniel : MonoBehaviour
 {
 
     [Header("PlayerController Variable Define")]
