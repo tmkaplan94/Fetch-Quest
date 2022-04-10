@@ -9,13 +9,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players " +
              "and a new room will be created.")]
-    [SerializeField] private byte maxPlayersPerRoom = 4;
+    [SerializeField] private byte maxPlayersPerRoom = 2;
     
     [Tooltip("The UI Panel to let the user enter name, connect and play")]
-    [SerializeField] private GameObject controlPanel;
+    [SerializeField] private GameObject launcherPanel;
     
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
-    [SerializeField] private GameObject progressLabel;
+    [SerializeField] private GameObject connectingLabel;
     
     #endregion
 
@@ -40,8 +40,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         // sets the proper display panel/label
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
+        connectingLabel.SetActive(false);
+        launcherPanel.SetActive(true);
     }
 
     #endregion
@@ -62,8 +62,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
         
         // sets the proper display panel/label
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
+        connectingLabel.SetActive(false);
+        launcherPanel.SetActive(true);
     }
     
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -89,8 +89,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void Connect()
     {
         // sets the proper display panel/label
-        progressLabel.SetActive(true);
-        controlPanel.SetActive(false);
+        connectingLabel.SetActive(true);
+        launcherPanel.SetActive(false);
         
         // join a random room if connected to server, otherwise connect to server
         if (PhotonNetwork.IsConnected)
