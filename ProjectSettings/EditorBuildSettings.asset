@@ -6,6 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/_FetchQuest/Scenes/Title.unity
     guid: 5c9592dd5983fa947a0a9ea436c3bf5c
   - enabled: 1
@@ -17,4 +18,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_FetchQuest/Scenes/DogSelection.unity
     guid: a8046d5dfb58f174199a362549da8cbc
+=======
+    path: Assets/_FetchQuest/Scenes/gameplay_movement_Nathaniel.unity
+    guid: 499aee1370288a74a959d5c3ce4446f1
+>>>>>>> main
   m_configObjects: {}
