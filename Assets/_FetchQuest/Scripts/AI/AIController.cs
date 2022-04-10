@@ -10,7 +10,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
 
-    private Transform currentWaypoint;
+    private int currentWaypoint = 0;
     private StateMachine _stateMachine;
 #nullable enable
     public Transform? Target { get; private set; }
@@ -45,19 +45,21 @@ public class AIController : MonoBehaviour
     public void SetTarget(Transform t)
     {
         Target = t;
+        
         print("target set");
     }
 
     public void GetNewTarget()
     {
-        print("getting Target");
+        print("getting Target " + currentWaypoint);
 
-        int waypointIdx = Random.Range(0, waypoints.Length - 1);
-        while(Target != null && waypoints[waypointIdx] == Target)
-        {
-            waypointIdx = Random.Range(0, waypoints.Length - 1);
-        }
-        SetTarget(waypoints[waypointIdx]);
+        if (currentWaypoint >= waypoints.Length -1)
+            currentWaypoint = 0;
+        else
+            currentWaypoint++;
+       
+        
+        SetTarget(waypoints[currentWaypoint]);
         
     }
 }
