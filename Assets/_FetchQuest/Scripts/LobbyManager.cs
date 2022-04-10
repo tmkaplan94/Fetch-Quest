@@ -20,6 +20,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
     [SerializeField] private GameObject connectingLabel;
+    
+    [Tooltip("The UI Label to inform the user that the connection is complete")]
+    [SerializeField] private GameObject connectedLabel;
 
     #endregion
 
@@ -43,8 +46,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         // sets the proper display panel/label
-        connectingLabel.SetActive(false);
         launcherPanel.SetActive(true);
+        connectingLabel.SetActive(false);
+        connectedLabel.SetActive(false);
     }
 
     #endregion
@@ -75,13 +79,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
 
         // sets the proper display panel/label
-        connectingLabel.SetActive(false);
         launcherPanel.SetActive(true);
+        connectingLabel.SetActive(false);
+        connectedLabel.SetActive(false);
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room.");
+        
+        // sets the proper display panel/label
+        launcherPanel.SetActive(false);
+        connectingLabel.SetActive(false);
+        connectedLabel.SetActive(true);
     }
     
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -122,8 +132,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Connect()
     {
         // sets the proper display panel/label
-        connectingLabel.SetActive(true);
         launcherPanel.SetActive(false);
+        connectingLabel.SetActive(true);
+        connectedLabel.SetActive(false);
 
         // join a random room if connected to server, otherwise connect to server
         if (PhotonNetwork.IsConnected)
