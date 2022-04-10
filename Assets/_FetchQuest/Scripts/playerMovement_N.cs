@@ -1,21 +1,16 @@
-/*
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-
-public class PlayerControllerNathaniel : MonoBehaviour
+public class playerMovement_N : MonoBehaviour
 {
 
     [Header("PlayerController Variable Define")]
-        [SerializeField]
-        float speed = 8f;
-        float sprintspeed = 10f;
-        float gravity = -1f;
-        float jumpSpeed = 10f;
+    [SerializeField]
+    float speed = 8f;
+    float sprintspeed = 10f;
+    float gravity = -1f;
+    float jumpSpeed = 10f;
 
     float energy = 10f;
 
@@ -29,7 +24,7 @@ public class PlayerControllerNathaniel : MonoBehaviour
     void Start()
     {
         mycontroller = GetComponent<CharacterController>();
-        
+
     }
 
     // Update is called once per frame
@@ -37,22 +32,15 @@ public class PlayerControllerNathaniel : MonoBehaviour
     {
         camY = new Vector3(cam.InverseTransformPoint(cam.position).x, 0, cam.InverseTransformPoint(cam.position).z);
         cam.transform.position = transform.position;
-        if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             transform.LookAt(cam.position + (cam.right * Input.GetAxis("Horizontal") + cam.forward * Input.GetAxis("Vertical")));
-            move(Mathf.Sqrt(Mathf.Pow(Input.GetAxis("Horizontal"),2) + Mathf.Pow(Input.GetAxis("Vertical"),2)));
+            move(Mathf.Sqrt(Mathf.Pow(Input.GetAxis("Horizontal"), 2) + Mathf.Pow(Input.GetAxis("Vertical"), 2)));
         }
         else
         {
             mycontroller.Move(new Vector3(0, gravity, 0));
         }
-    }
-
-
-
-    private void FlashlightToggle()
-    {
-        
     }
 
     /// <summary>
@@ -63,7 +51,7 @@ public class PlayerControllerNathaniel : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        *//*if (mycontroller.isGrounded)
+        if (mycontroller.isGrounded)
         {
             movedirection = new Vector3(moveX, 0, moveZ);
             movedirection = transform.TransformDirection(movedirection);
@@ -80,7 +68,8 @@ public class PlayerControllerNathaniel : MonoBehaviour
                 movedirection *= speed;
             }
 
-        }*//*
+        }
+        
 
         movedirection.y -= gravity;
         movedirection = cam.forward * moveZ + cam.right * moveX;
@@ -91,7 +80,7 @@ public class PlayerControllerNathaniel : MonoBehaviour
             walk.Play();
         }
         mycontroller.Move(new Vector3(movedirection.x * speed * Time.deltaTime, gravity, movedirection.z * speed * Time.deltaTime));
-        //mycontroller.Move(new Vector3((transform.forward.x * momentum * speed * Time.deltaTime), movedirection.y, (transform.forward.z * momentum * speed * Time.deltaTime)));
+        mycontroller.Move(new Vector3((transform.forward.x * momentum * speed * Time.deltaTime), movedirection.y, (transform.forward.z * momentum * speed * Time.deltaTime)));
 
     }
 
@@ -105,4 +94,5 @@ public class PlayerControllerNathaniel : MonoBehaviour
     {
     }
 
-}*/
+
+}
