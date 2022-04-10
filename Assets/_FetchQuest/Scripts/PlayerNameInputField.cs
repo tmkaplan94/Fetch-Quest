@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-using Photon.Realtime;
 
 [RequireComponent(typeof(InputField))]
 public class PlayerNameInputField : MonoBehaviour
 {
     #region Constants
 
-    // store the PlayerPref Key to avoid typos
+    // store PlayerPref key to avoid typos
     private const string PlayerNamePrefKey = "PlayerName";
 
     #endregion
@@ -18,7 +17,7 @@ public class PlayerNameInputField : MonoBehaviour
     
     private void Start ()
     {
-        GetPlayerPrefName();
+        GetPlayerPrefPlayerName();
     }
     
     #endregion
@@ -27,7 +26,7 @@ public class PlayerNameInputField : MonoBehaviour
     #region Public Methods
     
     // sets the name of the player and saves it in the PlayerPrefs for future sessions
-    public void SetPlayerPrefName(string value)
+    public void SetPlayerPrefPlayerName(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -44,7 +43,7 @@ public class PlayerNameInputField : MonoBehaviour
     #region Private Methods
 
     // get the player's stored name based on PlayerPrefs
-    private void GetPlayerPrefName()
+    private void GetPlayerPrefPlayerName()
     {
         string defaultName = "";
         InputField inputField = GetComponent<InputField>();
