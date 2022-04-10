@@ -25,8 +25,8 @@ public class AIController : MonoBehaviour
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
 
-        At(walkingState, idleState, HasTarget());
-        At(idleState, walkingState, ReachedDestination());
+        At(idleState, walkingState, HasTarget());
+        At(walkingState, idleState, ReachedDestination());
 
 
         _stateMachine.SetState(idleState);
@@ -51,6 +51,7 @@ public class AIController : MonoBehaviour
     public void GetNewTarget()
     {
         print("getting Target");
+
         int waypointIdx = Random.Range(0, waypoints.Length - 1);
         while(Target != null && waypoints[waypointIdx] == Target)
         {

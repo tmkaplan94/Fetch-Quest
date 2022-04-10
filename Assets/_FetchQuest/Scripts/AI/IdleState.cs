@@ -23,6 +23,7 @@ public class IdleState : IState
 
     public void OnEnter()
     {
+        Debug.Log("idling");
         waitTime = Time.time + _controller.AIStats.RestTime;
     }
 
