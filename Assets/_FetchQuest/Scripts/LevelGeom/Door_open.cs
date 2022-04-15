@@ -6,6 +6,7 @@ using UnityEngine;
 public class Door_open : MonoBehaviour, Interactable
 {
     private bool _isOpen = false;
+    private bool _isOpening = false;
     private Vector3 _startRot;
     private Vector3 _forward;
     private float _forwardDir = 0f;
@@ -21,7 +22,12 @@ public class Door_open : MonoBehaviour, Interactable
         _startRot = transform.rotation.eulerAngles;
         _forward = transform.forward;
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Interact(other.gameObject);
+    }
+
     public void Interact(GameObject interacter)
     {
         OpenDoor(interacter.transform);
@@ -63,7 +69,7 @@ public class Door_open : MonoBehaviour, Interactable
             time += Time.deltaTime * _speed;
         }
         time = _openTime + Time.time;
-        while(Time.time < _openTime)
+        while(Time.time < time)
         {
             yield return null;
         }
