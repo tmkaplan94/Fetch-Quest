@@ -19,11 +19,9 @@ public class ScoreManager : MonoBehaviour
     public delegate void OnPointsUpdated(GameObject player, int points);
     public OnPointsUpdated pointsDelegate;
 
-    // for initializing players
-    // TODO - how are we going to do this? 
-    // set in editor
-    [SerializeField]
-    private GameObject[] _players;
+    // player manager
+    // found as sibling component
+    private PlayerManager _playerManager;
     
     // where the scores be
     private Dictionary<GameObject, int> _scores = new Dictionary<GameObject, int>();
@@ -76,7 +74,8 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         // populate dictionary from editor array, temp
-        foreach (GameObject player in _players)
+        _playerManager = gameObject.GetComponent(typeof(PlayerManager)) as PlayerManager;
+        foreach (GameObject player in _playerManager.Players)
         {
             _scores.Add(player, 0);
         }
