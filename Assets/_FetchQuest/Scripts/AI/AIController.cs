@@ -9,6 +9,7 @@ public class AIController : MonoBehaviour
 {
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
+    [SerializeField] private Transform dogTarget; //Dog Target
 
     private int currentWaypoint = 0;
     private StateMachine _stateMachine;
@@ -24,16 +25,22 @@ public class AIController : MonoBehaviour
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
+        var pettingState = new PettingState(this); //Setting up PettingState
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
+        At(pettingState, walkingState, HasTarget()); //For now only allow to transition from petting to walking
+        Aat(pettingState, TargetNear()); //Adding petting state as an any
 
 
         _stateMachine.SetState(idleState);
     }
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
+    void Aat(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition); //Shorthand for AddAnyTransition
+    
 
     Func<bool> HasTarget() => () => Target != null;
+    Func<bool> TargetNear() => () => Mathf.Infinity <= _stats.PettingDistance; //Is dog near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
 
 
@@ -61,5 +68,10 @@ public class AIController : MonoBehaviour
         
         SetTarget(waypoints[currentWaypoint]);
         
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        _stateMachine.SetState(new PettingState(this));
     }
 }
