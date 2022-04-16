@@ -217,11 +217,6 @@ public class PlayerController_N : MonoBehaviour
         }
        
     }
-
-
-
-
-
     #endregion
 
 
@@ -237,8 +232,6 @@ public class PlayerController_N : MonoBehaviour
     }
 
     #endregion
-
-
 
     /// <summary>
     ///     Implement jump feature for player
