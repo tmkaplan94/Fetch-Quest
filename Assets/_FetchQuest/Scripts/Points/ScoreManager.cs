@@ -16,8 +16,8 @@ public class ScoreManager : MonoBehaviour
     // ===== FIELDS =====
 
 
-    delegate void OnPointsUpdated(GameObject player, int points);
-    OnPointsUpdated pointsDelegate;
+    public delegate void OnPointsUpdated(GameObject player, int points);
+    public OnPointsUpdated pointsDelegate;
 
     // for initializing players
     // TODO - how are we going to do this? 

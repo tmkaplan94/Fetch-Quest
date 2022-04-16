@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 /* ==========
     Daichi Murokami:
@@ -12,15 +12,22 @@ using UnityEngine.UIElements;
 public class TempScoreController : MonoBehaviour
 {
 
-    PlayerScore _playerScore;
+    private PlayerScore _playerScore;
 
-    Text text;
+    public Text text;
+    public ScoreManager scoreManager;
+
+    public void UpdateText(GameObject player, int points)
+    {
+        text.text = "Pets: " + points;
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
         _playerScore = gameObject.GetComponent(typeof(PlayerScore)) as PlayerScore;
+        scoreManager.pointsDelegate += UpdateText;
     }
 
     // Update is called once per frame
