@@ -10,10 +10,7 @@ public class TitleManager : MonoBehaviour
     [Tooltip("The name of the scene to load when Singleplayer Button is selected.")]
     [SerializeField] private string SingleplayerScene;
 
-    [Tooltip("The name of the scene to load when Testing Button is selected. Used in development only.")]
-    [SerializeField] private string TestingScene;
 
-    
     public void LoadMultiplayerScene()
     {
         SceneManager.LoadScene(MultiplayerScene);
@@ -24,9 +21,4 @@ public class TitleManager : MonoBehaviour
         SceneManager.LoadScene(SingleplayerScene);
     }
 
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene(TestingScene);
-    }
-    
 }
