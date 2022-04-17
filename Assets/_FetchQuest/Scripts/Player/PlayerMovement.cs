@@ -1,13 +1,14 @@
 /*
- * Author: Brackeys
+ * Author: Brackeys, Nathaniel
  * Contributors: Grant Reed
  * Summary: Handles Player Movement
  *
  * Description
- * - Stolen from this video: https://www.youtube.com/watch?v=4HpC--2iowE&list=RDCMUCYbK_tjZ2OrIZFBvU6CCMiA&index=1
+ * - Some of this code is Stolen from this video: https://www.youtube.com/watch?v=4HpC--2iowE&list=RDCMUCYbK_tjZ2OrIZFBvU6CCMiA&index=1
  * 
  * Updates
- * - Grant Reed 4/16: updated variables and comments.
+ * - Grant Reed 4/15: updated variables and comments.
+ * - Grant Reed 4/16: Added Jump from Nathaniel's code and reorganized code/comments.
  */
 using System.Collections;
 using UnityEngine;
