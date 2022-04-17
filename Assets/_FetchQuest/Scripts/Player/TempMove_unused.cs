@@ -12,7 +12,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class TempMove : MonoBehaviour
+public class TempMove_unused : MonoBehaviour
 {
     [SerializeField] private CharacterController _controller;
     [SerializeField] private Transform _cam;
