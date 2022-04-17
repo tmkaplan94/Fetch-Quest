@@ -1,13 +1,13 @@
 /*
  * Author: Brackeys
- * Contributors: Grant Reed
+ * Contributors:
  * Summary: Handles Player Movement
  *
  * Description
  * - Stolen from this video: https://www.youtube.com/watch?v=4HpC--2iowE&list=RDCMUCYbK_tjZ2OrIZFBvU6CCMiA&index=1
  * 
  * Updates
- * - Grant Reed 4/16: updated variables and comments.
+ * 
  */
 using System.Collections;
 using UnityEngine;
@@ -33,7 +33,18 @@ public class TempMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //jump
+        _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
+        if (_isGrounded && _velocity.y < 0)
+        {
+            _velocity.y = -2f;
+        }
+
+        if (Input.GetButtonDown("Jump") && _isGrounded)
+        {
+            _velocity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
+        }
         //gravity
         _velocity.y += _gravity * Time.deltaTime;
         _controller.Move(_velocity * Time.deltaTime);
