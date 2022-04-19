@@ -20,5 +20,11 @@ public class TitleManager : MonoBehaviour
     {
         SceneManager.LoadScene(SingleplayerScene);
     }
+    
+    public void Quit()
+    {
+        Debug.Log("Application.Quit()");
+        Application.Quit();
+    }
 
 }
