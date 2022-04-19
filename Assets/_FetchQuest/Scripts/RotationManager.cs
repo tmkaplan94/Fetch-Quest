@@ -4,9 +4,9 @@ public class RotationManager : MonoBehaviour
 {
     #region Private Serialized Fields
 
-    [SerializeField] private Transform[] dogPositions;
     [SerializeField] private Transform center;
-    [SerializeField] private Transform selectedLookAtTarget;
+    [SerializeField] private GameObject dogPositions;
+    [SerializeField] private Transform selectedLookAt;
     
     #endregion
 
