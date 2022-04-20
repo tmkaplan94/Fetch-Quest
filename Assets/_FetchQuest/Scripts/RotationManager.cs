@@ -48,6 +48,8 @@ public class RotationManager : MonoBehaviour
     public void RotateLeft()
     {
         // rotate dog wheel left
+        //Debug.Log("RotateLeft()");
+        dogList.transform.RotateAround(transform.position, Vector3.up, -30);
 
         // reset what current dog looks at
         //_currentDog.transform.LookAt(lookAtCamera);
@@ -59,7 +61,7 @@ public class RotationManager : MonoBehaviour
             _currentDogIndex = dogList.transform.childCount - 1;
         }
         _currentDog = _dogs[_currentDogIndex];
-        
+
         // update new current dog's look at
         //_currentDog.transform.LookAt(lookAtTarget);
     }
@@ -67,18 +69,20 @@ public class RotationManager : MonoBehaviour
     public void RotateRight()
     {
         // rotate dog wheel right
+        //Debug.Log("RotateRight()");
+        dogList.transform.RotateAround(transform.position, Vector3.up, 30);
 
         // reset what current dog looks at
         //_currentDog.transform.LookAt(lookAtCamera);
         
         // change current dog
         _currentDogIndex += 1;
-        if (_currentDogIndex >= dogList.transform.childCount)
+        if (_currentDogIndex > dogList.transform.childCount - 1)
         {
             _currentDogIndex = 0;
         }
         _currentDog = _dogs[_currentDogIndex];
-        
+
         // update new current dog's look at
         //_currentDog.transform.LookAt(lookAtTarget);
     }
@@ -94,7 +98,7 @@ public class RotationManager : MonoBehaviour
         int size = dogList.transform.childCount;
         _dogPositions = new Vector3[size];
         _dogs = new GameObject[size];
-
+        
         // for each dog, get/store each dog and its position
         for (int i = 0; i < size; i++)
         {
