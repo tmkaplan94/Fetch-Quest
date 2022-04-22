@@ -21,6 +21,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -49,11 +50,11 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region Fields
-    public AudioSource[] musicSources;
+    public Sounds[] _sounds;
     private AudioSource currentMusic;
-    public AudioSource[] sfxSource;
     private AudioSource currentSFX;
-    [SerializeField] private float musicVolume = 1.0f;
+    [SerializeField] private float musicVolume;
+    [SerializeField] private float sfxVolume;
     private bool firstMusicSourceIsActive;
     #endregion
 
@@ -64,92 +65,42 @@ public class AudioManager : MonoBehaviour
         currentMusic.loop = true;
     }
 
-    public void PlayMusic(AudioClip musicClip)
+    public void PlaySound(String n)
     {
-        foreach(AudioSource _source in musicSources)
+        for (int i = 0; i < _sounds.Length; i++)
         {
-            if(_source.clip == musicClip)
+            if (_sounds[i].name == n)
             {
-                currentMusic = _source;
-                _source.Play();
-                break;
+                _sounds[i].Play();
+                return;
             }
         }
+ 
+        // no sound with _name
+        Debug.LogWarning("AudioManager: Sound not found in list, " + n);
     }
-    // GET BACK TO THIS LATER. TOO TIRED RN [3:29AM]
-    /*
-    public void PlayMusicWithCrossFade(AudioClip musicClip, float transitionTime = 1.0f)
+
+    public void StopSound(string n)
     {
-        // Determine which source is active
-        AudioSource activeSource = (firstMusicSourceIsActive)? currentMusic;
-        AudioSource newSource = (firstMusicSourceIsActive) ? musicSource2 : musicSource;
-
-        // Swap the source
-        firstMusicSourceIsActive = !firstMusicSourceIsActive;
-
-        // Set the fields of the audio source, then start the coroutine to crossfade
-        newSource.clip = musicClip;
-        newSource.Play();
-        StartCoroutine(UpdateMusicWithCrossFade(activeSource, newSource, musicClip, transitionTime));
-    }
-    private IEnumerator UpdateMusicWithCrossFade(AudioSource original, AudioSource newSource, AudioClip music, float transitionTime)
-    {
-        // Make sure the source is active and playing
-        if (!original.isPlaying)
-            original.Play();
-
-        newSource.Stop();
-        newSource.clip = music;
-        newSource.Play();
-
-        float t = 0.0f;
-
-        for (t = 0.0f; t <= transitionTime; t += Time.deltaTime)
+        for (int i = 0; i < _sounds.Length; i++)
         {
-            original.volume = (musicVolume - ((t / transitionTime) * musicVolume));
-            newSource.volume = (t / transitionTime) * musicVolume;
-            yield return null;
-        }
-
-        // Make sure we don't end up with a weird float value
-        original.volume = 0;
-        newSource.volume = musicVolume;
-
-        original.Stop();
-    }*/
-
-    public void PlaySFX(AudioClip clip)
-    {
-        foreach(AudioSource _source in sfxSource)
-        {
-            if(_source.clip == clip)
+            if (_sounds[i].name == n)
             {
-                currentSFX = _source;
-                _source.Play();
-                break;
+                _sounds[i].Stop();
+                return;
             }
         }
-    }
-    public void PlaySFX(AudioClip clip, float volume)
-    {
-        foreach(AudioSource _source in sfxSource)
-        {
-            if(_source.clip == clip)
-            {
-                _source.volume = volume;
-                currentSFX = _source;
-                _source.Play();
-                break;
-            }
-        }
+ 
+        // no sound with _name
+        Debug.LogWarning("AudioManager: Sound not found in list, " + n);
     }
 
     public void SetMusicVolume(float volume)
     {
-        currentMusic.volume = volume;
+        currentMusic.volume = musicVolume;
     }
     public void SetSFXVolume(float volume)
     {
-        currentSFX.volume = volume; // prolly bug
+        currentSFX.volume = sfxVolume;
     }
 }
