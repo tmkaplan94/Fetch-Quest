@@ -167,19 +167,20 @@ MonoBehaviour:
   - {fileID: 1707107100}
   - {fileID: 784075058}
   dogTarget: {fileID: 585704981}
---- !u!135 &17586246
-SphereCollider:
+--- !u!136 &17586246
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17586243}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5
+  m_Height: 3.0049362
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0039682, z: 0}
 --- !u!54 &17586247
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -665,7 +666,7 @@ SphereCollider:
   m_GameObject: {fileID: 1707107096}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
