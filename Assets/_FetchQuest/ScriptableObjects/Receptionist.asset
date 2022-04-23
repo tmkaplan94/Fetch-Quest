@@ -17,3 +17,5 @@ MonoBehaviour:
   restTime: 5
   pettingDistance: 5
   pettingCooldown: 3
+  talkingCooldown: 6
+  workingCooldown: 6

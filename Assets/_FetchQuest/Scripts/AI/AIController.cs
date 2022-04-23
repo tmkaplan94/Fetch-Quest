@@ -10,7 +10,9 @@ public class AIController : MonoBehaviour
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
     public bool targetNearby = false; //Set Bool for dog nearby
-    private bool canPet = true;
+    private ReffBool canPet = new ReffBool(true);
+    private ReffBool isTalking = new ReffBool(false);
+    private ReffBool isWorking = new ReffBool(false);
 
     private int currentWaypoint = 0;
     private StateMachine _stateMachine;
@@ -18,6 +20,14 @@ public class AIController : MonoBehaviour
     public Transform? Target { get; private set; }
 
     public AIStats AIStats => _stats;
+    public class ReffBool
+    {
+        public bool value;
+        public ReffBool(bool defult)
+        {
+            value = defult;
+        }
+    }
 
     private void Awake()
     {
@@ -54,16 +64,14 @@ public class AIController : MonoBehaviour
         _stateMachine.Tick();
     }
 
-    IEnumerator Cooldown(float waitTime, Action functionName)
+    IEnumerator Cooldown(float waitTime, ReffBool boolToChange)
     {
         yield return new WaitForSecondsRealtime(waitTime);
-        functionName();
+        boolFlip(boolToChange);
     }
-    private void Nothing() 
+    private void boolFlip(ReffBool changeBool) 
     {
-        canPet = true;
-        //changeBool = !changeBool;
-        //return;
+        changeBool.value = !changeBool.value;
     }
 
     public void SetTarget(Transform t)
@@ -86,15 +94,24 @@ public class AIController : MonoBehaviour
         SetTarget(waypoints[currentWaypoint]);
         
     }
-
+    
     public void OnTriggerEnter(Collider other)
     {
-        if (canPet)
+        if (canPet.value && other.CompareTag("Player"))
         {
-            canPet = false;
+            canPet.value = false;
             targetNearby = true;
-            StartCoroutine(Cooldown(_stats.PettingCooldown, Nothing));
+            StartCoroutine(Cooldown(_stats.PettingCooldown, canPet));
         }
-        //_stateMachine.SetState(pettingState);
+        if(isTalking.value && other.CompareTag("AI"))
+        {
+            isTalking.value = true;
+            StartCoroutine(Cooldown(_stats.TalkingCooldown, isTalking));
+        }
+        if(isWorking.value && other.CompareTag("Workplace"))
+        {
+            isWorking.value = true;
+            StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));
+        }
     }
 }
