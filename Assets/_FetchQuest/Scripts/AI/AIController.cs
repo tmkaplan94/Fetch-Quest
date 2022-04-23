@@ -9,7 +9,8 @@ public class AIController : MonoBehaviour
 {
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
-    [SerializeField] private Transform dogTarget; //Dog Target
+    public bool targetNearby = false; //Set Bool for dog nearby
+    private bool canPet = true;
 
     private int currentWaypoint = 0;
     private StateMachine _stateMachine;
@@ -22,6 +23,7 @@ public class AIController : MonoBehaviour
     {
         var navMeshAgent = GetComponent<NavMeshAgent>();
         _stateMachine = new StateMachine();
+        
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
@@ -40,14 +42,29 @@ public class AIController : MonoBehaviour
     
 
     Func<bool> HasTarget() => () => Target != null;
-    Func<bool> TargetNear() => () => Mathf.Infinity <= _stats.PettingDistance; //Is dog near?
+    Func<bool> TargetNear() => () => targetNearby == true; //Is dog near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
 
 
 
     // Here is where the code is actually ran! Update function calls State Machine's Tick() every frame.
     //State Machine's Tick() checks if it needs to change states based on the transitions set above then calls tick() on current state.
-    private void Update() => _stateMachine.Tick();
+    private void Update()
+    {
+        _stateMachine.Tick();
+    }
+
+    IEnumerator Cooldown(float waitTime, Action functionName)
+    {
+        yield return new WaitForSecondsRealtime(waitTime);
+        functionName();
+    }
+    private void Nothing() 
+    {
+        canPet = true;
+        //changeBool = !changeBool;
+        //return;
+    }
 
     public void SetTarget(Transform t)
     {
@@ -72,6 +89,12 @@ public class AIController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        _stateMachine.SetState(new PettingState(this));
+        if (canPet)
+        {
+            canPet = false;
+            targetNearby = true;
+            StartCoroutine(Cooldown(_stats.PettingCooldown, Nothing));
+        }
+        //_stateMachine.SetState(pettingState);
     }
 }

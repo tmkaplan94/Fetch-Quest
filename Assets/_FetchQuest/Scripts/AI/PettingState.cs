@@ -6,16 +6,12 @@ using UnityEngine.AI;
 public class PettingState : IState
 {
     private readonly AIController _controller;
-    //private readonly NavMeshAgent _navMeshAgent;
-    //private readonly Transform _target;
 
     private float waitTime;
 
     public PettingState(AIController c)
     {
         _controller = c;
-        //_target = t;
-        //_navMeshAgent = n;
     }
 
     public void Tick()
@@ -23,26 +19,20 @@ public class PettingState : IState
         if (waitTime <= Time.time)
         {
             _controller.GetNewTarget();
+            Debug.Log(_controller.targetNearby);
         }
     }
 
     public void OnEnter()
     {
-        Debug.Log("petting");
-        if (_controller.AIStats.PettingCooldown != 0)
-        {
-            //Still on cooldown, exit
-        }
-
-        waitTime = Time.time + _controller.AIStats.RestTime;
-        //_navMeshAgent.enabled = true;
-        //_navMeshAgent.SetDestination(_controller.Target.transform.position);
+        Debug.Log("petting"); 
+        _controller.targetNearby = false;
+        waitTime = Time.time + .1f;
 
     }
 
     public void OnExit()
     {
-        //_controller.SetTarget(null);
-        //_navMeshAgent.enabled = false;
+        Debug.Log("Exitting petting");
     }
 }
