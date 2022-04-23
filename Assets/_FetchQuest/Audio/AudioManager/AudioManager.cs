@@ -6,13 +6,12 @@
  * Description
  * - To use Music: AudioManager.Instance.PlayMusic(<name>);
  * - To use SFX: AudioManager.Instance.PlaySFX(<name>);
- * - To use Cross Fade: AudioManager.Instance.PlayMusicWithCrossFade(<name>, float)
- * - Music Names: ["Life_of_a_Pet.mp3"]
- * - SFX Names: ["Crowd_Background.mp3", 
-                 "Cursor_Click_SFX.mp3", 
-                 "Cursor_Hover_SFX.mp3", 
-                 "Pick_Up_SFX.mp3", 
-                 "Score_Up_SFX.mp3"]
+ * - Music Names: ["Life_of_a_Pet"]
+ * - SFX Names: ["Crowd_Background", 
+                 "Cursor_Click_SFX", 
+                 "Cursor_Hover_SFX", 
+                 "Pick_Up_SFX", 
+                 "Score_Up_SFX"]
  *
  * Updates
  * - N/A
@@ -39,7 +38,6 @@ public class AudioManager : MonoBehaviour
                     instance = new GameObject("Spawned AudioManager", typeof(AudioManager)).GetComponent<AudioManager>();
                 }
             }
-
             return instance;
         }
         set
@@ -48,59 +46,97 @@ public class AudioManager : MonoBehaviour
         }
     }
     #endregion
-
     #region Fields
-    public Sounds[] _sounds;
-    private AudioSource currentMusic;
-    private AudioSource currentSFX;
-    [SerializeField] private float musicVolume;
-    [SerializeField] private float sfxVolume;
+    [Tooltip("All Music Clips")]
+    [SerializeField] private AudioClip[] _musicClips;
+    [Tooltip("All SFX Clips")]
+    [SerializeField] private AudioClip[] _sfxClips;
+    [SerializeField] private AudioSource currentMusic;
+    [SerializeField] private AudioSource currentSFX;
     private bool firstMusicSourceIsActive;
     #endregion
+    private void Awake(){DontDestroyOnLoad(this.gameObject);}
+    #region Playing Audio
 
-    private void Awake()
+    public void PlayMusic(String n)
     {
-        DontDestroyOnLoad(this.gameObject);
-        // Make sure to enable loop on music sources
-        currentMusic.loop = true;
+        for (int i = 0; i < _musicClips.Length; i++)
+        {
+            if (_musicClips[i].name == n)
+            {
+                Debug.Log("NAME: " + _musicClips[i].name);
+                currentMusic.clip = _musicClips[i];
+                currentMusic.Play();
+                return;
+            }
+            else{
+                Debug.Log("INCORRECT NAME");
+            }
+        }
+ 
+        // no sound with _name
+        Debug.LogWarning("AudioManager: Music not found in list, " + n);
     }
 
-    public void PlaySound(String n)
+    public void PlaySFX(String n)
     {
-        for (int i = 0; i < _sounds.Length; i++)
+        for (int i = 0; i < _sfxClips.Length; i++)
         {
-            if (_sounds[i].name == n)
+            if (_sfxClips[i].name == n)
             {
-                _sounds[i].Play();
+                Debug.Log("NAME: " + _sfxClips[i].name);
+                currentSFX.clip = _sfxClips[i];
+                currentSFX.Play();
+                return;
+            }
+            else{
+                Debug.Log("INCORRECT NAME");
+            }
+        }
+ 
+        // no sound with _name
+        Debug.LogWarning("AudioManager: SFX not found in list, " + n);
+    }
+    #endregion
+    #region StopAudio
+    public void StopMusic(string n)
+    {
+        for (int i = 0; i < _musicClips.Length; i++)
+        {
+            if (_musicClips[i].name == n)
+            {
+                currentMusic.clip = null;
                 return;
             }
         }
  
         // no sound with _name
-        Debug.LogWarning("AudioManager: Sound not found in list, " + n);
+        Debug.LogWarning("AudioManager: Music not found in list, " + n);
     }
 
-    public void StopSound(string n)
+    public void StopSFX(string n)
     {
-        for (int i = 0; i < _sounds.Length; i++)
+        for (int i = 0; i < _sfxClips.Length; i++)
         {
-            if (_sounds[i].name == n)
+            if (_sfxClips[i].name == n)
             {
-                _sounds[i].Stop();
+                _sfxClips[i] = null;
                 return;
             }
         }
  
         // no sound with _name
-        Debug.LogWarning("AudioManager: Sound not found in list, " + n);
+        Debug.LogWarning("AudioManager: SFX not found in list, " + n);
     }
-
+    #endregion
+    #region AudioControl
     public void SetMusicVolume(float volume)
     {
-        currentMusic.volume = musicVolume;
+        currentMusic.volume = volume;
     }
     public void SetSFXVolume(float volume)
     {
-        currentSFX.volume = sfxVolume;
+        currentSFX.volume = volume;
     }
+    #endregion
 }
