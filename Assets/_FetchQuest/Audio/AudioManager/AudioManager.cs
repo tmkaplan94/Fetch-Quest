@@ -1,12 +1,13 @@
 ﻿/*
  * Author: Loc Trinh
- * Contributors: Epitome
+ * Contributors: Grant Reed
  * Summary: Manages different audio clips throughout scenes.
  *
  * Description
  * - To use Music: AudioManager.Instance.PlayMusic(<name>);
  * - To use SFX: AudioManager.Instance.PlaySFX(<name>);
- * - Music Names: ["Life_of_a_Pet"]
+ * - Music Names: ["Life_of_a_Pet",
+                   "Strolling Along"]
  * - SFX Names: ["Crowd_Background", 
                  "Cursor_Click_SFX", 
                  "Cursor_Hover_SFX", 
@@ -21,6 +22,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -47,58 +49,72 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
     #region Fields
+    // Audio stuff
     [Tooltip("All Music Clips")]
     [SerializeField] private AudioClip[] _musicClips;
     [Tooltip("All SFX Clips")]
-    [SerializeField] private AudioClip[] _sfxClips;
+    [SerializeField] private AudioClip[] _SFXClips;
     [SerializeField] private AudioSource currentMusic;
     [SerializeField] private AudioSource currentSFX;
-    private bool firstMusicSourceIsActive;
+    // Mute Toggles
+    [SerializeField] private Toggle muteMaster;
+    [SerializeField] private Toggle muteMusic;
+    [SerializeField] private Toggle muteSFX;
+    // Volume Sliders
+    [SerializeField] private Slider sliderMaster;
+    [SerializeField] private Slider sliderMusic;
+    [SerializeField] private Slider sliderSFX;
+    // Audio Mixer
+    [SerializeField] private AudioMixer _mixer;
+    // Temp
+    private float _vol = 1;
+    // Bool conditions
+    private bool _masterMuteBool = false;
+    private bool _musicMuteBool = false;
+    private bool _sfxMuteBool = false;
     #endregion
     private void Awake(){DontDestroyOnLoad(this.gameObject);}
+    private void Start()
+    {
+        muteMaster.isOn = false;
+        muteMusic.isOn = false;
+        muteSFX.isOn = false;
+    }
     #region Playing Audio
-
+    // A function that plays the music audio with given name.
     public void PlayMusic(String n)
     {
         for (int i = 0; i < _musicClips.Length; i++)
         {
             if (_musicClips[i].name == n)
             {
-                Debug.Log("NAME: " + _musicClips[i].name);
                 currentMusic.clip = _musicClips[i];
                 currentMusic.Play();
                 return;
             }
-            else{
-                Debug.Log("INCORRECT NAME");
-            }
         }
- 
         // no sound with _name
         Debug.LogWarning("AudioManager: Music not found in list, " + n);
     }
-
-    public void PlaySFX(String n)
+    // A function that plays the SFX audio with given name.
+    public void PlaySFX(String n, Vector3 pos)
     {
-        for (int i = 0; i < _sfxClips.Length; i++)
+        for (int i = 0; i < _SFXClips.Length; i++)
         {
-            if (_sfxClips[i].name == n)
+            if (_SFXClips[i].name == n)
             {
-                Debug.Log("NAME: " + _sfxClips[i].name);
-                currentSFX.clip = _sfxClips[i];
-                currentSFX.Play();
+                currentSFX.clip = _SFXClips[i];
+                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _vol);
                 return;
             }
-            else{
-                Debug.Log("INCORRECT NAME");
-            }
         }
- 
         // no sound with _name
         Debug.LogWarning("AudioManager: SFX not found in list, " + n);
     }
     #endregion
     #region StopAudio
+    // Optional area meant for special interaction with level design, where
+    // you want certain audio group to play only.
     public void StopMusic(string n)
     {
         for (int i = 0; i < _musicClips.Length; i++)
@@ -116,11 +132,11 @@ public class AudioManager : MonoBehaviour
 
     public void StopSFX(string n)
     {
-        for (int i = 0; i < _sfxClips.Length; i++)
+        for (int i = 0; i < _SFXClips.Length; i++)
         {
-            if (_sfxClips[i].name == n)
+            if (_SFXClips[i].name == n)
             {
-                _sfxClips[i] = null;
+                _SFXClips[i] = null;
                 return;
             }
         }
@@ -130,13 +146,78 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
     #region AudioControl
+    public void SetMasterVolume(float volume)
+    {
+        if(!_masterMuteBool)
+        {
+            _mixer.SetFloat("Master", Mathf.Log10(volume)*20);
+        }
+    }
     public void SetMusicVolume(float volume)
     {
-        currentMusic.volume = volume;
+        if(!_masterMuteBool && !_musicMuteBool)
+        {
+            _mixer.SetFloat("Music", Mathf.Log10(volume)*20);
+        }
     }
-    public void SetSFXVolume(float volume)
+    public void SetSFXVolume(float volume) // 0.0001 - 1.0
     {
-        currentSFX.volume = volume;
+        if(!_masterMuteBool && !_sfxMuteBool)
+        {
+            _vol = volume;
+            _mixer.SetFloat("SFX", Mathf.Log10(volume)*20);
+        }
+        
+    }
+    //bug
+    public void MuteMaster(bool _audio)
+    {
+        _masterMuteBool = _audio;
+        if(_audio)
+        {
+            sliderMaster.interactable = false;
+            PlayerPrefs.SetFloat("SavedMasterVol", AudioListener.volume);
+            AudioListener.volume = 0f;
+        }
+        else
+        {
+            sliderMaster.interactable = true;
+            AudioListener.volume = PlayerPrefs.GetFloat("SavedMasterVol");
+        }
+    }
+    public void MuteMusic(bool _audio)
+    {
+        _musicMuteBool = _audio;
+        if(_audio)
+        {
+            float _currentMusicVol;
+            sliderMusic.interactable = false;
+            _mixer.GetFloat("Music", out _currentMusicVol);
+            PlayerPrefs.SetFloat("SavedMusicVol", _currentMusicVol);
+            _mixer.SetFloat("Music", -80f);
+        }
+        else
+        {
+            sliderMusic.interactable = true;
+            _mixer.SetFloat("Music", PlayerPrefs.GetFloat("SavedMusicVol"));
+        }
+    }
+    public void MuteSFX(bool _audio)
+    {
+        _sfxMuteBool = _audio;
+        if(_audio)
+        {
+            float _currentSFXVol;
+            sliderMusic.interactable = false;
+            _mixer.GetFloat("SFX", out _currentSFXVol);
+            PlayerPrefs.SetFloat("SavedSFXVol", _currentSFXVol);
+            _mixer.SetFloat("SFX", -80f);
+        }
+        else
+        {
+            sliderMusic.interactable = true;
+            _mixer.SetFloat("SFX", PlayerPrefs.GetFloat("SavedSFXVol"));
+        }
     }
     #endregion
 }

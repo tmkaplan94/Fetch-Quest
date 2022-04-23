@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class randomtest : MonoBehaviour
 {
+    [SerializeField] private Transform _player;
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayMusic("Strolling Along");
+        AudioManager.Instance.PlayMusic(AudioNames.IngameTheme);
     }
     void Update()
     {
         if(Input.GetKeyDown("g"))
-            AudioManager.Instance.PlaySFX("Pick_Up_SFX");
+            AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, gameObject.transform.position);
         if(Input.GetKeyDown("h"))
-            AudioManager.Instance.PlaySFX("Score_Up_SFX");
+            AudioManager.Instance.PlaySFX(AudioNames.PickUp, _player.position);
+
     }
 }
