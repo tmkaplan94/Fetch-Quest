@@ -5,7 +5,7 @@
  *
  * Description
  * - To use Music: AudioManager.Instance.PlayMusic(<name>);
- * - To use SFX: AudioManager.Instance.PlaySFX(<name>);
+ * - To use SFX: AudioManager.Instance.PlaySFX(<name>, <pos>);
  * - Music Names: ["Life_of_a_Pet",
                    "Strolling Along"]
  * - SFX Names: ["Crowd_Background", 
@@ -67,18 +67,15 @@ public class AudioManager : MonoBehaviour
     // Audio Mixer
     [SerializeField] private AudioMixer _mixer;
     // Temp
-    private float _vol = 1;
-    // Bool conditions
-    private bool _masterMuteBool = false;
-    private bool _musicMuteBool = false;
-    private bool _sfxMuteBool = false;
+    private float _sfxVol;
     #endregion
-    private void Awake(){DontDestroyOnLoad(this.gameObject);}
-    private void Start()
+    private void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         muteMaster.isOn = false;
         muteMusic.isOn = false;
         muteSFX.isOn = false;
+        _sfxVol = sliderSFX.value;
     }
     #region Playing Audio
     // A function that plays the music audio with given name.
@@ -104,7 +101,7 @@ public class AudioManager : MonoBehaviour
             if (_SFXClips[i].name == n)
             {
                 currentSFX.clip = _SFXClips[i];
-                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _vol);
+                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
                 return;
             }
         }
@@ -146,48 +143,54 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
     #region AudioControl
+    // Sets the master volume in the mixer with slider values.
     public void SetMasterVolume(float volume)
     {
-        if(!_masterMuteBool)
-        {
-            _mixer.SetFloat("Master", Mathf.Log10(volume)*20);
-        }
+        _mixer.SetFloat("Master", Mathf.Log10(volume)*20);
     }
+    // Sets the music volume in the mixer with slider values.
     public void SetMusicVolume(float volume)
     {
-        if(!_masterMuteBool && !_musicMuteBool)
-        {
-            _mixer.SetFloat("Music", Mathf.Log10(volume)*20);
-        }
+        _mixer.SetFloat("Music", Mathf.Log10(volume)*20);
     }
+    // Sets the SFX volume in the mixer with slider values.
+    // Currently doesn't correspond to the mixer because it's using _sfxVol to control volume instead.
     public void SetSFXVolume(float volume) // 0.0001 - 1.0
     {
-        if(!_masterMuteBool && !_sfxMuteBool)
-        {
-            _vol = volume;
-            _mixer.SetFloat("SFX", Mathf.Log10(volume)*20);
-        }
-        
+        _sfxVol = volume;
+        _mixer.SetFloat("SFX", Mathf.Log10(volume)*20);
     }
-    //bug
+    // Master-muting function that, by design, disables all slider volume controls.
+    // You can manually untoggle other audio functionalities and tinker with volume control (if you want).
+    // Saves volume states before and after.
     public void MuteMaster(bool _audio)
     {
-        _masterMuteBool = _audio;
         if(_audio)
         {
+            // Disable all sliders
             sliderMaster.interactable = false;
+            sliderMusic.interactable = false;
+            sliderSFX.interactable = false;
+            muteMusic.isOn = true;
+            muteSFX.isOn = true;
             PlayerPrefs.SetFloat("SavedMasterVol", AudioListener.volume);
             AudioListener.volume = 0f;
         }
         else
         {
+            // Enable all sliders
             sliderMaster.interactable = true;
+            sliderMusic.interactable = true;
+            sliderSFX.interactable = true;
+            muteMusic.isOn = false;
+            muteSFX.isOn = false;
             AudioListener.volume = PlayerPrefs.GetFloat("SavedMasterVol");
         }
     }
+    // Music-muting function that disables only the music slider volume control.
+    // Saves volume states before and after.
     public void MuteMusic(bool _audio)
     {
-        _musicMuteBool = _audio;
         if(_audio)
         {
             float _currentMusicVol;
@@ -202,21 +205,24 @@ public class AudioManager : MonoBehaviour
             _mixer.SetFloat("Music", PlayerPrefs.GetFloat("SavedMusicVol"));
         }
     }
+    // SFX-muting function that disables only the sfx slider volume control.
+    // Will change how SFX works in the future for consistency.
+    // Currently work a bit different than the other features because of how SFX are played.
+    // Saves volume states before and after.
     public void MuteSFX(bool _audio)
     {
-        _sfxMuteBool = _audio;
         if(_audio)
         {
             float _currentSFXVol;
-            sliderMusic.interactable = false;
-            _mixer.GetFloat("SFX", out _currentSFXVol);
+            sliderSFX.interactable = false;
+            _currentSFXVol = sliderSFX.value;
             PlayerPrefs.SetFloat("SavedSFXVol", _currentSFXVol);
-            _mixer.SetFloat("SFX", -80f);
+            _sfxVol = sliderSFX.minValue;
         }
         else
         {
-            sliderMusic.interactable = true;
-            _mixer.SetFloat("SFX", PlayerPrefs.GetFloat("SavedSFXVol"));
+            sliderSFX.interactable = true;
+            _sfxVol = PlayerPrefs.GetFloat("SavedSFXVol");
         }
     }
     #endregion
