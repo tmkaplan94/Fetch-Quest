@@ -9,7 +9,10 @@ public class AIController : MonoBehaviour
 {
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
-    public bool targetNearby = false; //Set Bool for dog nearby
+    [SerializeField] private Transform workplace;
+    public bool dogNearby = false; //Set Bool for dog nearby
+    public bool personNearby = false; //Set Bool for person nearby
+    public bool atWorkplace = false; //Set Bool for at workplace
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -18,6 +21,8 @@ public class AIController : MonoBehaviour
     private StateMachine _stateMachine;
 #nullable enable
     public Transform? Target { get; private set; }
+    public Transform? Work { get; private set; }
+    private NavMeshAgent navMeshAgent;
 
     public AIStats AIStats => _stats;
     public class ReffBool
@@ -31,18 +36,24 @@ public class AIController : MonoBehaviour
 
     private void Awake()
     {
-        var navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         _stateMachine = new StateMachine();
         
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
         var pettingState = new PettingState(this); //Setting up PettingState
+        var talkingState = new TalkingState(this); //Setting up TalkingState
+        var workingState = new WorkingState(this); //Setting up WorkingState
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
         At(pettingState, walkingState, HasTarget()); //For now only allow to transition from petting to walking
-        Aat(pettingState, TargetNear()); //Adding petting state as an any
+        At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
+        At(workingState, walkingState, HasTarget());
+        Aat(pettingState, DogNear()); //Adding petting state as an any
+        Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
+
 
 
         _stateMachine.SetState(idleState);
@@ -52,8 +63,12 @@ public class AIController : MonoBehaviour
     
 
     Func<bool> HasTarget() => () => Target != null;
-    Func<bool> TargetNear() => () => targetNearby == true; //Is dog near?
+    Func<bool> HasWork() => () => Work != null; // Copy HasTarget
+    Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
+    Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
+    Func<bool> AtWork() => () => atWorkplace == true; //Are they at the workplace?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
+    Func<bool> ReachedWorkDestination() => () => Work != null && Vector3.Distance(transform.position, Work.position) < 1f; //Copy ReachedDes to get them to work
 
 
 
@@ -80,6 +95,12 @@ public class AIController : MonoBehaviour
         
         print("target set");
     }
+    public void SetWork(Transform w)
+    {
+        Work = w;
+
+        print("Work target set");
+    }
 
     public void GetNewTarget()
     {
@@ -97,20 +118,27 @@ public class AIController : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Detected Collider");
+        navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
         if (canPet.value && other.CompareTag("Player"))
         {
+            Debug.Log("Dog");
             canPet.value = false;
-            targetNearby = true;
+            dogNearby = true;
             StartCoroutine(Cooldown(_stats.PettingCooldown, canPet));
         }
-        if(isTalking.value && other.CompareTag("AI"))
+        if(!isTalking.value && other.CompareTag("AI"))
         {
+            Debug.Log("AI");
             isTalking.value = true;
+            personNearby = true;
             StartCoroutine(Cooldown(_stats.TalkingCooldown, isTalking));
         }
-        if(isWorking.value && other.CompareTag("Workplace"))
+        if(!isWorking.value && other.CompareTag("Workplace"))
         {
+            Debug.Log("Workplace");
             isWorking.value = true;
+            atWorkplace = true;
             StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));
         }
     }

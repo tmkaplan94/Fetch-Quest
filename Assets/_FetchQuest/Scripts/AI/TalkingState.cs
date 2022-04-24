@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class PettingState : IState
+public class TalkingState : IState
 {
     private readonly AIController _controller;
 
     private float waitTime;
 
-    public PettingState(AIController c)
+    public TalkingState(AIController c)
     {
         _controller = c;
     }
@@ -19,20 +18,17 @@ public class PettingState : IState
         if (waitTime <= Time.time)
         {
             _controller.GetNewTarget();
-            //Debug.Log(_controller.dogNearby);
         }
     }
 
     public void OnEnter()
     {
-        Debug.Log("petting"); 
-        _controller.dogNearby = false;
-        waitTime = Time.time + .1f;
-
+        Debug.Log("Talking");
+        _controller.personNearby = false;
+        waitTime = Time.time + _controller.AIStats.RestTime;
     }
 
     public void OnExit()
     {
-        Debug.Log("Exitting petting");
     }
 }
