@@ -63,6 +63,19 @@ MonoBehaviour:
   sliderMusic: {fileID: 0}
   sliderSFX: {fileID: 0}
   _mixer: {fileID: 24100000, guid: 6d3da9d8f5657bd46a170e4126acd6f9, type: 2}
+  _barks:
+  - {fileID: 11400000, guid: b796af1a7671ca04e924f95ec2734888, type: 2}
+  - {fileID: 11400000, guid: 6da7e935850944f4c8bffd8adae56125, type: 2}
+  - {fileID: 11400000, guid: 9bef658c4dc1bf54997c47071b925e30, type: 2}
+  - {fileID: 11400000, guid: fff6c6795d2afe84bb00c6d9815caf21, type: 2}
+  - {fileID: 11400000, guid: 9f7b2ebfbbf44ac4fb1d5a0e6959d69c, type: 2}
+  - {fileID: 11400000, guid: 1226e52e91871ed4b92877d6bd3d4069, type: 2}
+  - {fileID: 11400000, guid: d3c10658b0175314abca9b8b1219b163, type: 2}
+  - {fileID: 11400000, guid: a1d722ff3b9a9e9438a29416701fe33c, type: 2}
+  - {fileID: 11400000, guid: 2fa52b6110d5532489422a977a46e888, type: 2}
+  - {fileID: 11400000, guid: 0a3b4e8b6ec1d114eb4c9040efe560aa, type: 2}
+  - {fileID: 11400000, guid: 2d4b75cfc3a2c484c8cee8624fac6db5, type: 2}
+  - {fileID: 11400000, guid: 350c7b5a031a1d24289f340e75eb6e09, type: 2}
 --- !u!82 &6713806861356117955
 AudioSource:
   m_ObjectHideFlags: 0

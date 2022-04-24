@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -53,7 +54,7 @@ public class AudioManager : MonoBehaviour
     [Tooltip("All Music Clips")]
     [SerializeField] private AudioClip[] _musicClips;
     [Tooltip("All SFX Clips")]
-    [SerializeField] private AudioClip[] _SFXClips;
+    [SerializeField] private List<AudioClip> _SFXClips = new List<AudioClip>();
     [SerializeField] private AudioSource currentMusic;
     [SerializeField] private AudioSource currentSFX;
     // Mute Toggles
@@ -66,6 +67,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private Slider sliderSFX;
     // Audio Mixer
     [SerializeField] private AudioMixer _mixer;
+    // Scriptable Object Reference
+    [SerializeField] private BarksSO[] _barks;
     // Temp
     private float _sfxVol;
     #endregion
@@ -76,6 +79,11 @@ public class AudioManager : MonoBehaviour
         muteMusic.isOn = false;
         muteSFX.isOn = false;
         _sfxVol = sliderSFX.value;
+
+        foreach(var barkSO in _barks)
+        {
+            _SFXClips.Add(barkSO._barkAudio);
+        }
     }
     #region Playing Audio
     // A function that plays the music audio with given name.
@@ -96,11 +104,23 @@ public class AudioManager : MonoBehaviour
     // A function that plays the SFX audio with given name.
     public void PlaySFX(String n, Vector3 pos)
     {
-        for (int i = 0; i < _SFXClips.Length; i++)
+        /*
+        for(int i = 0; i < _SFXClips.Length; i++)
         {
             if (_SFXClips[i].name == n)
             {
                 currentSFX.clip = _SFXClips[i];
+                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
+                return;
+            }
+        }
+        
+        */
+        foreach(AudioClip _clip in _SFXClips)
+        {
+            if(_clip.name == n)
+            {
+                currentSFX.clip = _clip;
                 AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
                 return;
             }
@@ -129,11 +149,21 @@ public class AudioManager : MonoBehaviour
 
     public void StopSFX(string n)
     {
+        /*
         for (int i = 0; i < _SFXClips.Length; i++)
         {
             if (_SFXClips[i].name == n)
             {
                 _SFXClips[i] = null;
+                return;
+            }
+        }
+        */
+        foreach(AudioClip _clip in _SFXClips)
+        {
+            if(_clip.name == n)
+            {
+                currentSFX.clip = null;
                 return;
             }
         }
