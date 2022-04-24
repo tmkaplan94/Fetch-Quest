@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2207829356549233287}
   - component: {fileID: 2198667111639997881}
   - component: {fileID: 5609755455097207451}
+  - component: {fileID: 3373242431270995871}
   m_Layer: 0
   m_Name: OpenDuctTurn
   m_TagString: Untagged
@@ -5494,3 +5495,17 @@ MonoBehaviour:
   - a: 703
     b: 701
   m_SelectedVertices: a2020000a1020000a0020000a3020000a6020000a5020000a4020000a7020000aa020000a9020000a8020000ab020000ae020000ad020000ac020000af020000b2020000b1020000b0020000b3020000b6020000b5020000b4020000b7020000ba020000b9020000b8020000bb020000be020000bd020000bc020000bf020000
+--- !u!64 &3373242431270995871
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2221067131159257431}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
