@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     #region Serialized Private Variables
     [SerializeField] private CharacterController _myCharacterController;
     [SerializeField] private Transform _cam;
-    [SerializeField] private Animator anime;
+    [SerializeField] private Animator _anime;
 
     [SerializeField] private float _speed = 6;
     [SerializeField] private float _sprintspeed = 10;
@@ -72,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
                 //applying speed to direction vector.
                 _moveDirection *= movementSpeed;
             }
+
+            float inputMag = Mathf.Clamp01(_moveDirection.magnitude);
+            _anime.SetFloat("Input Mag", inputMag);
+            Debug.Log("Current value of input mag is :" + inputMag);
 
         //jump / Gravity
         
