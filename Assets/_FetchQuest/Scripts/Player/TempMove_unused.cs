@@ -18,6 +18,7 @@ public class TempMove_unused : MonoBehaviour
     [SerializeField] private Transform _cam;
 
     [SerializeField] private float _speed = 6;
+    [SerializeField] private float _sprintSpeed;
     [SerializeField] private float _gravity = -9.81f;
     [SerializeField] private float _jumpHeight = 3;
     private Vector3 _velocity;
@@ -33,6 +34,15 @@ public class TempMove_unused : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float speed;
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = _sprintSpeed;
+        }
+        else
+        {
+            speed = _speed;
+        }
         //jump
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
@@ -60,7 +70,7 @@ public class TempMove_unused : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            _controller.Move(moveDir.normalized * _speed * Time.deltaTime);
+            _controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
     }
 }
