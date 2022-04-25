@@ -67,6 +67,7 @@ public class TempMove_unused : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        //animation section -----------------------------------------
         float inputMag;
         if (_isSprint)
         {
@@ -77,7 +78,7 @@ public class TempMove_unused : MonoBehaviour
             inputMag = Mathf.Clamp(direction.magnitude, 0f, 0.5f);
         }
         _anime.SetFloat("Input Mag", inputMag);
-        Debug.Log("Current value of input mag is :" + direction.magnitude);
+        // ----------------------------------------------------------
 
         if (direction.magnitude >= 0.1f)
         {
