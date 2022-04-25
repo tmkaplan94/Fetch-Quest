@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class IdleState : IState
+public class PettingState : IState
 {
     private readonly AIController _controller;
 
     private float waitTime;
-    
-    public IdleState(AIController c)
+
+    public PettingState(AIController c)
     {
         _controller = c;
     }
@@ -18,17 +19,20 @@ public class IdleState : IState
         if (waitTime <= Time.time)
         {
             _controller.GetNewTarget();
-        }  
+            //Debug.Log(_controller.dogNearby);
+        }
     }
 
     public void OnEnter()
     {
-        Debug.Log("idling");
-        waitTime = Time.time + _controller.AIStats.RestTime;
+        Debug.Log("petting"); 
+        _controller.dogNearby = false;
+        waitTime = Time.time + .1f;
+
     }
 
     public void OnExit()
     {
-        _controller.idelCount += 1;
+        Debug.Log("Exitting petting");
     }
 }

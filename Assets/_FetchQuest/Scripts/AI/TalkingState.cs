@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : IState
+public class TalkingState : IState
 {
     private readonly AIController _controller;
 
     private float waitTime;
-    
-    public IdleState(AIController c)
+
+    public TalkingState(AIController c)
     {
         _controller = c;
     }
@@ -18,17 +18,17 @@ public class IdleState : IState
         if (waitTime <= Time.time)
         {
             _controller.GetNewTarget();
-        }  
+        }
     }
 
     public void OnEnter()
     {
-        Debug.Log("idling");
-        waitTime = Time.time + _controller.AIStats.RestTime;
+        Debug.Log("Talking");
+        _controller.personNearby = false;
+        waitTime = Time.time + _controller.AIStats.TalkTime * 2;
     }
 
     public void OnExit()
     {
-        _controller.idelCount += 1;
     }
 }
