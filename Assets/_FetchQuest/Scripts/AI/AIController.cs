@@ -9,13 +9,14 @@ public class AIController : MonoBehaviour
 {
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
-    [SerializeField] private Transform workplace;
+    [SerializeField] private Transform workplace; //Workplace coords
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
-    public bool atWorkplace = false; //Set Bool for at workplace
+    public bool hasWorkToDo = false; //Set Bool for at workplace
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
+    public int idelCount = 0;
 
     private int currentWaypoint = 0;
     private StateMachine _stateMachine;
@@ -47,12 +48,15 @@ public class AIController : MonoBehaviour
         var workingState = new WorkingState(this); //Setting up WorkingState
 
         At(idleState, walkingState, HasTarget());
+        //At(idleState, walkingState, HasWork());
         At(walkingState, idleState, ReachedDestination());
+        //At(walkingState, workingState, HasWork());
         At(pettingState, walkingState, HasTarget()); //For now only allow to transition from petting to walking
         At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
         At(workingState, walkingState, HasTarget());
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
+        Aat(workingState, HasWork()); //Adding petting state as an any
 
 
 
@@ -63,12 +67,11 @@ public class AIController : MonoBehaviour
     
 
     Func<bool> HasTarget() => () => Target != null;
-    Func<bool> HasWork() => () => Work != null; // Copy HasTarget
+    Func<bool> HasWork() => () => isWorking.value == true;
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
     Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
-    Func<bool> AtWork() => () => atWorkplace == true; //Are they at the workplace?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
-    Func<bool> ReachedWorkDestination() => () => Work != null && Vector3.Distance(transform.position, Work.position) < 1f; //Copy ReachedDes to get them to work
+    //Func<bool> ReachedWorkDestination() => () => Work != null && Vector3.Distance(transform.position, Work.position) < 1f;
 
 
 
@@ -77,6 +80,11 @@ public class AIController : MonoBehaviour
     private void Update()
     {
         _stateMachine.Tick();
+        if (idelCount == 5)
+        {
+            hasWorkToDo = true;
+            idelCount = 0;
+        }
     }
 
     IEnumerator Cooldown(float waitTime, ReffBool boolToChange)
@@ -95,12 +103,6 @@ public class AIController : MonoBehaviour
         
         print("target set");
     }
-    public void SetWork(Transform w)
-    {
-        Work = w;
-
-        print("Work target set");
-    }
 
     public void GetNewTarget()
     {
@@ -110,16 +112,20 @@ public class AIController : MonoBehaviour
             currentWaypoint = 0;
         else
             currentWaypoint++;
-       
-        
-        SetTarget(waypoints[currentWaypoint]);
-        
+
+        if (hasWorkToDo)
+        {
+            SetTarget(workplace);
+            Debug.Log("Workplace Set");
+        }
+        else
+            SetTarget(waypoints[currentWaypoint]);
     }
     
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Detected Collider");
-        navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
+        //navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
         if (canPet.value && other.CompareTag("Player"))
         {
             Debug.Log("Dog");
@@ -138,7 +144,7 @@ public class AIController : MonoBehaviour
         {
             Debug.Log("Workplace");
             isWorking.value = true;
-            atWorkplace = true;
+            hasWorkToDo = false;
             StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));
         }
     }

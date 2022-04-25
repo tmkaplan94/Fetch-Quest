@@ -166,10 +166,11 @@ MonoBehaviour:
   waypoints:
   - {fileID: 102763731}
   - {fileID: 1781323634}
-  workplace: {fileID: 0}
+  workplace: {fileID: 276699689}
   dogNearby: 0
   personNearby: 0
-  atWorkplace: 0
+  hasWork: 0
+  idelCount: 4
 --- !u!136 &17586246
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -209,7 +210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 102763731}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,12 +225,56 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102763730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.72, y: 0.11118376, z: 2.4311903}
+  m_LocalPosition: {x: 9.32, y: 0.11118376, z: 2.4311903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &276699688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276699689}
+  - component: {fileID: 276699690}
+  m_Layer: 9
+  m_Name: Fake_Workplace
+  m_TagString: Workplace
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &276699689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276699688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.39, y: 0, z: 8.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &276699690
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276699688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &537332813
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1781323634}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -880,7 +925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781323633}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.24, y: 0.11118376, z: 2.4311903}
+  m_LocalPosition: {x: -0.42, y: 0.11118376, z: 2.4311903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

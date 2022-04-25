@@ -24,7 +24,7 @@ public class WorkingState : IState
     public void OnEnter()
     {
         Debug.Log("Working");
-        waitTime = Time.time + _controller.AIStats.RestTime / 10;
+        waitTime = Time.time + _controller.AIStats.RestTime * 3;
     }
 
     public void OnExit()

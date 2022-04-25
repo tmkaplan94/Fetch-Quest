@@ -25,7 +25,7 @@ public class TalkingState : IState
     {
         Debug.Log("Talking");
         _controller.personNearby = false;
-        waitTime = Time.time + _controller.AIStats.RestTime;
+        waitTime = Time.time + _controller.AIStats.TalkTime;
     }
 
     public void OnExit()

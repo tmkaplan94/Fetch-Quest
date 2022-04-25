@@ -29,5 +29,6 @@ public class IdleState : IState
 
     public void OnExit()
     {
+        _controller.idelCount += 1;
     }
 }
