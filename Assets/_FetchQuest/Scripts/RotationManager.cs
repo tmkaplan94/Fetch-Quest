@@ -1,3 +1,12 @@
+/*
+ * Author: Tyler Kaplan
+ * Contributors: Adrian Portillo
+ * Summary: Handles the rotations of dogs in DogSelection scene.
+ *
+ * Description
+ * - Rotates every dog in sync either left/right on button press
+ * - Rotates currently selected dog constantly
+ */
 using UnityEngine;
 
 public class RotationManager : MonoBehaviour
