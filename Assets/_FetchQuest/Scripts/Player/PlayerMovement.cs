@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     #region Serialized Private Variables
     [SerializeField] private CharacterController _myCharacterController;
     [SerializeField] private Transform _cam;
+    [SerializeField] private Animator anime;
 
     [SerializeField] private float _speed = 6;
     [SerializeField] private float _sprintspeed = 10;
