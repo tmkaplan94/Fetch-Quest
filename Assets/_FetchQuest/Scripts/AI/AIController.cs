@@ -48,9 +48,7 @@ public class AIController : MonoBehaviour
         var workingState = new WorkingState(this); //Setting up WorkingState
 
         At(idleState, walkingState, HasTarget());
-        //At(idleState, walkingState, HasWork());
         At(walkingState, idleState, ReachedDestination());
-        //At(walkingState, workingState, HasWork());
         At(pettingState, walkingState, HasTarget()); //For now only allow to transition from petting to walking
         At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
         At(workingState, walkingState, HasTarget());
@@ -71,7 +69,6 @@ public class AIController : MonoBehaviour
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
     Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
-    //Func<bool> ReachedWorkDestination() => () => Work != null && Vector3.Distance(transform.position, Work.position) < 1f;
 
 
 

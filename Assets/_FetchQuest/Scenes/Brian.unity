@@ -170,7 +170,7 @@ MonoBehaviour:
   dogNearby: 0
   personNearby: 0
   hasWorkToDo: 0
-  idelCount: 3
+  idelCount: 0
 --- !u!136 &17586246
 CapsuleCollider:
   m_ObjectHideFlags: 0
