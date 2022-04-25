@@ -29,10 +29,15 @@ public class RotationManager : MonoBehaviour
     private int _currentDogIndex;
     private GameObject _currentDog;
     private GameObject _previousDog;
-   
 
     #endregion
 
+
+    #region Properties
+    public GameObject CurrentDog => _currentDog;
+
+    #endregion
+    
 
     #region MonoBehavior Callbacks
 
@@ -48,7 +53,6 @@ public class RotationManager : MonoBehaviour
 
         // rotates the current dog in the selected position
         _currentDog.transform.Rotate(new Vector3(0, rotationSpeed, 0) * Time.deltaTime);
-
     }
 
     #endregion
