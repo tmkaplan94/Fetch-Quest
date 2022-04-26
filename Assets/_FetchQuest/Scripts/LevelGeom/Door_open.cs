@@ -6,7 +6,7 @@ using UnityEngine;
 public class Door_open : MonoBehaviour, Interactable
 {
     private bool _isOpen = false;
-    private bool _isOpening = false;
+    //private bool _isOpening = false;
     private Vector3 _startRot;
     private Vector3 _forward;
     private float _forwardDir = 0f;
