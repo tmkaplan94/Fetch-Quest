@@ -21,13 +21,13 @@ public class RotationManager : MonoBehaviour
     private Vector3[] _dogPositions;
     private Vector3[] _dogRotations;
     private GameObject[] _dogs;
-    private int _currentDogIndex;
     private GameObject _currentDog;
     private GameObject _previousDog;
    
 
     #endregion
 
+    public static int _currentDogIndex;
 
     #region MonoBehavior Callbacks
 
