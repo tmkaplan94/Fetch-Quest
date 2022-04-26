@@ -1,23 +1,18 @@
-/*
- * Author: Tyler Kaplan
- * Contributors: Adrian Portillo
- * Summary: Handles the rotations of dogs in DogSelection scene.
- *
- * Description
- * - Rotates every dog in sync either left/right on button press
- * - Rotates currently selected dog constantly
- */
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class RotationManager : MonoBehaviour
 {
     #region Private Serialized Fields
     
     [SerializeField] private GameObject dogList;
-
-    [Tooltip("The rotation speed for the currently selected dog, measured in degrees per second.")] [SerializeField]
-    private float rotationSpeed;
-
+    [SerializeField] private TextMeshProUGUI dogNameText;
+    [SerializeField] private TextMeshProUGUI dogSizeText;
+    
     #endregion
 
 
@@ -29,15 +24,10 @@ public class RotationManager : MonoBehaviour
     private int _currentDogIndex;
     private GameObject _currentDog;
     private GameObject _previousDog;
+   
 
     #endregion
 
-
-    #region Properties
-    public GameObject CurrentDog => _currentDog;
-
-    #endregion
-    
 
     #region MonoBehavior Callbacks
 
@@ -49,28 +39,36 @@ public class RotationManager : MonoBehaviour
         _currentDog = _dogs[_currentDogIndex];
     }
 
+    private void Start()
+    {
+        // have the first dog look at target point on camera
+        //_currentDog.transform.LookAt(lookAtTarget);
+    }
+
     void Update(){
 
-        // rotates the current dog in the selected position
-        _currentDog.transform.Rotate(new Vector3(0, rotationSpeed, 0) * Time.deltaTime);
+        //rotates the current dog in the selected position
+        _currentDog.transform.Rotate(new Vector3(0, 50, 0) * Time.deltaTime);
+
     }
 
     #endregion
 
-    
     #region Public Methods
 
     public void RotateLeft()
     {
 
         // rotate dog wheel left
+        //Debug.Log("RotateLeft()");
+        //dogList.transform.Rotate(new Vector3(0, -30, 0));
         foreach(Transform child in dogList.transform){
             child.gameObject.transform.RotateAround(dogList.transform.position, new Vector3(0,-1,0), 30);
         }
-
-        // get previous dog to reset their rotate value
+        
+        //get previous dog to reset their rotate value
         _previousDog = _currentDog;
-        CorrectOrientationForLeftRotation(_previousDog);
+        correctOrientationForLeftRotation(_previousDog);
         
         // change current dog
         _currentDogIndex -= 1;
@@ -80,20 +78,27 @@ public class RotationManager : MonoBehaviour
         }
 
         _currentDog = _dogs[_currentDogIndex];
+        changeUIText();
         
     }
 
     public void RotateRight()
     {
         // rotate dog wheel right
+
+        //children rotate with parent
+        //dogList.transform.Rotate(new Vector3(0, 30, 0));
+
+        //children rotate around parent
+        //each child rotates around parent 30 degrees
         foreach(Transform child in dogList.transform){
             child.gameObject.transform.RotateAround(dogList.transform.position, new Vector3(0,1,0), 30);
         }
 
-        // get previous dog to reset their rotate value
-        // currentDog has not changed yet
+        //get previous dog to reset their rotate value
+        //currentDog has not changed yet
         _previousDog = _currentDog;
-        CorrectOrientationForRightRotation(_previousDog);
+        correctOrientationForRightRotation(_previousDog);
 
         // change current dog
         _currentDogIndex += 1;
@@ -101,16 +106,86 @@ public class RotationManager : MonoBehaviour
         {
             _currentDogIndex = 0;
         }
+
         _currentDog = _dogs[_currentDogIndex];
-        
+        changeUIText();
+
     }
 
     #endregion
 
-
     #region Private Methods
 
-    // stores dog positions and rotations
+    //changes text of DogNameText UI element to match the currently selected dog
+    //changes text of DogSizeText UI element to match the currently selected dog
+    private void changeUIText(){
+
+        dogNameText.text = _currentDog.name;
+
+        if(_currentDog.name == "BORDER COLLIE"){
+            dogSizeText.text = "large";
+        }
+
+        if(_currentDog.name == "GERMAN SHEPARD"){
+            dogSizeText.text = "large";
+        }
+
+        if(_currentDog.name == "DOBERMAN"){
+            dogSizeText.text= "large";
+        }
+
+        if(_currentDog.name == "SAINT BERNARD"){
+            dogSizeText.text = "large";
+        }
+
+        if(_currentDog.name == "LABRADOR"){
+            dogSizeText.text = "mid";
+        }
+
+        if(_currentDog.name == "POODLE"){
+            dogSizeText.text = "mid";
+        }
+  
+        if(_currentDog.name == "LABRADOR"){
+            dogSizeText.text = "mid";
+        }
+
+        if(_currentDog.name == "BRITISH BULLDOG"){
+            dogSizeText.text = "mid";
+        }
+
+        if(_currentDog.name == "RHODESIAN RIDGEBACK"){
+            dogSizeText.text = "mid";
+        }
+
+        if(_currentDog.name == "PUG"){
+            dogSizeText.text = "small";
+        }
+
+        if(_currentDog.name == "CHIHUAHUA"){
+            dogSizeText.text = "small";
+        }
+
+        if(_currentDog.name == "BEAGLE"){
+            dogSizeText.text = "small";
+        }
+        
+        if(_currentDog.name == "BULLTERRIER"){
+            dogSizeText.text = "small";
+        }
+    }
+
+
+    //For right rotates, previous dog needs to be set to a rotateY of 30 to maintain correct orientation
+    private void correctOrientationForRightRotation(GameObject previousDog){
+        previousDog.transform.eulerAngles = new Vector3(0, 30, 0);
+    }
+
+    //For left rotates, previous dog needs to be set to a rotateY of -30 to maintain correct orientation
+    private void correctOrientationForLeftRotation(GameObject previousDog){
+        previousDog.transform.eulerAngles = new Vector3(0, -30, 0);
+    }
+
     private void InitializeDogsAndPositions()
     {
         // get number of dogs to select and make an vector3 array
@@ -126,16 +201,6 @@ public class RotationManager : MonoBehaviour
             _dogPositions[i] = dogList.transform.GetChild(i).position;
         }
 
-    }
-
-    // For right rotates, previous dog needs to be set to a rotateY of 30 to maintain correct orientation
-    private void CorrectOrientationForRightRotation(GameObject previousDog){
-        previousDog.transform.eulerAngles = new Vector3(0, 30, 0);
-    }
-
-    // For left rotates, previous dog needs to be set to a rotateY of -30 to maintain correct orientation
-    private void CorrectOrientationForLeftRotation(GameObject previousDog){
-        previousDog.transform.eulerAngles = new Vector3(0, -30, 0);
     }
 
     #endregion
