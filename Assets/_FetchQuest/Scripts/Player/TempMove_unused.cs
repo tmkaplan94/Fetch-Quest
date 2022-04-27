@@ -77,7 +77,7 @@ public class TempMove_unused : MonoBehaviour
         {
             inputMag = Mathf.Clamp(direction.magnitude, 0f, 0.5f);
         }
-        _anime.SetFloat("Input Mag", inputMag);
+        //_anime.SetFloat("Input Mag", inputMag);
         // ----------------------------------------------------------
 
         if (direction.magnitude >= 0.1f)
