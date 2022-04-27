@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     #region Serialized Private Variables
     [SerializeField] private CharacterController _myCharacterController;
     [SerializeField] private Transform _cam;
+    [SerializeField] private Animator _anime;
 
     [SerializeField] private float _speed = 6;
     [SerializeField] private float _sprintspeed = 10;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     #region Private Variables
     private float _turnSmoothVelocity;
     private Vector3 _moveDirection = Vector3.zero;
+    private bool _isSprint;
     #endregion
 
     // Update is called once per frame
@@ -64,13 +66,28 @@ public class PlayerMovement : MonoBehaviour
                 //normalizing direction vector so we can use speed/sprint speed.
                 _moveDirection.Normalize();
                 //changing the speed if player is pressing shift.
+                _isSprint = false;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     movementSpeed = _sprintspeed;
+                    _isSprint = true;
                 }
                 //applying speed to direction vector.
                 _moveDirection *= movementSpeed;
             }
+
+            //Animation ----------------------------------------------------
+            float inputMag;
+            if (_isSprint)
+            {
+                inputMag = Mathf.Clamp01(_moveDirection.magnitude);
+            }
+            else
+            {
+                inputMag = Mathf.Clamp(_moveDirection.magnitude, 0f, 0.5f);
+            }
+            _anime.SetFloat("Input Mag", inputMag);
+            //--------------------------------------------------------------
 
         //jump / Gravity
         
