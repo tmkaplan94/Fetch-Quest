@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 446378bc7a377ae40b5aabf3e05d9580, type: 3}
+  m_Name: Doberman_Bark
+  m_EditorClassIdentifier: 
+  _dogName: Doberman
+  _barkAudio: {fileID: 8300000, guid: c22ca5b1859b75642a34f215d14b3036, type: 3}
+  _mixerGroup: {fileID: 6645060065401040711, guid: 6d3da9d8f5657bd46a170e4126acd6f9, type: 2}
+  _pitch: 0.546
+  _volume: 0.487

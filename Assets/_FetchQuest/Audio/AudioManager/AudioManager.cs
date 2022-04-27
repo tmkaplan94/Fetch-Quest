@@ -1,18 +1,18 @@
 ﻿/*
  * Author: Loc Trinh
- * Contributors: Epitome
+ * Contributors: Grant Reed
  * Summary: Manages different audio clips throughout scenes.
  *
  * Description
  * - To use Music: AudioManager.Instance.PlayMusic(<name>);
- * - To use SFX: AudioManager.Instance.PlaySFX(<name>);
- * - To use Cross Fade: AudioManager.Instance.PlayMusicWithCrossFade(<name>, float)
- * - Music Names: ["Life_of_a_Pet.mp3"]
- * - SFX Names: ["Crowd_Background.mp3", 
-                 "Cursor_Click_SFX.mp3", 
-                 "Cursor_Hover_SFX.mp3", 
-                 "Pick_Up_SFX.mp3", 
-                 "Score_Up_SFX.mp3"]
+ * - To use SFX: AudioManager.Instance.PlaySFX(<name>, <pos>);
+ * - Music Names: ["Life_of_a_Pet",
+                   "Strolling Along"]
+ * - SFX Names: ["Crowd_Background", 
+                 "Cursor_Click_SFX", 
+                 "Cursor_Hover_SFX", 
+                 "Pick_Up_SFX", 
+                 "Score_Up_SFX"]
  *
  * Updates
  * - N/A
@@ -20,7 +20,10 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -38,7 +41,6 @@ public class AudioManager : MonoBehaviour
                     instance = new GameObject("Spawned AudioManager", typeof(AudioManager)).GetComponent<AudioManager>();
                 }
             }
-
             return instance;
         }
         set
@@ -47,109 +49,211 @@ public class AudioManager : MonoBehaviour
         }
     }
     #endregion
-
     #region Fields
-    public AudioSource[] musicSources;
-    private AudioSource currentMusic;
-    public AudioSource[] sfxSource;
-    private AudioSource currentSFX;
-    [SerializeField] private float musicVolume = 1.0f;
-    private bool firstMusicSourceIsActive;
+    // Audio stuff
+    [Tooltip("All Music Clips")]
+    [SerializeField] private AudioClip[] _musicClips;
+    [Tooltip("All SFX Clips")]
+    [SerializeField] private List<AudioClip> _SFXClips = new List<AudioClip>();
+    [SerializeField] private AudioSource currentMusic;
+    [SerializeField] private AudioSource currentSFX;
+    // Mute Toggles
+    [SerializeField] private Toggle muteMaster;
+    [SerializeField] private Toggle muteMusic;
+    [SerializeField] private Toggle muteSFX;
+    // Volume Sliders
+    [SerializeField] private Slider sliderMaster;
+    [SerializeField] private Slider sliderMusic;
+    [SerializeField] private Slider sliderSFX;
+    // Audio Mixer
+    [SerializeField] private AudioMixer _mixer;
+    // Scriptable Object Reference
+    [SerializeField] private BarksSO[] _barks;
+    // Temp
+    private float _sfxVol;
     #endregion
-
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-        // Make sure to enable loop on music sources
-        currentMusic.loop = true;
-    }
+        muteMaster.isOn = false;
+        muteMusic.isOn = false;
+        muteSFX.isOn = false;
+        _sfxVol = sliderSFX.value;
 
-    public void PlayMusic(AudioClip musicClip)
-    {
-        foreach(AudioSource _source in musicSources)
+        foreach(var barkSO in _barks)
         {
-            if(_source.clip == musicClip)
+            _SFXClips.Add(barkSO._barkAudio);
+        }
+    }
+    #region Playing Audio
+    // A function that plays the music audio with given name.
+    public void PlayMusic(String n)
+    {
+        for (int i = 0; i < _musicClips.Length; i++)
+        {
+            if (_musicClips[i].name == n)
             {
-                currentMusic = _source;
-                _source.Play();
-                break;
+                currentMusic.clip = _musicClips[i];
+                currentMusic.Play();
+                return;
             }
         }
+        // no sound with _name
+        Debug.LogWarning("AudioManager: Music not found in list, " + n);
     }
-    // GET BACK TO THIS LATER. TOO TIRED RN [3:29AM]
-    /*
-    public void PlayMusicWithCrossFade(AudioClip musicClip, float transitionTime = 1.0f)
+    // A function that plays the SFX audio with given name.
+    public void PlaySFX(String n, Vector3 pos)
     {
-        // Determine which source is active
-        AudioSource activeSource = (firstMusicSourceIsActive)? currentMusic;
-        AudioSource newSource = (firstMusicSourceIsActive) ? musicSource2 : musicSource;
-
-        // Swap the source
-        firstMusicSourceIsActive = !firstMusicSourceIsActive;
-
-        // Set the fields of the audio source, then start the coroutine to crossfade
-        newSource.clip = musicClip;
-        newSource.Play();
-        StartCoroutine(UpdateMusicWithCrossFade(activeSource, newSource, musicClip, transitionTime));
-    }
-    private IEnumerator UpdateMusicWithCrossFade(AudioSource original, AudioSource newSource, AudioClip music, float transitionTime)
-    {
-        // Make sure the source is active and playing
-        if (!original.isPlaying)
-            original.Play();
-
-        newSource.Stop();
-        newSource.clip = music;
-        newSource.Play();
-
-        float t = 0.0f;
-
-        for (t = 0.0f; t <= transitionTime; t += Time.deltaTime)
+        /*
+        for(int i = 0; i < _SFXClips.Length; i++)
         {
-            original.volume = (musicVolume - ((t / transitionTime) * musicVolume));
-            newSource.volume = (t / transitionTime) * musicVolume;
-            yield return null;
-        }
-
-        // Make sure we don't end up with a weird float value
-        original.volume = 0;
-        newSource.volume = musicVolume;
-
-        original.Stop();
-    }*/
-
-    public void PlaySFX(AudioClip clip)
-    {
-        foreach(AudioSource _source in sfxSource)
-        {
-            if(_source.clip == clip)
+            if (_SFXClips[i].name == n)
             {
-                currentSFX = _source;
-                _source.Play();
-                break;
+                currentSFX.clip = _SFXClips[i];
+                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
+                return;
             }
         }
-    }
-    public void PlaySFX(AudioClip clip, float volume)
-    {
-        foreach(AudioSource _source in sfxSource)
+        
+        */
+        foreach(AudioClip _clip in _SFXClips)
         {
-            if(_source.clip == clip)
+            if(_clip.name == n)
             {
-                _source.volume = volume;
-                currentSFX = _source;
-                _source.Play();
-                break;
+                currentSFX.clip = _clip;
+                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
+                return;
             }
         }
+        // no sound with _name
+        Debug.LogWarning("AudioManager: SFX not found in list, " + n);
+    }
+    #endregion
+    #region StopAudio
+    // Optional area meant for special interaction with level design, where
+    // you want certain audio group to play only.
+    public void StopMusic(string n)
+    {
+        for (int i = 0; i < _musicClips.Length; i++)
+        {
+            if (_musicClips[i].name == n)
+            {
+                currentMusic.clip = null;
+                return;
+            }
+        }
+ 
+        // no sound with _name
+        Debug.LogWarning("AudioManager: Music not found in list, " + n);
     }
 
+    public void StopSFX(string n)
+    {
+        /*
+        for (int i = 0; i < _SFXClips.Length; i++)
+        {
+            if (_SFXClips[i].name == n)
+            {
+                _SFXClips[i] = null;
+                return;
+            }
+        }
+        */
+        foreach(AudioClip _clip in _SFXClips)
+        {
+            if(_clip.name == n)
+            {
+                currentSFX.clip = null;
+                return;
+            }
+        }
+ 
+        // no sound with _name
+        Debug.LogWarning("AudioManager: SFX not found in list, " + n);
+    }
+    #endregion
+    #region AudioControl
+    // Sets the master volume in the mixer with slider values.
+    public void SetMasterVolume(float volume)
+    {
+        _mixer.SetFloat("Master", Mathf.Log10(volume)*20);
+    }
+    // Sets the music volume in the mixer with slider values.
     public void SetMusicVolume(float volume)
     {
-        currentMusic.volume = volume;
+        _mixer.SetFloat("Music", Mathf.Log10(volume)*20);
     }
-    public void SetSFXVolume(float volume)
+    // Sets the SFX volume in the mixer with slider values.
+    // Currently doesn't correspond to the mixer because it's using _sfxVol to control volume instead.
+    public void SetSFXVolume(float volume) // 0.0001 - 1.0
     {
-        currentSFX.volume = volume; // prolly bug
+        _sfxVol = volume;
+        _mixer.SetFloat("SFX", Mathf.Log10(volume)*20);
     }
+    // Master-muting function that, by design, disables all slider volume controls.
+    // You can manually untoggle other audio functionalities and tinker with volume control (if you want).
+    // Saves volume states before and after.
+    public void MuteMaster(bool _audio)
+    {
+        if(_audio)
+        {
+            // Disable all sliders
+            sliderMaster.interactable = false;
+            sliderMusic.interactable = false;
+            sliderSFX.interactable = false;
+            muteMusic.isOn = true;
+            muteSFX.isOn = true;
+            PlayerPrefs.SetFloat("SavedMasterVol", AudioListener.volume);
+            AudioListener.volume = 0f;
+        }
+        else
+        {
+            // Enable all sliders
+            sliderMaster.interactable = true;
+            sliderMusic.interactable = true;
+            sliderSFX.interactable = true;
+            muteMusic.isOn = false;
+            muteSFX.isOn = false;
+            AudioListener.volume = PlayerPrefs.GetFloat("SavedMasterVol");
+        }
+    }
+    // Music-muting function that disables only the music slider volume control.
+    // Saves volume states before and after.
+    public void MuteMusic(bool _audio)
+    {
+        if(_audio)
+        {
+            float _currentMusicVol;
+            sliderMusic.interactable = false;
+            _mixer.GetFloat("Music", out _currentMusicVol);
+            PlayerPrefs.SetFloat("SavedMusicVol", _currentMusicVol);
+            _mixer.SetFloat("Music", -80f);
+        }
+        else
+        {
+            sliderMusic.interactable = true;
+            _mixer.SetFloat("Music", PlayerPrefs.GetFloat("SavedMusicVol"));
+        }
+    }
+    // SFX-muting function that disables only the sfx slider volume control.
+    // Will change how SFX works in the future for consistency.
+    // Currently work a bit different than the other features because of how SFX are played.
+    // Saves volume states before and after.
+    public void MuteSFX(bool _audio)
+    {
+        if(_audio)
+        {
+            float _currentSFXVol;
+            sliderSFX.interactable = false;
+            _currentSFXVol = sliderSFX.value;
+            PlayerPrefs.SetFloat("SavedSFXVol", _currentSFXVol);
+            _sfxVol = sliderSFX.minValue;
+        }
+        else
+        {
+            sliderSFX.interactable = true;
+            _sfxVol = PlayerPrefs.GetFloat("SavedSFXVol");
+        }
+    }
+    #endregion
 }
