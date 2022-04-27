@@ -1,4 +1,11 @@
-using System;
+/*
+ * Author: Tyler Kaplan
+ * Contributors: 
+ * Summary: not implemented yet
+ *
+ * Description
+ * - 
+ */
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;

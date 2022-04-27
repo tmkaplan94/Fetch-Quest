@@ -16,6 +16,7 @@ public class TempMove_unused : MonoBehaviour
 {
     [SerializeField] private CharacterController _controller;
     [SerializeField] private Transform _cam;
+    [SerializeField] private Animator _anime;
 
     [SerializeField] private float _speed = 6;
     [SerializeField] private float _sprintSpeed;
@@ -23,6 +24,7 @@ public class TempMove_unused : MonoBehaviour
     [SerializeField] private float _jumpHeight = 3;
     private Vector3 _velocity;
     private bool _isGrounded;
+    private bool _isSprint;
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundDistance = 0.4f;
@@ -38,10 +40,12 @@ public class TempMove_unused : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift))
         {
             speed = _sprintSpeed;
+            _isSprint = true;
         }
         else
         {
             speed = _speed;
+            _isSprint = false;
         }
         //jump
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
@@ -62,6 +66,19 @@ public class TempMove_unused : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        //animation section -----------------------------------------
+        float inputMag;
+        if (_isSprint)
+        {
+            inputMag = Mathf.Clamp01(direction.magnitude);
+        }
+        else
+        {
+            inputMag = Mathf.Clamp(direction.magnitude, 0f, 0.5f);
+        }
+        _anime.SetFloat("Input Mag", inputMag);
+        // ----------------------------------------------------------
 
         if (direction.magnitude >= 0.1f)
         {
