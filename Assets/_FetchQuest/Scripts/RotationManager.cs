@@ -1,6 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * Author: Tyler Kaplan
+ * Contributors: Adrian
+ * Summary: Deals with all dog rotations in DogSelection scene
+ */
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;

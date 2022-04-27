@@ -2,9 +2,6 @@
  * Author: Tyler Kaplan
  * Contributors: 
  * Summary: Deals with scene transitioning from Title scene
- *
- * Description
- * - 
  */
 using UnityEngine;
 using UnityEngine.SceneManagement;

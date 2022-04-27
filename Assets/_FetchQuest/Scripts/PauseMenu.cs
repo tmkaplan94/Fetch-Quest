@@ -1,3 +1,15 @@
+/*
+ * Author: Tyler Kaplan
+ * Contributors:
+ * Summary: Handles the pause menu functionality.
+ *
+ * Description
+ * - Game will pause and resume on ESC, utilizing timescale
+ * - displays and hides pause menu on pause and resume
+ *
+ * Updates
+ * - Tyler 4/27/22: now calls Resume() on Quit() calls to reset timescale
+ */
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
