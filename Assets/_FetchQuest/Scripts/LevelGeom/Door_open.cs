@@ -42,6 +42,12 @@ public class Door_open : MonoBehaviour, Interactable
                     Interact(other.gameObject);
                 }
             }
+            float dot = Vector3.Dot(_forward, (other.transform.position - transform.position).normalized);
+            if(dot <= _forwardDir)
+            {
+                isLocked = false;
+                Interact(other.gameObject);
+            }
         }
         else
             Interact(other.gameObject);
@@ -72,6 +78,7 @@ public class Door_open : MonoBehaviour, Interactable
 
         if(forwardAmount >= _forwardDir)
         {
+            
             endRotation = Quaternion.Euler(new Vector3(0, _startRot.y - _rotationAmt, 0));
         }
         else
