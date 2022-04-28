@@ -23,7 +23,10 @@ public class PickUpSystem : MonoBehaviour
             PickUp();
          }
     }
-
+    public GameObject GetItem()
+    {
+        return currentItem;
+    }
     private void PickUp()
     {
         Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer);

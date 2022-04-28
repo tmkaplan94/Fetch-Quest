@@ -19,6 +19,7 @@ public class AIController : MonoBehaviour
     private ReffBool isWorking = new ReffBool(false);
     private ScoreManager scoreManager;
     public int idelCount = 0;
+    private int scoreInc = 1;
 
     private int currentWaypoint = 0;
     private StateMachine _stateMachine;
@@ -126,13 +127,25 @@ public class AIController : MonoBehaviour
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
         //navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
-        if (canPet.value && other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            canPet.value = false;
-            dogNearby = true;
+            GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             
-            StartCoroutine(Cooldown(_stats.PettingCooldown, canPet));
-           
+            if (canPet.value)
+            {
+                if (bone != null)
+                {
+                    scoreInc = 10;
+                    Destroy(bone);
+                    SpawnBones.Instance.SpawnNewBone();
+                }
+                AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
+                canPet.value = false;
+                dogNearby = true;
+
+                StartCoroutine(Cooldown(_stats.PettingCooldown, canPet));
+
+            }
         }
         if(!isTalking.value && other.CompareTag("AI"))
         {
@@ -150,7 +163,8 @@ public class AIController : MonoBehaviour
 
     public void AnimationStart(float _sp)
     {
-        scoreManager.IncrementScore(1);
+        scoreManager.IncrementScore(scoreInc);
+        scoreInc = 1;
         personAnimator.SetFloat("Speed", _sp);
         personAnimator.SetFloat("Forward", -0.5f);
     }
