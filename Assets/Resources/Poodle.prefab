@@ -119,6 +119,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Poodle
       objectReference: {fileID: 0}
+    - target: {fileID: 3802909261761450170, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
+      propertyPath: _speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3802909261761450170, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
+      propertyPath: _sprintSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4706332110636008781, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -229,15 +237,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8382472874497826312, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.13017416
+      value: 0.13017415
       objectReference: {fileID: 0}
     - target: {fileID: 8382472874497826312, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.03488468
+      value: 0.034884658
       objectReference: {fileID: 0}
     - target: {fileID: 8382472874497826312, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0045829425
+      value: -0.0045829387
       objectReference: {fileID: 0}
     - target: {fileID: 8948242128158077449, guid: eef1edec7cf6b1e4a955eb858b05bbbb, type: 3}
       propertyPath: _speed
