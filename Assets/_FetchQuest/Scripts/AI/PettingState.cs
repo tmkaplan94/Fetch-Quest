@@ -27,6 +27,7 @@ public class PettingState : IState
     {
         Debug.Log("petting"); 
         _controller.dogNearby = false;
+        _controller.AnimationStart();
         waitTime = Time.time + .1f;
 
     }
@@ -34,5 +35,6 @@ public class PettingState : IState
     public void OnExit()
     {
         Debug.Log("Exitting petting");
+        _controller.AnimationStop();
     }
 }

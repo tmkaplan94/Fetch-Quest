@@ -10,6 +10,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private Transform workplace; //Workplace coords
+    [SerializeField] private Animator personAnimator;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
     public bool hasWorkToDo = false; //Set Bool for at workplace
@@ -128,7 +129,9 @@ public class AIController : MonoBehaviour
             Debug.Log("Dog");
             canPet.value = false;
             dogNearby = true;
+            personAnimator.SetFloat("Forward", -0.5f);
             StartCoroutine(Cooldown(_stats.PettingCooldown, canPet));
+            personAnimator.SetFloat("Forward", 0f);
         }
         if(!isTalking.value && other.CompareTag("AI"))
         {
@@ -144,5 +147,15 @@ public class AIController : MonoBehaviour
             hasWorkToDo = false;
             StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));
         }
+    }
+
+    public void AnimationStart()
+    {
+        personAnimator.SetFloat("Forward", -0.5f);
+    }
+
+    public void AnimationStop()
+    {
+        personAnimator.SetFloat("Forward", 0f);
     }
 }
