@@ -187,7 +187,7 @@ BlendTree:
     m_DirectBlendParameter: 
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 01c9a76fc859f0e4ba6a5415255c0852, type: 2}
+    m_Motion: {fileID: -203655887218126122, guid: 26a6a51cde3b37940a7ed54b76d6b967, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: -0.5}
     m_TimeScale: 1
