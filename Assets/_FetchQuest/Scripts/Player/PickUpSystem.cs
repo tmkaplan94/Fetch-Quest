@@ -37,6 +37,7 @@ public class PickUpSystem : MonoBehaviour
             {
                 if (item.gameObject.CompareTag(interactableTag))
                 {
+                    AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
                     Drop();
                     currentItem = item.gameObject;
                     BoxCollider[] cols = currentItem.GetComponentsInChildren<BoxCollider>();
