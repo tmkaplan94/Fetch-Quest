@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.61970884, g: 0.9216271, b: 0.97588366, a: 1}
+  m_IndirectSpecularColor: {r: 0.61970824, g: 0.9216259, b: 0.97588295, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -393,6 +393,7 @@ MonoBehaviour:
   dogList: {fileID: 646941717}
   dogNameText: {fileID: 309277246}
   dogSizeText: {fileID: 678438426}
+  audioPos: {fileID: 284787787}
 --- !u!4 &202049993
 Transform:
   m_ObjectHideFlags: 0
@@ -406,6 +407,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &284787786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 284787787}
+  m_Layer: 0
+  m_Name: audioPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &284787787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284787786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 6.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299109004
 GameObject:
@@ -436,6 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86558c09fc66a8945b7c9092849f1b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioPos: {fileID: 284787787}
 --- !u!4 &299109006
 Transform:
   m_ObjectHideFlags: 0
@@ -2821,7 +2853,7 @@ Transform:
   m_GameObject: {fileID: 453535116}
   m_LocalRotation: {x: -0, y: -0.87117106, z: 0, w: -0.49097964}
   m_LocalPosition: {x: 5.165366, y: 0, z: -3.052444}
-  m_LocalScale: {x: 6.5, y: 6.5, z: 6.5}
+  m_LocalScale: {x: 6.66, y: 6.66, z: 6.66}
   m_Children:
   - {fileID: 453832830}
   - {fileID: 453847512}
@@ -13104,7 +13136,7 @@ Transform:
   m_GameObject: {fileID: 1044713939}
   m_LocalRotation: {x: 0, y: -0.258819, z: 0, w: 0.9659259}
   m_LocalPosition: {x: -2.9472485, y: 0, z: 5.226103}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 6.67, y: 6.67, z: 6.67}
   m_Children:
   - {fileID: 1044541185}
   - {fileID: 1044624175}
@@ -23419,7 +23451,7 @@ Transform:
   m_GameObject: {fileID: 1375096639}
   m_LocalRotation: {x: 0, y: -0.8662435, z: 0, w: 0.49962202}
   m_LocalPosition: {x: -5.226103, y: 0, z: -2.9472485}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1374796643}
   - {fileID: 1374723795}
@@ -30186,7 +30218,7 @@ Transform:
   m_GameObject: {fileID: 1388000888}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.06073651, y: 0, z: 5.999692}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 1388060228}
   - {fileID: 1388154090}
@@ -31319,6 +31351,7 @@ GameObject:
   - component: {fileID: 1541996975}
   - component: {fileID: 1541996974}
   - component: {fileID: 1541996977}
+  - component: {fileID: 1541996978}
   m_Layer: 5
   m_Name: RotateLeft Button
   m_TagString: Untagged
@@ -31456,6 +31489,19 @@ MonoBehaviour:
   m_UseGraphicAlpha: 1
   iterations: 5
   shadowSpread: {x: 5, y: 5}
+--- !u!114 &1541996978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541996972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de39bec23a6afc4bb3c67e0baadf299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioPos: {fileID: 284787787}
 --- !u!1 &1643677058
 GameObject:
   m_ObjectHideFlags: 0
@@ -31470,6 +31516,7 @@ GameObject:
   - component: {fileID: 1643677060}
   - component: {fileID: 1643677063}
   - component: {fileID: 1643677064}
+  - component: {fileID: 1643677065}
   m_Layer: 5
   m_Name: SelectDog Button
   m_TagString: Untagged
@@ -31623,6 +31670,19 @@ MonoBehaviour:
   m_UseGraphicAlpha: 1
   iterations: 5
   shadowSpread: {x: 3, y: 3}
+--- !u!114 &1643677065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643677058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de39bec23a6afc4bb3c67e0baadf299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioPos: {fileID: 284787787}
 --- !u!4 &1719149213
 Transform:
   m_ObjectHideFlags: 0
@@ -43535,7 +43595,7 @@ Transform:
   m_GameObject: {fileID: 1843627202}
   m_LocalRotation: {x: -0, y: -0.9998321, z: 0, w: -0.018324913}
   m_LocalPosition: {x: -0.060736515, y: 0, z: -5.999693}
-  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
+  m_LocalScale: {x: 5.33, y: 5.33, z: 5.33}
   m_Children:
   - {fileID: 1843859006}
   - {fileID: 1843848348}
@@ -49147,7 +49207,7 @@ Transform:
   m_GameObject: {fileID: 1857687174}
   m_LocalRotation: {x: 0, y: -0.519519, z: 0, w: 0.85445887}
   m_LocalPosition: {x: -5.1653657, y: 0, z: 3.0524437}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 1858072256}
   - {fileID: 1858006582}
@@ -49807,6 +49867,7 @@ GameObject:
   - component: {fileID: 1892657789}
   - component: {fileID: 1892657788}
   - component: {fileID: 1892657791}
+  - component: {fileID: 1892657792}
   m_Layer: 5
   m_Name: RotateRight Button
   m_TagString: Untagged
@@ -49944,6 +50005,19 @@ MonoBehaviour:
   m_UseGraphicAlpha: 1
   iterations: 5
   shadowSpread: {x: 5, y: 5}
+--- !u!114 &1892657792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892657786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de39bec23a6afc4bb3c67e0baadf299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioPos: {fileID: 284787787}
 --- !u!1 &1980762148
 GameObject:
   m_ObjectHideFlags: 0
@@ -52272,7 +52346,7 @@ Transform:
   m_GameObject: {fileID: 1981014214}
   m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 3.052444, y: 0, z: 5.165366}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 3.33, y: 3.33, z: 3.33}
   m_Children:
   - {fileID: 1981098740}
   - {fileID: 1981084510}
@@ -57687,7 +57761,7 @@ Transform:
   m_GameObject: {fileID: 2030790182}
   m_LocalRotation: {x: -0, y: -0.69465846, z: 0, w: -0.7193397}
   m_LocalPosition: {x: 5.97, y: 0, z: -0.06}
-  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
+  m_LocalScale: {x: 4.33, y: 4.33, z: 4.33}
   m_Children:
   - {fileID: 2031012382}
   - {fileID: 2031006612}
@@ -68649,7 +68723,7 @@ Transform:
   m_GameObject: {fileID: 2135918222}
   m_LocalRotation: {x: -0, y: -0.97236997, z: 0, w: -0.23344533}
   m_LocalPosition: {x: 2.9472485, y: 0, z: -5.226103}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 2135639360}
   - {fileID: 2135652888}
