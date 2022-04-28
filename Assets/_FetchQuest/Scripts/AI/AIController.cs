@@ -99,12 +99,10 @@ public class AIController : MonoBehaviour
     {
         Target = t;
         
-        print("target set");
     }
 
     public void GetNewTarget()
     {
-        print("getting Target " + currentWaypoint);
 
         if (currentWaypoint >= waypoints.Length -1)
             currentWaypoint = 0;
@@ -114,7 +112,6 @@ public class AIController : MonoBehaviour
         if (hasWorkToDo)
         {
             SetTarget(workplace);
-            Debug.Log("Workplace Set");
         }
         else
             SetTarget(waypoints[currentWaypoint]);
@@ -122,11 +119,9 @@ public class AIController : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Detected Collider");
         //navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
         if (canPet.value && other.CompareTag("Player"))
         {
-            Debug.Log("Dog");
             canPet.value = false;
             dogNearby = true;
             personAnimator.SetFloat("Forward", -0.5f);
@@ -135,14 +130,12 @@ public class AIController : MonoBehaviour
         }
         if(!isTalking.value && other.CompareTag("AI"))
         {
-            Debug.Log("AI");
             isTalking.value = true;
             personNearby = true;
             StartCoroutine(Cooldown(_stats.TalkingCooldown, isTalking));
         }
         if(!isWorking.value && other.CompareTag("Workplace"))
         {
-            Debug.Log("Workplace");
             isWorking.value = true;
             hasWorkToDo = false;
             StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));

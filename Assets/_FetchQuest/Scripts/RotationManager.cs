@@ -127,7 +127,7 @@ public class RotationManager : MonoBehaviour
         dogNameText.text = _currentDog.name;
 
         if(_currentDog.name == "BORDER COLLIE"){
-            dogSizeText.text = "large";
+            dogSizeText.text = "mid";
         }
 
         if(_currentDog.name == "GERMAN SHEPARD"){
@@ -149,17 +149,13 @@ public class RotationManager : MonoBehaviour
         if(_currentDog.name == "POODLE"){
             dogSizeText.text = "mid";
         }
-  
-        if(_currentDog.name == "LABRADOR"){
-            dogSizeText.text = "mid";
-        }
 
         if(_currentDog.name == "BRITISH BULLDOG"){
             dogSizeText.text = "mid";
         }
 
         if(_currentDog.name == "RHODESIAN RIDGEBACK"){
-            dogSizeText.text = "mid";
+            dogSizeText.text = "large";
         }
 
         if(_currentDog.name == "PUG"){

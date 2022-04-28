@@ -8,6 +8,8 @@ TagManager:
   - Waypoint
   - AI
   - Workplace
+  - Bullet
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Interactable
   - AI
   - Waypoint
-  - 
+  - Ground
   - 
   - 
   - 
