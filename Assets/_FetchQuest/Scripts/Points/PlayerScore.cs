@@ -1,14 +1,14 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/* ==========
+*//* ==========
     Daichi Murokami:
 
     Player component for scoring, communicates with manager
     Allows gameobject to self manage/modify score;
 
-    ========== */
+    ========== *//*
 
 public class PlayerScore : MonoBehaviour
 {
@@ -41,3 +41,4 @@ public class PlayerScore : MonoBehaviour
         
     }
 }
+*/

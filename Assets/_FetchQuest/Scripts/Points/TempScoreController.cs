@@ -1,14 +1,14 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* ==========
+*//* ==========
     Daichi Murokami:
 
     for testing my score classes, move this to the controller thx.
 
-    ========== */
+    ========== *//*
 public class TempScoreController : MonoBehaviour
 {
 
@@ -39,3 +39,4 @@ public class TempScoreController : MonoBehaviour
         }
     }
 }
+*/

@@ -1,16 +1,16 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class ScoreManager_old : MonoBehaviour
 {
-    /* ==========
+    *//* ==========
     Daichi Murokami:
 
     Stores and manages scores - sorry, kind of thrown together
 
-    ========== */
+    ========== *//*
 
 
     // ===== FIELDS =====
@@ -94,3 +94,4 @@ public class ScoreManager_old : MonoBehaviour
         
     }
 }
+*/
