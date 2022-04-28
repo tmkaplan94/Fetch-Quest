@@ -138,8 +138,12 @@ public class AIController : MonoBehaviour
                     scoreInc = 10;
                     Destroy(bone);
                     SpawnBones.Instance.SpawnNewBone();
+                    AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
                 }
-                AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
+                else
+                {
+                    AudioManager.Instance.PlaySFX(AudioNames.hover, transform.position);
+                }
                 canPet.value = false;
                 dogNearby = true;
 
