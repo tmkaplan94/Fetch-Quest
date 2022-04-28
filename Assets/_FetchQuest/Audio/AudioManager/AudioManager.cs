@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer _mixer;
     // Scriptable Object Reference
     [SerializeField] private BarksSO[] _barks;
-    // Temp
+    // Var
     private float _sfxVol;
     #endregion
     private void Awake()
@@ -78,7 +78,7 @@ public class AudioManager : MonoBehaviour
         muteMaster.isOn = false;
         muteMusic.isOn = false;
         muteSFX.isOn = false;
-        _sfxVol = sliderSFX.value;
+        _mixer.GetFloat("SFX", out _sfxVol);
         
         foreach(var barkSO in _barks)
         {
@@ -104,24 +104,15 @@ public class AudioManager : MonoBehaviour
     // A function that plays the SFX audio with given name.
     public void PlaySFX(String n, Vector3 pos)
     {
-        /*
-        for(int i = 0; i < _SFXClips.Length; i++)
-        {
-            if (_SFXClips[i].name == n)
-            {
-                currentSFX.clip = _SFXClips[i];
-                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
-                return;
-            }
-        }
-        
-        */
         foreach(AudioClip _clip in _SFXClips)
         {
             if(_clip.name == n)
             {
+                _mixer.GetFloat("SFX", out _sfxVol);
                 currentSFX.clip = _clip;
-                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _sfxVol);
+                _mixer.GetFloat("Master", out float _masterVol); // gets master volume log10
+                float _masterAdjustment = Mathf.Pow(10, _masterVol/20); // gets master volume into linear
+                AudioSource.PlayClipAtPoint(currentSFX.clip, pos, _masterAdjustment * Mathf.Pow(10, _sfxVol/20));
                 return;
             }
         }
@@ -149,16 +140,6 @@ public class AudioManager : MonoBehaviour
 
     public void StopSFX(string n)
     {
-        /*
-        for (int i = 0; i < _SFXClips.Length; i++)
-        {
-            if (_SFXClips[i].name == n)
-            {
-                _SFXClips[i] = null;
-                return;
-            }
-        }
-        */
         foreach(AudioClip _clip in _SFXClips)
         {
             if(_clip.name == n)
@@ -187,7 +168,6 @@ public class AudioManager : MonoBehaviour
     // Currently doesn't correspond to the mixer because it's using _sfxVol to control volume instead.
     public void SetSFXVolume(float volume) // 0.0001 - 1.0
     {
-        _sfxVol = volume;
         _mixer.SetFloat("SFX", Mathf.Log10(volume)*20);
     }
     // Master-muting function that, by design, disables all slider volume controls.
@@ -203,8 +183,10 @@ public class AudioManager : MonoBehaviour
             sliderSFX.interactable = false;
             muteMusic.isOn = true;
             muteSFX.isOn = true;
-            PlayerPrefs.SetFloat("SavedMasterVol", AudioListener.volume);
-            AudioListener.volume = 0f;
+            float _currentMasterVol;
+            _mixer.GetFloat("Master", out _currentMasterVol);
+            PlayerPrefs.SetFloat("SavedMasterVol", _currentMasterVol);
+            _mixer.SetFloat("Master", -80f);
         }
         else
         {
@@ -214,7 +196,7 @@ public class AudioManager : MonoBehaviour
             sliderSFX.interactable = true;
             muteMusic.isOn = false;
             muteSFX.isOn = false;
-            AudioListener.volume = PlayerPrefs.GetFloat("SavedMasterVol");
+            _mixer.SetFloat("Master", PlayerPrefs.GetFloat("SavedMasterVol"));
         }
     }
     // Music-muting function that disables only the music slider volume control.
@@ -236,8 +218,6 @@ public class AudioManager : MonoBehaviour
         }
     }
     // SFX-muting function that disables only the sfx slider volume control.
-    // Will change how SFX works in the future for consistency.
-    // Currently work a bit different than the other features because of how SFX are played.
     // Saves volume states before and after.
     public void MuteSFX(bool _audio)
     {
@@ -245,14 +225,14 @@ public class AudioManager : MonoBehaviour
         {
             float _currentSFXVol;
             sliderSFX.interactable = false;
-            _currentSFXVol = sliderSFX.value;
+            _mixer.GetFloat("SFX", out _currentSFXVol);
             PlayerPrefs.SetFloat("SavedSFXVol", _currentSFXVol);
-            _sfxVol = sliderSFX.minValue;
+            _mixer.SetFloat("SFX", -80f);
         }
         else
         {
             sliderSFX.interactable = true;
-            _sfxVol = PlayerPrefs.GetFloat("SavedSFXVol");
+            _mixer.SetFloat("SFX", PlayerPrefs.GetFloat("SavedSFXVol"));
         }
     }
     #endregion

@@ -32,6 +32,13 @@ public class TempMove_unused : MonoBehaviour
 
     float _turnSmoothVelocity;
     [SerializeField] private float _turnSmoothTime = 0.1f;
+    // Get Player Position for Barking
+    Transform _pos;
+
+    void Awake()
+    {
+        _pos = gameObject.GetComponent<Transform>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -46,6 +53,11 @@ public class TempMove_unused : MonoBehaviour
         {
             speed = _speed;
             _isSprint = false;
+        }
+        // bark
+        if(Input.GetButtonDown("f"))
+        {
+            AudioManager.Instance.PlaySFX("General_Bark", _pos.position);
         }
         //jump
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
