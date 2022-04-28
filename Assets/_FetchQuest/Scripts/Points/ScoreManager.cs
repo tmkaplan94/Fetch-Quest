@@ -1,96 +1,98 @@
+/*
+ * Author: Tyler Kaplan
+ * Contributors:
+ * Summary: Manages the score for singleplayer.
+ *
+ * Description
+ * - IncrementScore(int amount) can be called from anywhere
+ * - amount parameter will reflect on the score board
+ * - displays visual feedback for the player, also based on amount
+ *
+ * Updates
+ * - PLEASE REMOVE UPDATE() FUNCTION, FOR TESTING PURPOSES ONLY !!
+ */
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class ScoreManager : MonoBehaviour
 {
-    /* ==========
-    Daichi Murokami:
+    #region Private Serialized Fields
 
-    Stores and manages scores - sorry, kind of thrown together
-
-    ========== */
-
-
-    // ===== FIELDS =====
-
-
-    public delegate void OnPointsUpdated(GameObject player, int points);
-    public OnPointsUpdated pointsDelegate;
-
-    // player manager
-    // found as sibling component
-    private PlayerManager _playerManager;
+    [SerializeField] private TMP_Text currentScore;
+    [SerializeField] private GameObject updateText;
+    [SerializeField] private TMP_Text updateScore;
+    [SerializeField] private int displaySecs;
     
-    // where the scores be
-    private Dictionary<GameObject, int> _scores = new Dictionary<GameObject, int>();
-
-    // cumulative scores
-    private int _totalScore = 0;
+    #endregion
 
 
-    // ===== ACCESSORS =====
+    #region Properties
+    
+    public int Score { get; private set; }
+    
+    #endregion
 
 
-    public int GetTotalScore()
+    #region MonoBehavior Callbacks
+
+    // initialize score board
+    private void Start()
     {
-        return _totalScore;
+        Score = 0;
+        UpdateCurrentScoreText();
     }
 
-
-    public int GetPlayerScore(GameObject player)
+    /****************************************************
+     * REMOVE THIS !
+     * - call IncrementScore(int amount) from wherever
+     ***************************************************/
+    private void Update()
     {
-        int score;
-        Assert.IsTrue(_scores.TryGetValue(player, out score));
-        return score;
-    }
-
-
-    public void SetPlayerScore(GameObject player, int score)
-    {
-        Assert.IsTrue(_scores.ContainsKey(player));
-        AddScore(player, score);
-    }
-
-
-    // ===== HELPERS =====
-
-
-    private void AddScore(GameObject player, int score)
-    {
-        // debug
-        print("score manager, score updated: "+ player+ ", "+ score);
-        _scores[player] = score;
-
-        // plug into ui or something here
-        pointsDelegate(player, score);
-    }
-
-
-    // ===== CALLBACK FUNCS =====
-
-
-    void Start()
-    {
-        // populate dictionary from editor array, temp
-        _playerManager = gameObject.GetComponent(typeof(PlayerManager)) as PlayerManager;
-        foreach (GameObject player in _playerManager.Players)
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            _scores.Add(player, 0);
-        }
-
-        // inject self reference into all monitored players
-        foreach (GameObject player in _scores.Keys)
-        {
-            PlayerScore component = player.GetComponent(typeof(PlayerScore)) as PlayerScore;
-            component._scoreManager = this;
+            IncrementScore(1);
         }
     }
 
+    #endregion
 
-    void Update()
+
+    #region Public Methods
+
+    // updates score and visual feedback based on amount
+    public void IncrementScore(int amount)
     {
-        
+        Score += amount;
+        DisplayUpdateText(amount);
+        UpdateCurrentScoreText();
     }
+    
+    #endregion
+
+
+    #region Private Methods
+
+    // updates displayed score
+    private void UpdateCurrentScoreText()
+    {
+        currentScore.text = Score.ToString();
+    }
+
+    // shows visual feedback for a certain amount of displaySecs
+    private void DisplayUpdateText(int amount)
+    {
+        updateScore.text = "+" + amount;
+        StartCoroutine(BrieflyShowTextCoroutine());
+    }
+
+    // activates updateText for set amount of displaySecs
+    private IEnumerator BrieflyShowTextCoroutine()
+    {
+        updateText.SetActive(true);
+        yield return new WaitForSeconds(displaySecs);
+        updateText.SetActive(false);
+    }
+
+    #endregion
 }

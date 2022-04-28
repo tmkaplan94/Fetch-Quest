@@ -15,7 +15,7 @@ public class TempScoreController : MonoBehaviour
     private PlayerScore _playerScore;
 
     public Text text;
-    public ScoreManager scoreManager;
+    public ScoreManager_old scoreManager;
 
     public void UpdateText(GameObject player, int points)
     {

@@ -17,7 +17,7 @@ public class PlayerScore : MonoBehaviour
     // assume player has been added to score/player manager
     // TODO is there any way to have the manager anonymously monitor this?
     [HideInInspector]
-    public ScoreManager _scoreManager;
+    public ScoreManager_old _scoreManager;
 
 
     // Call this
