@@ -16,9 +16,7 @@ public class Door_open : MonoBehaviour, Interactable
     [SerializeField] private BoxCollider bColl;
 
     private string[] _largeDogs = { "RhodesianRidgeback(Clone)", "SaintBernard(Clone)", "GermnShepherd(Clone)", "Doberman(Clone)" };
-    private string[] _smallDogs;
-    private string[] _midDogs;
-
+    
     [SerializeField] private bool isLocked;
     private Coroutine _animationCor;
     public GameObject player;
