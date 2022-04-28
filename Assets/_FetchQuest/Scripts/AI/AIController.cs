@@ -24,7 +24,7 @@ public class AIController : MonoBehaviour
 #nullable enable
     public Transform? Target { get; private set; }
     public Transform? Work { get; private set; }
-    private NavMeshAgent navMeshAgent;
+    private NavMeshAgent? navMeshAgent;
 
     public AIStats AIStats => _stats;
     public class ReffBool
