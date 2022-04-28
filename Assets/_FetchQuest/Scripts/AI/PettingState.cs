@@ -7,7 +7,8 @@ public class PettingState : IState
 {
     private readonly AIController _controller;
 
-    private float waitTime;
+    private float waitTime = 5f;
+    private float timeToWaitTil;
 
     public PettingState(AIController c)
     {
@@ -16,8 +17,9 @@ public class PettingState : IState
 
     public void Tick()
     {
-        if (waitTime <= Time.time)
+        if (timeToWaitTil <= Time.time)
         {
+            Debug.Log("leave");
             _controller.GetNewTarget();
             //Debug.Log(_controller.dogNearby);
         }
@@ -27,9 +29,9 @@ public class PettingState : IState
     {
         Debug.Log("petting"); 
         _controller.dogNearby = false;
+        //float animSPeed = waitTime / 1.25f;
         _controller.AnimationStart();
-        waitTime = Time.time + .1f;
-
+        timeToWaitTil = Time.time + waitTime;
     }
 
     public void OnExit()

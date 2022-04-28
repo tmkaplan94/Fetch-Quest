@@ -103,11 +103,13 @@ public class AIController : MonoBehaviour
 
     public void GetNewTarget()
     {
-
+        
         if (currentWaypoint >= waypoints.Length -1)
             currentWaypoint = 0;
         else
             currentWaypoint++;
+
+        Debug.Log("getting " + currentWaypoint);
 
         if (hasWorkToDo)
         {
@@ -124,9 +126,9 @@ public class AIController : MonoBehaviour
         {
             canPet.value = false;
             dogNearby = true;
-            personAnimator.SetFloat("Forward", -0.5f);
+            
             StartCoroutine(Cooldown(_stats.PettingCooldown, canPet));
-            personAnimator.SetFloat("Forward", 0f);
+           
         }
         if(!isTalking.value && other.CompareTag("AI"))
         {
@@ -144,11 +146,15 @@ public class AIController : MonoBehaviour
 
     public void AnimationStart()
     {
+        
+        //personAnimator.SetFloat("Speed", _sp);
         personAnimator.SetFloat("Forward", -0.5f);
+        Debug.Log("buttstuff" + personAnimator.GetFloat("Forward"));
     }
 
     public void AnimationStop()
     {
         personAnimator.SetFloat("Forward", 0f);
+        Debug.Log("booty booty " + personAnimator.GetFloat("Forward"));
     }
 }

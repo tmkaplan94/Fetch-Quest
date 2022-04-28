@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 2289117858285860903}
   m_Layer: 0
   m_Name: DONOTTOUCH_DogBase
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 6969390475020677538}
   _cam: {fileID: 6737826633270860006}
-  _anime: {fileID: 0}
+  _anime: {fileID: 4706332110643442427}
   _speed: 6
   _sprintSpeed: 0
   _gravity: -20
@@ -1139,10 +1139,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9544832, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: af05641889f5f7b43af990018cc660ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
 --- !u!4 &4706332110636311603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455240, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
+  m_PrefabInstance: {fileID: 4706332110636127867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4706332110643442427 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9544832, guid: d3273ee892cdcf749a22b49daf393a91, type: 3}
   m_PrefabInstance: {fileID: 4706332110636127867}
   m_PrefabAsset: {fileID: 0}
