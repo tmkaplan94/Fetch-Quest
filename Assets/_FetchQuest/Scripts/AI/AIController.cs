@@ -144,16 +144,17 @@ public class AIController : MonoBehaviour
         }
     }
 
-    public void AnimationStart()
+    public void AnimationStart(float _sp)
     {
         
-        //personAnimator.SetFloat("Speed", _sp);
+        personAnimator.SetFloat("Speed", _sp);
         personAnimator.SetFloat("Forward", -0.5f);
         Debug.Log("buttstuff" + personAnimator.GetFloat("Forward"));
     }
 
     public void AnimationStop()
     {
+        personAnimator.SetFloat("Speed", 1);
         personAnimator.SetFloat("Forward", 0f);
         Debug.Log("booty booty " + personAnimator.GetFloat("Forward"));
     }
