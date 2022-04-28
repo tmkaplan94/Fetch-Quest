@@ -13,7 +13,9 @@ public class Door_open : MonoBehaviour, Interactable
     [SerializeField] private float _openTime;
     [SerializeField] private float _speed;
     [SerializeField] private float _rotationAmt;
+    [SerializeField] private BoxCollider bColl;
 
+    [SerializeField] private bool isLocked;
     private Coroutine _animationCor;
     public GameObject player;
 
@@ -25,6 +27,12 @@ public class Door_open : MonoBehaviour, Interactable
 
     private void OnTriggerEnter(Collider other)
     {
+        if(isLocked)
+        {
+            bColl.center = new Vector3(-0.5f, 1, 0);
+            isLocked = false;
+        }
+        
         Interact(other.gameObject);
     }
 

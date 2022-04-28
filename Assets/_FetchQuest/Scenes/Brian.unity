@@ -153,6 +153,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &134144542 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6944402716104183446, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+  m_PrefabInstance: {fileID: 6993436172828419316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &276699688
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585704977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.3, y: 0.5, z: -3.46}
+  m_LocalPosition: {x: 6.3, y: 0.5, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -891,6 +896,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Receptionist
       objectReference: {fileID: 0}
+    - target: {fileID: 6993436172844432561, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+      propertyPath: workplace
+      value: 
+      objectReference: {fileID: 276699689}
+    - target: {fileID: 6993436172844432561, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+      propertyPath: personAnimator
+      value: 
+      objectReference: {fileID: 134144542}
+    - target: {fileID: 6993436172844432561, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6993436172844432561, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 102763731}
+    - target: {fileID: 6993436172844432561, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1781323634}
+    - target: {fileID: 6993436172844432561, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
+      propertyPath: waypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 276699689}
     - target: {fileID: 6997925170289544666, guid: cd313d98a7540054899eea2e44eb82f0, type: 3}
       propertyPath: m_RootOrder
       value: 3

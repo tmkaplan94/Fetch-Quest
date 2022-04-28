@@ -46,14 +46,9 @@ public class ScoreManager : MonoBehaviour
     /****************************************************
      * REMOVE THIS !
      * - call IncrementScore(int amount) from wherever
+     * NO
      ***************************************************/
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            IncrementScore(1);
-        }
-    }
+    
 
     #endregion
 

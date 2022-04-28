@@ -15,7 +15,8 @@ MonoBehaviour:
   petAttraction: 0
   movementSpeed: 10
   restTime: 5
+  talkTime: 0
   pettingDistance: 5
   pettingCooldown: 3
   talkingCooldown: 6
-  workingCooldown: 6
+  workingCooldown: 12

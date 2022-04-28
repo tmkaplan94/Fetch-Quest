@@ -47,6 +47,8 @@ MonoBehaviour:
   _openTime: 3
   _speed: 2
   _rotationAmt: 90
+  bColl: {fileID: 3925051859793718473}
+  isLocked: 1
   player: {fileID: 0}
 --- !u!1001 &3935873942595188299
 PrefabInstance:
@@ -108,5 +110,10 @@ PrefabInstance:
 --- !u!4 &3932141489662985469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4166765154808502, guid: b22f04ba179fc9c448127e58f941c698, type: 3}
+  m_PrefabInstance: {fileID: 3935873942595188299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3925051859793718473 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 65194036698782338, guid: b22f04ba179fc9c448127e58f941c698, type: 3}
   m_PrefabInstance: {fileID: 3935873942595188299}
   m_PrefabAsset: {fileID: 0}

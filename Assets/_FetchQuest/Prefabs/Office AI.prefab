@@ -1701,6 +1701,7 @@ MonoBehaviour:
   _stats: {fileID: 11400000, guid: aaa5e960fea955946ab36a67b366d686, type: 2}
   waypoints: []
   workplace: {fileID: 0}
+  personAnimator: {fileID: 6944402716104183446}
   dogNearby: 0
   personNearby: 0
   hasWorkToDo: 0

@@ -17,6 +17,7 @@ public class AIController : MonoBehaviour
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
+    private ScoreManager scoreManager;
     public int idelCount = 0;
 
     private int currentWaypoint = 0;
@@ -39,6 +40,7 @@ public class AIController : MonoBehaviour
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
         
 
@@ -121,9 +123,13 @@ public class AIController : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
+        Debug.LogWarning(canPet.value);
+        Debug.LogWarning(other.gameObject.tag);
         //navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
         if (canPet.value && other.CompareTag("Player"))
         {
+            Debug.Log("booty booty ");
+
             canPet.value = false;
             dogNearby = true;
             
@@ -146,16 +152,14 @@ public class AIController : MonoBehaviour
 
     public void AnimationStart(float _sp)
     {
-        
+        scoreManager.IncrementScore(1);
         personAnimator.SetFloat("Speed", _sp);
         personAnimator.SetFloat("Forward", -0.5f);
-        Debug.Log("buttstuff" + personAnimator.GetFloat("Forward"));
     }
 
     public void AnimationStop()
     {
         personAnimator.SetFloat("Speed", 1);
         personAnimator.SetFloat("Forward", 0f);
-        Debug.Log("booty booty " + personAnimator.GetFloat("Forward"));
     }
 }
