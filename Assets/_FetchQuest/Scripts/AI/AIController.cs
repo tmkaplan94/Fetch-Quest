@@ -128,8 +128,6 @@ public class AIController : MonoBehaviour
         //navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
         if (canPet.value && other.CompareTag("Player"))
         {
-            Debug.Log("booty booty ");
-
             canPet.value = false;
             dogNearby = true;
             

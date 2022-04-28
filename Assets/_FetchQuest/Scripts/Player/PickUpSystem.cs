@@ -27,6 +27,7 @@ public class PickUpSystem : MonoBehaviour
     private void PickUp()
     {
         Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer);
+        
         if (items.Length > 0)
         {
             foreach (Collider item in items)
