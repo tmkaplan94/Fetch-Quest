@@ -79,7 +79,7 @@ public class AudioManager : MonoBehaviour
         muteMusic.isOn = false;
         muteSFX.isOn = false;
         _sfxVol = sliderSFX.value;
-
+        
         foreach(var barkSO in _barks)
         {
             _SFXClips.Add(barkSO._barkAudio);

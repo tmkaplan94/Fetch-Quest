@@ -15,6 +15,8 @@ public class TitleManager : MonoBehaviour
     [Tooltip("The name of the scene to load when Singleplayer Button is selected.")]
     [SerializeField] private string SingleplayerScene;
 
+    [SerializeField] private Transform centerScene;
+
 
     public void LoadMultiplayerScene()
     {
@@ -23,13 +25,20 @@ public class TitleManager : MonoBehaviour
 
     public void LoadSingleplayerScene()
     {
+        AudioManager.Instance.PlaySFX(AudioNames.click, centerScene.position);
         SceneManager.LoadScene(SingleplayerScene);
     }
     
     public void Quit()
     {
+        AudioManager.Instance.PlaySFX(AudioNames.click, centerScene.position);
         Debug.Log("Application.Quit()");
         Application.Quit();
+    }
+
+    public void PlayHoverAudio()
+    {
+        AudioManager.Instance.PlaySFX(AudioNames.hover, centerScene.position);
     }
 
 }

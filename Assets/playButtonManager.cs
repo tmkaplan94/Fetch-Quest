@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-public class playButtonManager : MonoBehaviour
+using UnityEngine.EventSystems;
+public class playButtonManager : MonoBehaviour, IPointerEnterHandler
 {
+    [SerializeField] private TitleManager tm;
     
     #region Public Methods
 
-    public void SelectDog()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        SceneManager.LoadScene("DogSelection");
+        tm.PlayHoverAudio();
     }
-    
+
     #endregion
 }

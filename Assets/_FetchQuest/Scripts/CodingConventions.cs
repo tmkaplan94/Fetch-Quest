@@ -9,7 +9,7 @@
  *
  * Updates
  * - Loc Trinh 4/10: added additional functionality
- */
+ *//*
 
 using UnityEngine;
 
@@ -29,7 +29,7 @@ public class CodingConventions : MonoBehaviour
     #region Private Fields
 
     // fields should have an underscore and be in camelCase
-    private string _thisIsUsedByTheClass;
+    private string _thisIsUsedByTheClass = "";
     private Transform _alsoForCachingNeededComponents;
 
     #endregion
@@ -90,4 +90,4 @@ public class CodingConventions : MonoBehaviour
     }
 
     #endregion
-}
+}*/
