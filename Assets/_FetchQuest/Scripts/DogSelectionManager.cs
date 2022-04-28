@@ -14,7 +14,7 @@ public class DogSelectionManager : MonoBehaviour
 
     #region Private Fields
 
-
+    [SerializeField] private Transform audioPos;
     
     #endregion
 
@@ -37,6 +37,7 @@ public class DogSelectionManager : MonoBehaviour
 
     public void SelectDog()
     {
+        AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
         SceneManager.LoadScene("Grant");
     }
     

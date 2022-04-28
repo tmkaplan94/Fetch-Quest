@@ -58,13 +58,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource currentMusic;
     [SerializeField] private AudioSource currentSFX;
     // Mute Toggles
-    [SerializeField] private Toggle muteMaster;
-    [SerializeField] private Toggle muteMusic;
-    [SerializeField] private Toggle muteSFX;
+    [SerializeField] public Toggle muteMaster;
+    [SerializeField] public Toggle muteMusic;
+    [SerializeField] public Toggle muteSFX;
     // Volume Sliders
-    [SerializeField] private Slider sliderMaster;
-    [SerializeField] private Slider sliderMusic;
-    [SerializeField] private Slider sliderSFX;
+    [SerializeField] public Slider sliderMaster;
+    [SerializeField] public Slider sliderMusic;
+    [SerializeField] public Slider sliderSFX;
     // Audio Mixer
     [SerializeField] private AudioMixer _mixer;
     // Scriptable Object Reference

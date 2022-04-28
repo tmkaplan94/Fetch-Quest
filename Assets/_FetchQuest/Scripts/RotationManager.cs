@@ -14,6 +14,7 @@ public class RotationManager : MonoBehaviour
     [SerializeField] private GameObject dogList;
     [SerializeField] private TextMeshProUGUI dogNameText;
     [SerializeField] private TextMeshProUGUI dogSizeText;
+    [SerializeField] private Transform audioPos;
     
     #endregion
 
@@ -60,7 +61,7 @@ public class RotationManager : MonoBehaviour
 
     public void RotateLeft()
     {
-
+        AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
         // rotate dog wheel left
         //Debug.Log("RotateLeft()");
         //dogList.transform.Rotate(new Vector3(0, -30, 0));
@@ -86,6 +87,7 @@ public class RotationManager : MonoBehaviour
 
     public void RotateRight()
     {
+        AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
         // rotate dog wheel right
 
         //children rotate with parent
