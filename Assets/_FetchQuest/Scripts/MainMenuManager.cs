@@ -6,7 +6,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleManager : MonoBehaviour
+public class MainMenuManager : MonoBehaviour
 {
     
     [Tooltip("The name of the scene to load when the Multiplayer Button is selected.")]
