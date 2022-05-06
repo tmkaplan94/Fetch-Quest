@@ -16,8 +16,15 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     [SerializeField] private InputField roomName;
     [SerializeField] private GameObject createButton;
     [SerializeField] private GameObject joinButton;
+
+    [SerializeField] private GameObject launcherPanel;
+    [SerializeField] private GameObject roomListingsPanel;
+    [SerializeField] private GameObject roomPanel;
+    
     [SerializeField] private Transform roomsContent;
     [SerializeField] private RoomListing roomListing;
+    [SerializeField] private Transform playersContent;
+    [SerializeField] private PlayerListing playerListing;
 
     #endregion
 
@@ -26,6 +33,7 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
 
     private RoomOptions _roomOptions = new RoomOptions();
     private List<string> _availableRooms = new List<string>();
+    private List<PlayerListing> _playerListings = new List<PlayerListing>();
 
     #endregion
 
@@ -86,6 +94,8 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room successfully");
+        SetUpRoomPanel();
+        UpdatePlayerList();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -100,6 +110,15 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
             RoomListing room = Instantiate(roomListing, roomsContent);
             room.SetInformation(roomInfo);
         }
+    }
+    
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        UpdatePlayerList();
+    }
+    public override void OnPlayerLeftRoom(Player newPlayer)
+    {
+        UpdatePlayerList();
     }
 
     #endregion
@@ -176,6 +195,49 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     private int GetRandomNumber()
     {
         return Random.Range(0, 10000);
+    }
+    
+    private void UpdatePlayerList()
+    {
+        foreach(PlayerListing player in _playerListings)
+        {
+            Destroy(player.gameObject);
+        }
+        _playerListings.Clear();
+
+        if (PhotonNetwork.CurrentRoom == null)
+            return;
+        
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            PlayerListing newPlayer =  Instantiate(playerListing, playersContent);
+            newPlayer.SetInformation(player.Value);
+            _playerListings.Add(newPlayer);
+        }
+    }
+
+    private void SetUpRoomPanel()
+    {
+        // disable or enable proper panels
+        launcherPanel.SetActive(false);
+        roomListingsPanel.SetActive(false);
+        roomPanel.SetActive(true);
+        
+        // update room name
+        roomPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = roomName.text;
+        
+        // enable proper panels depending on if user is the host or not
+        if (PhotonNetwork.IsMasterClient)
+        {
+            roomPanel.transform.GetChild(2).gameObject.SetActive(true);
+            roomPanel.transform.GetChild(3).gameObject.SetActive(false);
+        }
+        else
+        {
+            roomPanel.transform.GetChild(2).gameObject.SetActive(false);
+            roomPanel.transform.GetChild(3).gameObject.SetActive(true);
+        }
+        
     }
 
     #endregion
