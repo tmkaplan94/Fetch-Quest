@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61fdf99808d5474d88d4723d34702ba, type: 3}
   m_Name: NetworkManager
   m_EditorClassIdentifier: 
-  gameSettings: {fileID: 0}
+  gameSettings: {fileID: 11400000, guid: f5ea2f3668db16541ade38d282f49bf9, type: 2}
