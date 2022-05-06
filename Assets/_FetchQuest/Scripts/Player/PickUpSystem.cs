@@ -29,7 +29,7 @@ public class PickUpSystem : MonoBehaviour
     }
     private void PickUp()
     {
-        Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer);
+        Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer );
         
         if (items.Length > 0)
         {
@@ -49,6 +49,7 @@ public class PickUpSystem : MonoBehaviour
                     currentItem.transform.parent = bonePos;
                     currentItem.transform.position = bonePos.position;
                     currentItem.transform.rotation = bonePos.rotation;
+                    break;
                 }
             }
         }
