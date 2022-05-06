@@ -135,7 +135,7 @@ public class AIController : MonoBehaviour
     {
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             
@@ -159,13 +159,13 @@ public class AIController : MonoBehaviour
 
             }
         }
-        if(!isTalking.value && other.CompareTag("AI"))
+        if(!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
             StartCoroutine(Cooldown(_stats.TalkingCooldown, isTalking));
         }
-        if(!isWorking.value && other.CompareTag("Workplace"))
+        if(!isWorking.value && other.CompareTag("Workplace") && !fireAlarm)
         {
             isWorking.value = true;
             hasWorkToDo = false;
