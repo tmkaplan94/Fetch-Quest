@@ -30,13 +30,6 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     #endregion
 
 
-    // #region Properties
-    //
-    // public static GameSettings GameSettings => Instance.gameSettings;
-    //
-    // #endregion
-
-
     #region MonoBehavior Callbacks
 
     private void Awake()
@@ -66,6 +59,13 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
         
         // connect to lobby to see room updates
         PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        // enable player to create/join rooms
+        createButton.SetActive(true);
+        joinButton.SetActive(true);
     }
     
     public override void OnDisconnected(DisconnectCause cause)
