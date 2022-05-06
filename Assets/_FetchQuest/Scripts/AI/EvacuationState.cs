@@ -9,9 +9,6 @@ public class EvacuationState : IState
     private readonly NavMeshAgent _navMeshAgent;
 
 
-    private Vector3 _lastPosition = Vector3.zero;
-    public float TimeStuck;
-
     public EvacuationState(AIController c, NavMeshAgent n)
     {
         _controller = c;
@@ -20,10 +17,7 @@ public class EvacuationState : IState
 
     public void Tick()
     {
-        if (Vector3.Distance(_controller.transform.position, _lastPosition) <= 0f)
-            TimeStuck += Time.deltaTime;
-
-        _lastPosition = _controller.transform.position;
+        
     }
 
 
