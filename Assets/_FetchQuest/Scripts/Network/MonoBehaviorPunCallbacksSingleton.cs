@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObject
+public class MonoBehaviorPunCallbacksSingleton<T> : MonoBehaviourPunCallbacks where T : Component
 {
     // the one and only instance of type T
-    private static T _instance = null;
-
-    // property returns the only instance
+    private static T _instance;
+    
     public static T Instance
     {
         get
         {
-            // if _instance is not set yet
+            // if _instance has not been set yet
             if (_instance == null)
             {
-                // find out if there is an instance anywhere
-                T[] results = Resources.FindObjectsOfTypeAll<T>();
+                // find out if it exists
+                T[] results = FindObjectsOfType<T>();
 
                 // check if there are no instances
                 if (results.Length == 0)
@@ -30,12 +30,13 @@ public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : 
                     return null;
                 }
 
-                // otherwise,set _instance to the only result found
+                // otherwise, set _instance to the only result found
                 _instance = results[0];
             }
-
+            
             // return the only instance
             return _instance;
         }
     }
+    
 }

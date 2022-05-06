@@ -6,7 +6,9 @@ public class GameSettings : ScriptableObject
     #region Private Serialized Fields
 
     [SerializeField] private string gameVersion = "1";
-    [SerializeField] private string nickName = "Doggo";
+    [SerializeField] private byte maxPlayers = 2;
+    [SerializeField] private string defaultPlayerName = "Doggo";
+    [SerializeField] private string defaultRoomName = "Room";
 
     #endregion
 
@@ -14,7 +16,9 @@ public class GameSettings : ScriptableObject
     #region Properties
 
     public string GameVersion => gameVersion;
-    public string NickName => nickName;
+    public byte MaxPlayers => maxPlayers;
+    public string DefaultPlayerName => defaultPlayerName;
+    public string DefaultRoomName => defaultRoomName;
 
     #endregion
 }
