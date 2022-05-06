@@ -1,25 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class ChooseDogPrefab : MonoBehaviour
 {
-
     [SerializeField] private GameObject[] dogPrefab;
     private int dogIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        // I know this are a little overkill, but Rider was bugging me...
+        Transform dogTransform = transform;
+        Vector3 dogPosition = dogTransform.position;
+        Quaternion dogRotation = dogTransform.rotation;
+        
         dogIndex = RotationManager._currentDogIndex;
-        Instantiate(dogPrefab[dogIndex], transform.position, transform.rotation);
-        
+        Instantiate(dogPrefab[dogIndex], dogPosition, dogRotation);
+        //PhotonNetwork.Instantiate(dogPrefab[dogIndex].name, dogPosition, dogRotation);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
