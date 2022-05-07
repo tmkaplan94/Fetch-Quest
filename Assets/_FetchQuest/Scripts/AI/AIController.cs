@@ -11,9 +11,12 @@ public class AIController : MonoBehaviour
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private Transform workplace; //Workplace coords
     [SerializeField] private Animator personAnimator;
+    public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
     public bool hasWorkToDo = false; //Set Bool for at workplace
+    public bool fireAlarm = false; //Set Bool for fire alarm
+    public bool turnAlarmOff = false; //Set Bool for fire alarm to turn off
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -50,15 +53,19 @@ public class AIController : MonoBehaviour
         var pettingState = new PettingState(this); //Setting up PettingState
         var talkingState = new TalkingState(this); //Setting up TalkingState
         var workingState = new WorkingState(this); //Setting up WorkingState
+        var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
         At(pettingState, walkingState, HasTarget()); //For now only allow to transition from petting to walking
         At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
         At(workingState, walkingState, HasTarget());
+        At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
         Aat(workingState, HasWork()); //Adding petting state as an any
+        Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
+        
 
 
 
@@ -70,6 +77,8 @@ public class AIController : MonoBehaviour
 
     Func<bool> HasTarget() => () => Target != null;
     Func<bool> HasWork() => () => isWorking.value == true;
+    Func<bool> AlarmOn() => () => fireAlarm == true;
+    Func<bool> AlarmOff() => () => turnAlarmOff == true;
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
     Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
@@ -126,8 +135,7 @@ public class AIController : MonoBehaviour
     {
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
-        //navMeshAgent.transform.LookAt(other.transform); //Look At Object (Whatever it is)
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             
@@ -151,13 +159,13 @@ public class AIController : MonoBehaviour
 
             }
         }
-        if(!isTalking.value && other.CompareTag("AI"))
+        if(!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
             StartCoroutine(Cooldown(_stats.TalkingCooldown, isTalking));
         }
-        if(!isWorking.value && other.CompareTag("Workplace"))
+        if(!isWorking.value && other.CompareTag("Workplace") && !fireAlarm)
         {
             isWorking.value = true;
             hasWorkToDo = false;
