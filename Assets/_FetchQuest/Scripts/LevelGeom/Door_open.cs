@@ -31,9 +31,9 @@ public class Door_open : MonoBehaviour, Interactable
     {
         if (isLocked)
         {
-            foreach(string booty in _largeDogs)
+            foreach (string booty in _largeDogs)
             {
-                if(other.transform.parent.gameObject.name == booty)
+                if (other.transform.parent.gameObject.name == booty)
                 {
                     Debug.Log("booty");
                     isLocked = false;
@@ -41,13 +41,13 @@ public class Door_open : MonoBehaviour, Interactable
                 }
             }
             float dot = Vector3.Dot(_forward, (other.transform.position - transform.position).normalized);
-            if(dot <= _forwardDir)
+            if (dot <= _forwardDir)
             {
                 isLocked = false;
                 Interact(other.gameObject);
             }
         }
-        else
+        else if (other.gameObject.CompareTag("Player")) 
             Interact(other.gameObject);
     }
 
