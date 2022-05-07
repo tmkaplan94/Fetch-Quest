@@ -53,6 +53,14 @@ public class RotationManager : MonoBehaviour
         //rotates the current dog in the selected position
         _currentDog.transform.Rotate(new Vector3(0, 50, 0) * Time.deltaTime);
 
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            RotateLeft();
+        }
+
+        if(Input.GetKeyDown(KeyCode.RightArrow)){
+            RotateRight();
+        }
+
     }
 
     #endregion

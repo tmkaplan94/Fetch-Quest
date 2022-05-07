@@ -35,10 +35,22 @@ public class DogSelectionManager : MonoBehaviour
 
     #region Public Methods
 
+
+    void Update(){
+        if(Input.GetKeyDown("return")){
+            SelectDog();    
+        }
+    }
+
     public void SelectDog()
     {
         AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
         SceneManager.LoadScene("Grant");
+    }
+
+    public void GoHome(){
+        AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
+        SceneManager.LoadScene("MainMenu");
     }
     
     #endregion

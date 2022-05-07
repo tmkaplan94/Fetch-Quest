@@ -15,6 +15,8 @@ public class TitleManager : MonoBehaviour
     [Tooltip("The name of the scene to load when Singleplayer Button is selected.")]
     [SerializeField] private string SingleplayerScene;
 
+    [SerializeField] private GameObject audioCanvas;
+    [SerializeField] private GameObject mainUICanvas;
     [SerializeField] private Transform centerScene;
 
 
@@ -39,6 +41,20 @@ public class TitleManager : MonoBehaviour
     public void PlayHoverAudio()
     {
         AudioManager.Instance.PlaySFX(AudioNames.hover, centerScene.position);
+    }
+
+    public void SetAudioOptionsVisibility(){
+        if(audioCanvas.activeSelf){
+            audioCanvas.SetActive(false);
+        }else{
+            audioCanvas.SetActive(true);
+        }
+
+        if(mainUICanvas.activeSelf){
+            mainUICanvas.SetActive(false);
+        }else{
+            mainUICanvas.SetActive(true);
+        }
     }
 
 }
