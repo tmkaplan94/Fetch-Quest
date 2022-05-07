@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class NetworkStart : MonoBehaviour
+public class DoggoNetworkStart : MonoBehaviour
 {
     [SerializeField] PhotonView _view;
     [SerializeField] TempMove_unused _movementScript;
