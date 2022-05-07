@@ -42,6 +42,9 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
 
     private void Awake()
     {
+        // persist in scenes
+        DontDestroyOnLoad(this);
+        
         // all clients in the same room will automatically sync level
         PhotonNetwork.AutomaticallySyncScene = true;
         
