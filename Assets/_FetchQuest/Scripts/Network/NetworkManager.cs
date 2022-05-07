@@ -142,13 +142,20 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
             playerName.text = gameSettings.DefaultPlayerName + GetRandomNumber();
         }
         
-        // set room name
+        // check room name
         string enteredRoomValue = roomName.text;
         if (enteredRoomValue == "")
         {
+            Debug.LogWarning("No room name entered, creating a random room now");
             roomName.text = gameSettings.DefaultRoomName + GetRandomNumber();
         }
-        
+        if (_availableRooms.Contains(enteredRoomValue))
+        {
+            Debug.LogWarning("Room already exists, joining it now...");
+            PhotonNetwork.JoinRoom(roomName.text);
+            return;
+        }
+
         // create room
         PhotonNetwork.CreateRoom(roomName.text, _roomOptions, TypedLobby.Default);
     }
