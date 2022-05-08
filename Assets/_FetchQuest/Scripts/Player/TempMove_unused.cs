@@ -102,4 +102,10 @@ public class TempMove_unused : MonoBehaviour
             _controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
     }
+
+
+    public float get_player_speed()
+    {
+        return _speed;
+    }
 }
