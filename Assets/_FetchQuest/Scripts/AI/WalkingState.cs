@@ -31,11 +31,13 @@ public class WalkingState :  IState
     {
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_controller.Target.transform.position);
+        _controller.AnimationWalking();
     }
 
     public void OnExit()
     {
         _controller.SetTarget(null);
         _navMeshAgent.enabled = false;
+        _controller.AnimationStop();
     }
 }
