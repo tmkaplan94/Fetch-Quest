@@ -267,6 +267,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77436bdb87e498346a2b0b1c03fdb5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2198160148429575966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768158204909552607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7a5162e0affde24da1b89fb76e62969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _view: {fileID: 8042538628741056709}
+  _movementScript: {fileID: 5263986850461841620}
+  _camera1: {fileID: 1995058101385214299}
+  _camera2: {fileID: 3310950937849441808}
 --- !u!114 &2652438017312712043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,19 +322,3 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2198160148429575966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768158204909552607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a5162e0affde24da1b89fb76e62969, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _view: {fileID: 8042538628741056709}
-  _movementScript: {fileID: 5263986850461841620}
-  _camera1: {fileID: 1995058101385214299}
-  _camera2: {fileID: 3310950937849441808}

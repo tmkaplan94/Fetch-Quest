@@ -291,6 +291,22 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &3782460324283831797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768158204909552607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7a5162e0affde24da1b89fb76e62969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _view: {fileID: 6259459284739504629}
+  _movementScript: {fileID: 5263986850461841620}
+  _camera1: {fileID: 1995058101385214299}
+  _camera2: {fileID: 3310950937849441808}
 --- !u!114 &6259459284739504629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,19 +330,3 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3782460324283831797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768158204909552607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a5162e0affde24da1b89fb76e62969, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _view: {fileID: 6259459284739504629}
-  _movementScript: {fileID: 5263986850461841620}
-  _camera1: {fileID: 1995058101385214299}
-  _camera2: {fileID: 3310950937849441808}

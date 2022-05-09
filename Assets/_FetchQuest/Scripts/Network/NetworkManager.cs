@@ -26,6 +26,8 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     [SerializeField] private Transform playersContent;
     [SerializeField] private PlayerListing playerListing;
 
+    [SerializeField] private Players players;
+
     #endregion
 
 
@@ -34,6 +36,14 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     private RoomOptions _roomOptions = new RoomOptions();
     private List<string> _availableRooms = new List<string>();
     private List<PlayerListing> _playerListings = new List<PlayerListing>();
+    private int _id;
+
+    #endregion
+
+    
+    #region Properties
+
+    public int ID { get; private set; }
 
     #endregion
 
@@ -42,6 +52,8 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
 
     private void Awake()
     {
+        ID = GetComponent<PhotonView>().ViewID;
+        
         // persist in scenes
         DontDestroyOnLoad(this);
         
@@ -97,8 +109,15 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room successfully");
+        players.Add(ID);
+        Debug.Log("Player" + ID + " is not ready to play");
         SetUpRoomPanel();
         UpdatePlayerList();
+    }
+
+    public override void OnLeftRoom()
+    {
+        players.Remove(ID);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -195,6 +214,11 @@ public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
         
         // join room
         PhotonNetwork.JoinRoom(roomName.text);
+    }
+
+    public void LoadDogSelectionScene()
+    {
+        PhotonNetwork.LoadLevel("DogSelection");
     }
 
     #endregion

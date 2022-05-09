@@ -1556,6 +1556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1040893567}
   - component: {fileID: 1040893566}
+  - component: {fileID: 1040893568}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1587,6 +1588,7 @@ MonoBehaviour:
   roomListing: {fileID: 7188636159084432124, guid: d982b05f690aae948be7555ea76c0677, type: 3}
   playersContent: {fileID: 427251267}
   playerListing: {fileID: 2902587300875196254, guid: e9ded818c0d9c3d45aadc936a859c3fb, type: 3}
+  players: {fileID: 11400000, guid: 41c1fa76c996ce542bc6bfa25222b37f, type: 2}
 --- !u!4 &1040893567
 Transform:
   m_ObjectHideFlags: 0
@@ -1601,6 +1603,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1040893568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040893565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1058169835
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,7 +3698,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2013020898}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1040893566}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
+        m_MethodName: LoadDogSelectionScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2013020898
 MonoBehaviour:
   m_ObjectHideFlags: 0

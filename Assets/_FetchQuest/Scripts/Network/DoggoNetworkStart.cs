@@ -8,7 +8,14 @@ public class DoggoNetworkStart : MonoBehaviour
     [SerializeField] private GameObject _camera1;
     [SerializeField] GameObject _camera2;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            GetComponent<DoggoNetworkStart>().enabled = false;
+        }
+    }
+
     void Start()
     {
         if (!_view.IsMine)
