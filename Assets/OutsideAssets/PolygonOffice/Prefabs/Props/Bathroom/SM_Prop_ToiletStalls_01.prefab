@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openTime: 3
   _speed: 2
-  _rotationAmt: 90
+  _rotationAmt: -90
   bColl: {fileID: 5110023167634865958}
   isLocked: 0
   player: {fileID: 0}
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openTime: 3
   _speed: 2
-  _rotationAmt: 90
+  _rotationAmt: -90
   bColl: {fileID: 5110023167634865958}
   isLocked: 0
   player: {fileID: 0}
