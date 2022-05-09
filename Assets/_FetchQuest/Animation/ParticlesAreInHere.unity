@@ -8243,7 +8243,7 @@ GameObject:
   - component: {fileID: 1821423997}
   - component: {fileID: 1821423996}
   m_Layer: 0
-  m_Name: DogPet
+  m_Name: DogPetParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8481,7 +8481,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.030391693
+          time: 0
           value: 0.8676472
           inSlope: 0
           outSlope: 0
@@ -8490,7 +8490,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.987854
+          time: 1
           value: -0.20588797
           inSlope: 0
           outSlope: 0
@@ -8889,7 +8889,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
