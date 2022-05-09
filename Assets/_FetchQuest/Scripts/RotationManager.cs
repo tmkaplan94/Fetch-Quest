@@ -61,6 +61,16 @@ public class RotationManager : MonoBehaviour
             RotateRight();
         }
 
+    
+        if(Input.GetKeyDown("a")){
+            RotateLeft();
+        }
+
+        if(Input.GetKeyDown("d")){
+            RotateRight();
+        }
+    
+   
     }
 
     #endregion
