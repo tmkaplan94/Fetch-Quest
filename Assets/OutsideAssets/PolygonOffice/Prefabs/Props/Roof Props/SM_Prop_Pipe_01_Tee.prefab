@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4580671810277834}
   - component: {fileID: 33843633949759494}
   - component: {fileID: 23918098480962360}
-  - component: {fileID: 64538208671244804}
+  - component: {fileID: 7130193995696291494}
+  - component: {fileID: 627135301164650320}
   m_Layer: 0
   m_Name: SM_Prop_Pipe_01_Tee
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033815691619266}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -82,8 +83,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64538208671244804
-MeshCollider:
+--- !u!65 &7130193995696291494
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,7 +93,19 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43520567847903076, guid: 98de183b4159dba4c9c8b1f3130a6e25, type: 2}
+  serializedVersion: 2
+  m_Size: {x: 1.5279515, y: 0.3790062, z: 0.25}
+  m_Center: {x: 0.73602426, y: -0.000000022351742, z: 0.01}
+--- !u!65 &627135301164650320
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033815691619266}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.29, y: 0.3790062, z: 0.71745473}
+  m_Center: {x: 0.73602426, y: -0.000000022351742, z: 0.16922423}

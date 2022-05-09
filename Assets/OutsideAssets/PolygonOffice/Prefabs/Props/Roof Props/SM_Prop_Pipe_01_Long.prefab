@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4392721587289610}
   - component: {fileID: 33687421642566802}
   - component: {fileID: 23721797990927366}
-  - component: {fileID: 64525306130111980}
+  - component: {fileID: 7536089068576235597}
   m_Layer: 0
   m_Name: SM_Prop_Pipe_01_Long
   m_TagString: Untagged
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126975434900336}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -82,8 +82,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64525306130111980
-MeshCollider:
+--- !u!65 &7536089068576235597
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,7 +92,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43734926931649618, guid: 015334907c94df940ba730e63780533a, type: 2}
+  serializedVersion: 2
+  m_Size: {x: 1.5279515, y: 0.3790062, z: 0.3790062}
+  m_Center: {x: 0.73602426, y: -0.000000022351742, z: 0.000000029802322}
