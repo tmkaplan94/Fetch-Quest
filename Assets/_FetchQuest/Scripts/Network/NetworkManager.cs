@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class NetworkManager : MonoBehaviorPunCallbacksSingleton<NetworkManager>
+public class NetworkManager : MonoBehaviourPunCallbacks
 {
     #region Private Serialized Fields
 
