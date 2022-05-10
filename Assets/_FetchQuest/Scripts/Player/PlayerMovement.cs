@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpStrength = 3;
     [SerializeField] private float _turnSmoothTime = 0.1f;
     #endregion
+    
+    
     #region Private Variables
     private float _turnSmoothVelocity;
     private Vector3 _moveDirection = Vector3.zero;

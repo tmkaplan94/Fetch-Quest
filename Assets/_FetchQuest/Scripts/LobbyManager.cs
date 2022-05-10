@@ -14,10 +14,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     #region Private Serialized Fields
 
-    [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players " +
-             "and a new room will be created.")]
-    [SerializeField]
-    private byte maxPlayersPerRoom = 2;
+    // [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players " +
+    //          "and a new room will be created.")]
+    // [SerializeField]
+    // private byte maxPlayersPerRoom = 2;
 
     [Tooltip("The UI Panel to let the user enter name, connect and play")] [SerializeField]
     private GameObject launcherPanel;
@@ -80,7 +80,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // failed to join a random room, so create a new room
         Debug.Log("Calling PhotonNetwork.CreateRoom()");
-        PhotonNetwork.CreateRoom(null, new RoomOptions() {MaxPlayers = maxPlayersPerRoom});
+        PhotonNetwork.CreateRoom(null, new RoomOptions() {MaxPlayers = 2});
     }
 
     public override void OnJoinedRoom()
