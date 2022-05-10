@@ -13,19 +13,30 @@ public class QuestBus : MonoBehaviour
 
     // ===== PUBLIC API =====
 
+    // public singleton
+    public static QuestBus QUEST_BUS;
+
     // subscribe to this to receive updates when quests are updated
     // ie. questBus.questUpdatedDelegate += listenerFunc;
     public delegate void QuestUpdatedDelegate(QuestObject quest);
     public QuestUpdatedDelegate questUpdatedDelegate; 
 
-    // call to publish quest updates
+    // call to update all subscribers
     public void update(QuestObject quest)
     {
         publish(quest);
     }
 
+    // test
+    public void subscribe(QuestUpdatedDelegate subscriber)
+    {
+        questUpdatedDelegate += subscriber;
+    }
 
     #endregion
+
+
+    # region HELPERS AND MONODEVELOP
 
 
     // ===== HELPERS =====
@@ -35,7 +46,6 @@ public class QuestBus : MonoBehaviour
         // publishes to delegate
         questUpdatedDelegate(quest);
     }
-
 
 
     // ===== unity callbacks =====
@@ -51,4 +61,6 @@ public class QuestBus : MonoBehaviour
     {
         
     }
+
+    #endregion
 }
