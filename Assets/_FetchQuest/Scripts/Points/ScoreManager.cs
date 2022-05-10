@@ -4,10 +4,13 @@
  * Summary: Manages the score for singleplayer.
  *
  * Description
+
+ * - I HAVE HIJACKED THIS SCRIPT FOR TESTING THE EVENT BUS
+ * - currently it both subscribes to and updates the bus
+
  * - IncrementScore(int amount) can be called from anywhere
  * - amount parameter will reflect on the score board
  * - displays visual feedback for the player, also based on amount
- * - Daichi - for testing, hooks up to receive updates from the bus
  *
  * Updates
  * - PLEASE REMOVE UPDATE() FUNCTION, FOR TESTING PURPOSES ONLY !!
@@ -26,7 +29,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int displaySecs;
 
     // bus testing
-    [SerializeField] private QuestBus questBus; 
+    private QuestBus questBus;
     
     #endregion
 
@@ -44,7 +47,18 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         // hookup, listens to bus
-        questBus.subscribe(UpdateFromQuestObject);
+        // has to wait until after parent starts
+        if (LevelStatic.currentLevel != null)
+        {
+            questBus = LevelStatic.currentLevel.questBus; 
+            questBus.subscribe(UpdateFromQuestObject);
+            print("HOOKED UP TO QUEST BUS");
+        }
+        else
+        {
+            print("FAILED TO FIND LEVELDATA: " + LevelStatic.currentLevel);
+        }
+        
         
         Score = 0;
         UpdateCurrentScoreText();
@@ -66,11 +80,15 @@ public class ScoreManager : MonoBehaviour
     public void IncrementScore(int amount)
     {
         // hijacking  this to test
-        questBus.update(new QuestObject(amount, "test quest 2!"));
-
-        // Score += amount;
-        // DisplayUpdateText(amount.ToString());
-        // UpdateCurrentScoreText();
+        if (questBus != null)
+            questBus.update(new QuestObject(amount, "test quest 3!"));
+        else
+        {
+            print("QUEST BUS IS NULL");
+            Score += amount;
+            DisplayUpdateText(amount.ToString());
+            UpdateCurrentScoreText();
+        }
     }
     
     #endregion

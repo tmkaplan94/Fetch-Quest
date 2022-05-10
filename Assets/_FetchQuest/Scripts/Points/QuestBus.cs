@@ -13,24 +13,21 @@ public class QuestBus : MonoBehaviour
 
     // ===== PUBLIC API =====
 
-    // public singleton
-    public static QuestBus QUEST_BUS;
-
-    // subscribe to this to receive updates when quests are updated
-    // ie. questBus.questUpdatedDelegate += listenerFunc;
     public delegate void QuestUpdatedDelegate(QuestObject quest);
-    public QuestUpdatedDelegate questUpdatedDelegate; 
+    private QuestUpdatedDelegate questUpdatedDelegate; 
 
     // call to update all subscribers
     public void update(QuestObject quest)
     {
         publish(quest);
+        print("PUBLISHED QUEST: " + quest.message);
     }
 
-    // test
+    // call to subscribe to updates
     public void subscribe(QuestUpdatedDelegate subscriber)
     {
         questUpdatedDelegate += subscriber;
+        print("NEW SUBSCRIBER: " + subscriber);
     }
 
     #endregion
