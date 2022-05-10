@@ -1,3 +1,8 @@
+/*
+ * Author: Tyler Kaplan
+ * Contributors: 
+ * Summary: Deals with scene transitioning from Title scene
+ */
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +15,9 @@ public class TitleManager : MonoBehaviour
     [Tooltip("The name of the scene to load when Singleplayer Button is selected.")]
     [SerializeField] private string SingleplayerScene;
 
-    [Tooltip("The name of the scene to load when Testing Button is selected. Used in development only.")]
-    [SerializeField] private string TestingScene;
+    [SerializeField] private Transform centerScene;
 
-    
+
     public void LoadMultiplayerScene()
     {
         SceneManager.LoadScene(MultiplayerScene);
@@ -21,12 +25,20 @@ public class TitleManager : MonoBehaviour
 
     public void LoadSingleplayerScene()
     {
+        AudioManager.Instance.PlaySFX(AudioNames.click, centerScene.position);
         SceneManager.LoadScene(SingleplayerScene);
     }
-
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene(TestingScene);
-    }
     
+    public void Quit()
+    {
+        AudioManager.Instance.PlaySFX(AudioNames.click, centerScene.position);
+        Debug.Log("Application.Quit()");
+        Application.Quit();
+    }
+
+    public void PlayHoverAudio()
+    {
+        AudioManager.Instance.PlaySFX(AudioNames.hover, centerScene.position);
+    }
+
 }

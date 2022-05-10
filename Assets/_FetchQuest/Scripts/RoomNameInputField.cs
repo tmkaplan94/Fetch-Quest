@@ -15,7 +15,7 @@ public class RoomNameInputField : MonoBehaviour
 
     private void Start()
     {
-        UpdatePlayerPrefRoomName();
+        GetPlayerPrefRoomName();
     }
 
     #endregion
@@ -34,19 +34,13 @@ public class RoomNameInputField : MonoBehaviour
         PlayerPrefs.SetString(RoomNamePrefKey, value);
     }
     
-    // gets the player's preferred room name based on PlayerPref
-    public string GetPlayerPrefRoomName()
-    {
-        return GetComponent<InputField>().text;
-    }
-
     #endregion
-    
-    
-    #region Private Methods
 
-    // updates the player's preferred room name based on PlayerPref
-    private void UpdatePlayerPrefRoomName()
+
+    #region Private Methods
+    
+    // gets the player's preferred room name based on PlayerPref
+    private void GetPlayerPrefRoomName()
     {
         string defaultName = "";
         InputField inputField = GetComponent<InputField>();
@@ -59,7 +53,6 @@ public class RoomNameInputField : MonoBehaviour
             }
         }
     }
-
+    
     #endregion
-
 }
