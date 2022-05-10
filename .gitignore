@@ -5,6 +5,7 @@ desktop.ini
 *.wlt
 *.dwlt
 *.vsconfig
+*.DS_Store
 
 # Unity files
 /[Ll]ibrary/
