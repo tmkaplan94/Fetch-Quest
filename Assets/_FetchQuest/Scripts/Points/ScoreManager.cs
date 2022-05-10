@@ -44,7 +44,7 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         // hookup, listens to bus
-        questBus.questUpdatedDelegate += UpdateFromQuestObject;
+        questBus.subscribe(UpdateFromQuestObject);
         
         Score = 0;
         UpdateCurrentScoreText();
@@ -66,7 +66,7 @@ public class ScoreManager : MonoBehaviour
     public void IncrementScore(int amount)
     {
         // hijacking  this to test
-        questBus.update(new QuestObject(amount, "test quest!"));
+        questBus.update(new QuestObject(amount, "test quest 2!"));
 
         // Score += amount;
         // DisplayUpdateText(amount.ToString());
