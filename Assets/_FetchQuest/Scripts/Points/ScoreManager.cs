@@ -1,5 +1,5 @@
 /*
- * Author: Tyler Kaplan
+ * Author: Tyler Kaplan, Daichi Murokami
  * Contributors:
  * Summary: Manages the score for singleplayer.
  *
@@ -7,6 +7,7 @@
  * - IncrementScore(int amount) can be called from anywhere
  * - amount parameter will reflect on the score board
  * - displays visual feedback for the player, also based on amount
+ * - Daichi - for testing, hooks up to receive updates from the bus
  *
  * Updates
  * - PLEASE REMOVE UPDATE() FUNCTION, FOR TESTING PURPOSES ONLY !!
@@ -23,6 +24,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject updateText;
     [SerializeField] private TMP_Text updateScore;
     [SerializeField] private int displaySecs;
+
+    // bus testing
+    [SerializeField] private QuestBus questBus; 
     
     #endregion
 
@@ -39,6 +43,9 @@ public class ScoreManager : MonoBehaviour
     // initialize score board
     private void Start()
     {
+        // hookup, listens to bus
+        questBus.questUpdatedDelegate += UpdateFromQuestObject;
+        
         Score = 0;
         UpdateCurrentScoreText();
     }
@@ -58,9 +65,12 @@ public class ScoreManager : MonoBehaviour
     // updates score and visual feedback based on amount
     public void IncrementScore(int amount)
     {
-        Score += amount;
-        DisplayUpdateText(amount);
-        UpdateCurrentScoreText();
+        // hijacking  this to test
+        questBus.update(new QuestObject(amount, "test quest!"));
+
+        // Score += amount;
+        // DisplayUpdateText(amount.ToString());
+        // UpdateCurrentScoreText();
     }
     
     #endregion
@@ -68,6 +78,15 @@ public class ScoreManager : MonoBehaviour
 
     #region Private Methods
 
+    // processes quest objects and displays
+    private void UpdateFromQuestObject(QuestObject quest)
+    {
+        Score += quest.pointsAwarded;
+        DisplayUpdateText(quest.message);
+        UpdateCurrentScoreText();
+        
+    }
+    
     // updates displayed score
     private void UpdateCurrentScoreText()
     {
@@ -75,7 +94,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     // shows visual feedback for a certain amount of displaySecs
-    private void DisplayUpdateText(int amount)
+    private void DisplayUpdateText(string amount)
     {
         updateScore.text = "+" + amount;
         StartCoroutine(BrieflyShowTextCoroutine());
