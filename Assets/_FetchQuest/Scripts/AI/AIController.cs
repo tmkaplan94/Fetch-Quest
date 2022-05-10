@@ -186,4 +186,9 @@ public class AIController : MonoBehaviour
         personAnimator.SetFloat("Speed", 1);
         personAnimator.SetFloat("Forward", 0f);
     }
+
+    public void AnimationWalking()
+    {
+        personAnimator.SetFloat("Forward", 0.5f);
+    }
 }
