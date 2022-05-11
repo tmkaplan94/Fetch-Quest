@@ -17,4 +17,7 @@ public class QuestComponent : MonoBehaviour
         QuestObject quest = new QuestObject(points, message);
         questBus.update(quest);
     }
+
+    //
+
 }
