@@ -82,7 +82,7 @@ public class ScoreManager : MonoBehaviour
         // hijacking  this to test
         if (questBus != null)
             questBus.update(new QuestObject(amount, "dogs are good!", 
-                            LevelData.publicEvents.FIREALARM));
+                            LevelData.publicEvents.FIREALARM, "helloQuest"));
         else
         {
             print("QUEST BUS IS NULL");
@@ -101,7 +101,8 @@ public class ScoreManager : MonoBehaviour
     private void UpdateFromQuestObject(QuestObject quest)
     {
         Score += quest.pointsAwarded;
-        string display = quest.message + " enum: " + quest.eventEnum;
+        string display = quest.message + " enum: " + quest.eventEnum
+                + " name: " + quest.questName;
         DisplayUpdateText(display);
         UpdateCurrentScoreText();
         
