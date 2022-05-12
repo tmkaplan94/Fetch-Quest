@@ -5,35 +5,34 @@ using UnityEngine.UI;
 
 public class FaceCamera : MonoBehaviour
 {
-    public Transform mLookat;
-
-    private Transform localTrans;
     [SerializeField] private GameObject panel;
-    [SerializeField] private TextMesh text;
+    [SerializeField] private Text text;
 
     void Start()
     {
-        localTrans = GetComponent<Transform>();
+        
     }
 
-    
     void Update()
     {
-        if (mLookat)
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                panel.SetActive(true);
-                localTrans.LookAt(2 * localTrans.position - mLookat.position);
-            }
-            else if (Input.GetKeyDown(KeyCode.L))
-            {
-                panel.SetActive(false);
-            }
+            ChangeText("hello");
+            panel.SetActive(true);
         }
-        
+        else if (Input.GetKeyDown(KeyCode.L))
         {
-            localTrans.LookAt(2 * localTrans.position - mLookat.position);
+            panel.SetActive(false);
         }
+
+    }
+    void LateUpdate()
+    {
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+
+    }
+    public void ChangeText(string a)
+    {
+        text.text = a;
     }
 }
