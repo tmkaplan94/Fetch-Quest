@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: Grant Reed
+ * Contributors: 
+ * Summary: Allows dog to pickup items
+ *
+ * Description:
+ * Updates
+ * - N/A
+ */
+
 public class PickUpSystem : MonoBehaviour
 {
     [SerializeField] private GameObject currentItem = null;
@@ -40,8 +50,8 @@ public class PickUpSystem : MonoBehaviour
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
                     Drop();
                     currentItem = item.gameObject;
-                    BoxCollider[] cols = currentItem.GetComponentsInChildren<BoxCollider>();
-                    foreach (BoxCollider col in cols)
+                    Collider[] cols = currentItem.GetComponentsInChildren<Collider>();
+                    foreach (Collider col in cols)
                     {
                         col.enabled = false;
                     }
@@ -66,8 +76,8 @@ public class PickUpSystem : MonoBehaviour
             currentItem.transform.parent = null;
             currentItem.transform.position = dropPos.position;
             currentItem.transform.rotation = dropPos.rotation;
-            BoxCollider[] cols = currentItem.GetComponentsInChildren<BoxCollider>();
-            foreach (BoxCollider col in cols)
+            Collider[] cols = currentItem.GetComponentsInChildren<Collider>();
+            foreach (Collider col in cols)
             {
                 col.enabled = true;
             }
