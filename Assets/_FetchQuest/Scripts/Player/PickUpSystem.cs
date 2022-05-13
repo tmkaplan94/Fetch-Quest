@@ -15,18 +15,15 @@ using UnityEngine;
 public class PickUpSystem : MonoBehaviour
 {
     [SerializeField] private GameObject currentItem = null;
-    private bool _touchedBone = false;
    
-    [SerializeField] private Transform bonePos;
+    [SerializeField] private Transform holdPos;
     [SerializeField] private Transform dropPos;
     [SerializeField] private Vector3 pickUpBox;
     [SerializeField] private LayerMask pickUpsLayer;
 
     private string interactableTag = "Interactable";
 
-    [SerializeField] private bool __DebugbyNat;
-
-    private void Update()
+    private void Update() 
     {
          if (Input.GetKeyDown(KeyCode.E))
          {
@@ -56,9 +53,9 @@ public class PickUpSystem : MonoBehaviour
                         col.enabled = false;
                     }
                     currentItem.GetComponent<Rigidbody>().isKinematic = true;
-                    currentItem.transform.parent = bonePos;
-                    currentItem.transform.position = bonePos.position;
-                    currentItem.transform.rotation = bonePos.rotation;
+                    currentItem.transform.parent = holdPos;
+                    currentItem.transform.position = holdPos.position;
+                    currentItem.transform.rotation = holdPos.rotation;
                     break;
                 }
             }
