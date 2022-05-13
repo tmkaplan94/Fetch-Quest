@@ -1207,7 +1207,7 @@ GameObject:
   - component: {fileID: 9547742}
   m_Layer: 0
   m_Name: SM_Beagle_02
-  m_TagString: Untagged
+  m_TagString: medium
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

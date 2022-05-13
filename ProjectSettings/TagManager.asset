@@ -10,6 +10,9 @@ TagManager:
   - Workplace
   - Bullet
   - Ground
+  - small
+  - medium
+  - big
   layers:
   - Default
   - TransparentFX
