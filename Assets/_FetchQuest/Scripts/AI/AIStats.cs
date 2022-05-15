@@ -12,6 +12,7 @@ public class AIStats : ScriptableObject
     [SerializeField] private float pettingCooldown; //Petting Cooldown
     [SerializeField] private float talkingCooldown; //Talking Cooldown
     [SerializeField] private float workingCooldown; //Walking Cooldown
+    [SerializeField] private bool isJanitor; //if not janitor, call for janitor
 
     public float PetAttraction => petAttraction;
     public float MovementSpeed => movementSpeed;
@@ -21,5 +22,6 @@ public class AIStats : ScriptableObject
     public float PettingCooldown => pettingCooldown; //Ref
     public float TalkingCooldown => talkingCooldown; //Ref
     public float WorkingCooldown => workingCooldown; //Ref
+    public bool IsJanitor => isJanitor; //Ref
 
 }

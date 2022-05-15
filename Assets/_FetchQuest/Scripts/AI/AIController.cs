@@ -17,6 +17,8 @@ public class AIController : MonoBehaviour
     public bool hasWorkToDo = false; //Set Bool for at workplace
     public bool fireAlarm = false; //Set Bool for fire alarm
     public bool turnAlarmOff = false; //Set Bool for fire alarm to turn off
+    public bool peeFound = false; //Set Bool for calling janitor if pee is found
+    private Collider peeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -54,18 +56,24 @@ public class AIController : MonoBehaviour
         var talkingState = new TalkingState(this); //Setting up TalkingState
         var workingState = new WorkingState(this); //Setting up WorkingState
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
+        var calljanitorState = new CallJanitorState(this, navMeshAgent);
+        var cleaningState = new CleaningState(this, peeObj);
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
         At(pettingState, walkingState, HasTarget()); //For now only allow to transition from petting to walking
         At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
         At(workingState, walkingState, HasTarget());
+        At(cleaningState, walkingState, HasTarget());
+        At(calljanitorState, walkingState, HasTarget());
         At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
         Aat(workingState, HasWork()); //Adding petting state as an any
         Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
-        
+        Aat(calljanitorState, FoundPeeEmp());
+        Aat(cleaningState, FoundPeeJan());
+
 
 
 
@@ -82,6 +90,8 @@ public class AIController : MonoBehaviour
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
     Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
+    Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
+    Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
 
 
 
@@ -171,6 +181,16 @@ public class AIController : MonoBehaviour
             hasWorkToDo = false;
             StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));
         }
+        if (other.CompareTag("Pee"))
+        {
+            peeFound = true;
+            peeObj = other;
+        }
+    }
+    public void CallDestroy(Collider obj)
+    {
+        Debug.Log("Destroyed was Called on: " + obj);
+        Destroy(obj);
     }
 
     public void AnimationStart(float _sp)
