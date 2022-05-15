@@ -19,10 +19,13 @@ public class FishQuest : Quest
         base.Start();
         fishRemaining = startingFish;
         fishQuestParticles.subscribe(fishQuestDetected);
+
+        // set particle number
+        fishQuestParticles.setNumberOfFish(startingFish);
     }
 
-    // called as subscriber to fqd
-    // quest start/finish logic
+    // called as subscriber to fish particles
+    // quest lifetime logic
     private void fishQuestDetected()
     {
         if (!completed)
@@ -31,8 +34,9 @@ public class FishQuest : Quest
             if (!started) questStarted();
             else
             {
-                questBus.update( new QuestObject(0, 
-                             "Fish Collected! " + fishRemaining + " fish left!"));
+                string message = "Fish Collected! " + fishRemaining + " fish left!";
+                questBus.update( new QuestObject(0, message));
+                fishQuestParticles.setNumberOfFish(fishRemaining);
             }
             if (fishRemaining <= 0) questCompleted();
         }
@@ -41,15 +45,16 @@ public class FishQuest : Quest
     public override void questStarted()
     {
         base.questStarted();
-        print("fish quest starting");
-        questBus.update(new QuestObject(0, "Flying fish! Everywhere! Quickly, clean up the mess! "
-                                        + fishRemaining + " remaining"));
+        string message = "Flying fish! Everywhere! Quickly, clean up the mess! "
+                                        + fishRemaining + " remaining";
+        questBus.update(new QuestObject(0, message, LevelData.publicEvents.QUESTSTARTED, questName));
     }
 
     public override void questCompleted()
     {
         base.questCompleted();
-        questBus.update(new QuestObject(10, "Flying fish? Never seen one in my life! (...yum)"));
+        string message = "Flying fish? Never seen one in my life! (...yum)";
+        questBus.update(new QuestObject(10, message, LevelData.publicEvents.QUESTFINISHED, questName));
     }
     
 }

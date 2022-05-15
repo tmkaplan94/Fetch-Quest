@@ -32,16 +32,22 @@ public class FishQuestParticles : MonoBehaviour
         // TODO do this properly
         if (other.GetComponent<PlayerMovement>())
         {
-            deleteCollidingParticles(other);
+            Vector3 fishPos = deleteCollidingParticles(other);
             onFishQuestDetected();
+            crumbParticles.transform.position = fishPos;
+            crumbParticles.Play();
         }
     }
 
-    private void deleteCollidingParticles(GameObject target)
+    // returns position of deleted particle for crumb spawning
+    // hacky but I think best
+    private Vector3 deleteCollidingParticles(GameObject target)
     {
         // following code shamelessly recreated from unity forums post:
         // https://answers.unity.com/questions/1438477/finding-particle-information-upon-collision.html
 
+        Vector3 particlePos = Vector3.zero;
+        
         // get particle array
         ParticleSystem.Particle[] allParticles;
         allParticles = new ParticleSystem.Particle[fishParticles.particleCount];
@@ -57,6 +63,7 @@ public class FishQuestParticles : MonoBehaviour
                                             allParticles[i].GetCurrentSize3D(fishParticles));
                 if (collider.bounds.Intersects(particleBounds))
                 {
+                    particlePos = allParticles[i].position;
                     allParticles[i].remainingLifetime = -1;
                     break;
                 }
@@ -65,6 +72,12 @@ public class FishQuestParticles : MonoBehaviour
 
          // build particles from updated array
          fishParticles.SetParticles(allParticles);
+         return particlePos;
+    }
 
+    public void setNumberOfFish(int fish)
+    {
+        var main = fishParticles.main;
+        main.maxParticles = fish;
     }
 }

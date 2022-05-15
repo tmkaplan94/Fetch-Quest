@@ -13,6 +13,7 @@ public class Quest : MonoBehaviour
     // public to open to inheritance
     [HideInInspector] public QuestBus questBus;
     [HideInInspector] public QuestManager questManager;
+    [SerializeField] public string questName = "Quest";
     public bool completed = false;
     public bool started = false;
     

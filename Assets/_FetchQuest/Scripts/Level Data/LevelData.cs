@@ -13,7 +13,7 @@ public class LevelData : MonoBehaviour
     public QuestBus questBus;
     public QuestManager questManager;
 
-    public enum publicEvents {NOEVENT, FIREALARM};
+    public enum publicEvents {NOEVENT, QUESTSTARTED, QUESTFINISHED, FIREALARM};
 
     // on (level) load, puts itself in the level static
     private void Awake()
