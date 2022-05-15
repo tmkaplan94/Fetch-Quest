@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EvacuationState : IState
+public class FiredState : IState
 {
     private readonly AIController _controller;
     private readonly NavMeshAgent _navMeshAgent;
     private float waitTime;
 
-    public EvacuationState(AIController c, NavMeshAgent n)
+    private Vector3 _lastPosition = Vector3.zero;
+    public float TimeStuck;
+
+    public FiredState(AIController c, NavMeshAgent n)
     {
         _controller = c;
         _navMeshAgent = n;
@@ -19,15 +22,14 @@ public class EvacuationState : IState
     {
         if (waitTime <= Time.time)
         {
-            waitTime += Time.time;
-            if (_controller.turnAlarmOff == true) { waitTime = 0; }
+            //Destroy(this); (This does not work, I need to call _controller, can fix later after flushing out a few things)
         }
     }
 
 
     public void OnEnter()
     {
-        Debug.Log("Evacuation Enter");
+        Debug.Log("Fired Janitor Start");
         waitTime = Time.time + _controller.AIStats.RestTime * 3;
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_controller.exit.position);
@@ -35,10 +37,7 @@ public class EvacuationState : IState
 
     public void OnExit()
     {
-        Debug.Log("Evacuation Exit");
-        _navMeshAgent.enabled = false;
-        _controller.fireAlarm = false;
-        _controller.turnAlarmOff = false;
-        _controller.GetNewTarget();
+        Debug.Log("Fired");
+        //Destroy(this); (Or would it go better here?)
     }
 }

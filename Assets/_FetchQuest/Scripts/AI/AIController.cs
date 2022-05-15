@@ -18,6 +18,8 @@ public class AIController : MonoBehaviour
     public bool fireAlarm = false; //Set Bool for fire alarm
     public bool turnAlarmOff = false; //Set Bool for fire alarm to turn off
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
+    public bool gotFired = false;
+    public bool bossMad = false;
     private Collider peeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
@@ -58,6 +60,7 @@ public class AIController : MonoBehaviour
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
         var calljanitorState = new CallJanitorState(this, navMeshAgent);
         var cleaningState = new CleaningState(this, peeObj);
+        var firedState = new FiredState(this, navMeshAgent);
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
@@ -73,6 +76,7 @@ public class AIController : MonoBehaviour
         Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
         Aat(calljanitorState, FoundPeeEmp());
         Aat(cleaningState, FoundPeeJan());
+        Aat(firedState, Fired());
 
 
 
@@ -92,6 +96,7 @@ public class AIController : MonoBehaviour
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
     Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
+    Func<bool> Fired() => () => _stats.IsJanitor == true && gotFired == true;
 
 
 
@@ -186,8 +191,12 @@ public class AIController : MonoBehaviour
             peeFound = true;
             peeObj = other;
         }
+        if (_stats.IsBoss == true && other.gameObject.name == "Janitor" && bossMad == true)
+        {
+            gotFired = true;
+        }
     }
-    public void CallDestroy(Collider obj)
+    public void CallDestroy(GameObject obj)
     {
         Debug.Log("Destroyed was Called on: " + obj);
         Destroy(obj);

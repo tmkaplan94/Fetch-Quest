@@ -20,3 +20,5 @@ MonoBehaviour:
   pettingCooldown: 100
   talkingCooldown: 45
   workingCooldown: 30
+  isJanitor: 0
+  isBoss: 1

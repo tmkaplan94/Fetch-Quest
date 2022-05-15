@@ -16,20 +16,18 @@ public class CleaningState : IState
 
     public void Tick()
     {
-        Debug.Log("Janitor Waiting");
         if (waitTime <= Time.time)
         {
             _controller.peeFound = false;
-            _controller.CallDestroy(pee); //Does Not Work /shrug
+            //Destroy(pee); pee is a Transform and not a gameObject, will fix later
             _controller.GetNewTarget();
         }
     }
 
     public void OnEnter()
     {
-        Debug.Log("Janitor Enter Cleaning");
-        waitTime = Time.time + _controller.AIStats.RestTime;
-        //Play Animation
+        Debug.Log("Janitor Cleaning Entered");
+        waitTime = Time.time + _controller.AIStats.RestTime * 2;
     }
 
     public void OnExit()
