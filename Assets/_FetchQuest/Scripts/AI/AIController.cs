@@ -191,7 +191,7 @@ public class AIController : MonoBehaviour
             peeFound = true;
             peeObj = other;
         }
-        if (_stats.IsBoss == true && other.gameObject.name == "Janitor" && bossMad == true)
+        if (_stats.IsJanitor == true && other.gameObject.name == "Boss" && bossMad == true)
         {
             gotFired = true;
         }
