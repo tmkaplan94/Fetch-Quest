@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Daichi m
+// Daichi M
 // the fish quest
 
 // testing new quest architectures
@@ -11,8 +11,9 @@ public class FishQuest : Quest
 {
     [SerializeField] private FishQuestParticles fishQuestParticles;
     [SerializeField] public int startingFish = 10;
+    [SerializeField] private int reward = 50;
     
-    int fishRemaining = 0;
+    private int fishRemaining = 0;
     
     public override void Start()
     {
@@ -24,37 +25,52 @@ public class FishQuest : Quest
         fishQuestParticles.setNumberOfFish(startingFish);
     }
 
-    // called as subscriber to fish particles
-    // quest lifetime logic
-    private void fishQuestDetected()
-    {
-        if (!completed)
-        {
-            fishRemaining--;
-            if (!started) questStarted();
-            else
-            {
-                string message = "Fish Collected! " + fishRemaining + " fish left!";
-                questBus.update( new QuestObject(0, message));
-                fishQuestParticles.setNumberOfFish(fishRemaining);
-            }
-            if (fishRemaining <= 0) questCompleted();
-        }
-    }
+    # region QUEST FUNCTIONS
 
     public override void questStarted()
     {
         base.questStarted();
+
         string message = "Flying fish! Everywhere! Quickly, clean up the mess! "
                                         + fishRemaining + " remaining";
-        questBus.update(new QuestObject(0, message, LevelData.publicEvents.QUESTSTARTED, questName));
+        QuestObject update = new QuestObject(0, message);
+        update.eventEnum = LevelData.publicEvents.QUESTSTARTED;
+        update.questName = questName;
+
+        questBus.update(update);
     }
 
     public override void questCompleted()
     {
         base.questCompleted();
+
         string message = "Flying fish? Never seen one in my life! (...yum)";
-        questBus.update(new QuestObject(10, message, LevelData.publicEvents.QUESTFINISHED, questName));
+        QuestObject update = new QuestObject(reward, message);
+        update.eventEnum = LevelData.publicEvents.QUESTFINISHED;
+        update.questName = questName;
+
+        questBus.update(update);
     }
+
+    private void updateFish()
+    {
+        string message = "Fish Collected! " + fishRemaining + " fish left!";
+        questBus.update( new QuestObject(0, message));
+        fishQuestParticles.setNumberOfFish(fishRemaining);
+    }
+
+    # endregion
     
+    // called as subscriber to fish particles
+    // quest lifetime logic
+    private void fishQuestDetected()
+    {
+        if (completed) return;
+
+        fishRemaining--;
+        
+        if (!started) questStarted();
+        else updateFish();
+        if (fishRemaining <= 0) questCompleted();
+    }
 }
