@@ -18,10 +18,10 @@ public class FishQuest : Quest
     public override void Start()
     {
         base.Start();
+
         fishRemaining = startingFish;
         fishQuestParticles.subscribe(fishQuestDetected);
 
-        // set particle number
         fishQuestParticles.setNumberOfFish(startingFish);
     }
 
@@ -34,9 +34,6 @@ public class FishQuest : Quest
         string message = "Flying fish! Everywhere! Quickly, clean up the mess! "
                                         + fishRemaining + " remaining";
         QuestObject update = new QuestObject(0, message);
-        update.eventEnum = LevelData.publicEvents.QUESTSTARTED;
-        update.questName = questName;
-
         questBus.update(update);
     }
 
@@ -46,9 +43,6 @@ public class FishQuest : Quest
 
         string message = "Flying fish? Never seen one in my life! (...yum)";
         QuestObject update = new QuestObject(reward, message);
-        update.eventEnum = LevelData.publicEvents.QUESTFINISHED;
-        update.questName = questName;
-
         questBus.update(update);
     }
 

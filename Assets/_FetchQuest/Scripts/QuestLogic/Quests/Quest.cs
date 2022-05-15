@@ -21,12 +21,16 @@ public class Quest : MonoBehaviour
     {
         started = true;
         questManager.questStarted(this);
+        QuestObject update = new QuestObject(0,"", LevelData.publicEvents.QUESTSTARTED, questName);
+        questBus.update(update);
     }
 
     public virtual void questCompleted()
     {
         completed = true;
         questManager.questCompleted(this);
+        QuestObject update = new QuestObject(0,"", LevelData.publicEvents.QUESTFINISHED, questName);
+        questBus.update(update);
     }
     
     
