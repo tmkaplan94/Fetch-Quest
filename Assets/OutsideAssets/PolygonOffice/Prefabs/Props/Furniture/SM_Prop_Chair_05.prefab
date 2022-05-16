@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 4751637669458596}
   - component: {fileID: 33471368226376294}
   - component: {fileID: 23517388460959024}
-  - component: {fileID: 1312892917}
   - component: {fileID: 1312892918}
   - component: {fileID: 1312892919}
+  - component: {fileID: 2142209408}
+  - component: {fileID: 2142209409}
+  - component: {fileID: 2142209410}
   m_Layer: 10
   m_Name: SM_Prop_Chair_05
   m_TagString: Untagged
@@ -84,22 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &1312892917
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639133898463432}
-  serializedVersion: 2
-  m_Mass: 2
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &1312892918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -114,6 +100,48 @@ BoxCollider:
   m_Size: {x: 0.55, y: 0.29, z: 0.03}
   m_Center: {x: 0, y: 0.78, z: -0.19}
 --- !u!65 &1312892919
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639133898463432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.55, y: 0.63, z: 0.43}
+  m_Center: {x: 0, y: 0.316, z: 0.03}
+--- !u!54 &2142209408
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639133898463432}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &2142209409
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639133898463432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.55, y: 0.29, z: 0.03}
+  m_Center: {x: 0, y: 0.78, z: -0.19}
+--- !u!65 &2142209410
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
