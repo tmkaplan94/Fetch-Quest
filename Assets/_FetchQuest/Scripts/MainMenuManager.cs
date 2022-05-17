@@ -17,7 +17,9 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private GameObject audioCanvas;
     [SerializeField] private GameObject mainUICanvas;
+    [SerializeField] private GameObject controlCanvas;
     [SerializeField] private Transform centerScene;
+    
 
 
     public void LoadMultiplayerScene()
@@ -43,11 +45,25 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.PlaySFX(AudioNames.hover, centerScene.position);
     }
 
-    public void SetAudioOptionsVisibility(){
+    public void SetAudioOptionsVisibility (){
         if(audioCanvas.activeSelf){
             audioCanvas.SetActive(false);
         }else{
             audioCanvas.SetActive(true);
+        }
+
+        if(mainUICanvas.activeSelf){
+            mainUICanvas.SetActive(false);
+        }else{
+            mainUICanvas.SetActive(true);
+        }
+    }
+
+    public void SetControlsVisibility(){
+        if(controlCanvas.activeSelf){
+            controlCanvas.SetActive(false);
+        }else{
+            controlCanvas.SetActive(true);
         }
 
         if(mainUICanvas.activeSelf){
