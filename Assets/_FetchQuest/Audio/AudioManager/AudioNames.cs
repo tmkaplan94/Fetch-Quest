@@ -11,4 +11,5 @@ public static class AudioNames
     public static string PickUp = "Pick_Up_SFX";
     public static string click = "Cursor_Click_SFX";
     public static string hover = "Cursor_Hover_SFX";
+    public static string FireAlarm = "Fire_Alarm";
 }

@@ -22,6 +22,7 @@ public class PickUpSystem : MonoBehaviour
     [SerializeField] private LayerMask pickUpsLayer;
 
     private string interactableTag = "Interactable";
+    private string EventObjectTag = "EventObj";
     private float maxMass;
     private void Start()
     {
@@ -53,6 +54,10 @@ public class PickUpSystem : MonoBehaviour
         {
             foreach (Collider item in items)
             {
+                if(item.gameObject.CompareTag(EventObjectTag))
+                {
+                    item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
+                }
                 if (item.gameObject.CompareTag(interactableTag) && item.attachedRigidbody.mass <= maxMass)
                 {
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);

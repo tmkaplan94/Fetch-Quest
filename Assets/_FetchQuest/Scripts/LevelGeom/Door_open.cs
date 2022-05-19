@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Door_open : MonoBehaviour, Interactable
+public class Door_open : MonoBehaviour
 {
     private bool _isOpen = false;
     //private bool _isOpening = false;
