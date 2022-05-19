@@ -17,16 +17,15 @@ public class openWindow : MonoBehaviour
         if (!isOpen)
         {
             Debug.Log("isnt open");
-            foreach (string booty in _midDogs)
-            {
-                if (other.transform.parent.gameObject.name == booty)
+
+                if (other.transform.parent.gameObject.CompareTag("medium"))
                 {
                     Debug.Log("booty");
                     Open();
                 }
-            }
         }
     }
+
     private void Open()
     {
         isOpen = true;

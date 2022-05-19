@@ -145,12 +145,15 @@ public class AIController : MonoBehaviour
         else
             SetTarget(waypoints[currentWaypoint]);
     }
-    
+
+    bool ComparePlayerTag(string tag) { 
+        return tag == "small" || tag == "big" || tag == "medium" ;
+    }
     public void OnTriggerEnter(Collider other)
     {
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
-        if (other.CompareTag("Player") && !fireAlarm)
+        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             
