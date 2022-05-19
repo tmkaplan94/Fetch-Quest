@@ -22,6 +22,17 @@ public class PickUpSystem : MonoBehaviour
     [SerializeField] private LayerMask pickUpsLayer;
 
     private string interactableTag = "Interactable";
+    private float maxMass;
+    private void Start()
+    {
+        switch (gameObject.tag) 
+        {
+            case "big": maxMass = 15; break;
+            case "medium": maxMass = 10; break;
+            case "small": maxMass = 5; break;
+            default: maxMass = 0; break;
+        }
+    }
 
     private void Update() 
     {
@@ -37,15 +48,15 @@ public class PickUpSystem : MonoBehaviour
     private void PickUp()
     {
         Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer );
-        
+        Drop();
         if (items.Length > 0)
         {
             foreach (Collider item in items)
             {
-                if (item.gameObject.CompareTag(interactableTag))
+                if (item.gameObject.CompareTag(interactableTag) && item.attachedRigidbody.mass <= maxMass)
                 {
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
-                    Drop();
+                    
                     currentItem = item.gameObject;
                     Collider[] cols = currentItem.GetComponentsInChildren<Collider>();
                     foreach (Collider col in cols)
@@ -60,10 +71,7 @@ public class PickUpSystem : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            Drop();
-        }
+        
     }
 
     private void Drop()
