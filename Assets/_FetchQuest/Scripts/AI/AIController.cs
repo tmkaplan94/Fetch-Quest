@@ -25,6 +25,7 @@ public class AIController : MonoBehaviour
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
     private ScoreManager scoreManager;
+    private QuestBus eventSys;
     public int idelCount = 0;
     private int scoreInc = 1;
 
@@ -50,7 +51,8 @@ public class AIController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        
+        eventSys = LevelStatic.currentLevel.questBus;
+        eventSys.subscribe(HandleEvents);
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
@@ -90,7 +92,7 @@ public class AIController : MonoBehaviour
     Func<bool> HasTarget() => () => Target != null;
     Func<bool> HasWork() => () => isWorking.value == true;
     Func<bool> AlarmOn() => () => fireAlarm == true;
-    Func<bool> AlarmOff() => () => turnAlarmOff == true;
+    Func<bool> AlarmOff() => () => fireAlarm == false;
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
     Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
@@ -144,6 +146,17 @@ public class AIController : MonoBehaviour
         }
         else
             SetTarget(waypoints[currentWaypoint]);
+    }
+    private void HandleEvents(QuestObject q)
+    {
+        switch (q.eventEnum)
+        {
+            case LevelData.publicEvents.FIREALARM:
+                {
+                    fireAlarm = !fireAlarm;
+                }
+                break;
+        }
     }
 
     bool ComparePlayerTag(string tag) { 

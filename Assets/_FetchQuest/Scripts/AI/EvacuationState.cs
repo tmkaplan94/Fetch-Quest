@@ -19,7 +19,7 @@ public class EvacuationState : IState
     {
         if (waitTime <= Time.time)
         {
-            waitTime += Time.time;
+            waitTime += Time.deltaTime;
             if (_controller.turnAlarmOff == true) { waitTime = 0; }
         }
     }
