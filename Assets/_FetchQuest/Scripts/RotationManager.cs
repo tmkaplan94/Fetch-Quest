@@ -169,7 +169,7 @@ public class RotationManager : MonoBehaviour
         }
 
         if(_currentDog.name == "BRITISH BULLDOG"){
-            dogSizeText.text = "mid";
+            dogSizeText.text = "small";
         }
 
         if(_currentDog.name == "RHODESIAN RIDGEBACK"){
@@ -189,7 +189,7 @@ public class RotationManager : MonoBehaviour
         }
         
         if(_currentDog.name == "BULLTERRIER"){
-            dogSizeText.text = "small";
+            dogSizeText.text = "mid";
         }
     }
 
