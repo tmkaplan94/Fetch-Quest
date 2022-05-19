@@ -124,10 +124,10 @@ public class Player_Physic : MonoBehaviour
         }
 
         // We dont want to push objects below us
-        if (hit.moveDirection.y < -0.3)
+        /*if (hit.moveDirection.y < -0.3)
         {
             return;
-        }
+        }*/
 
         if (_debug_pyshic_Nate)
         {
