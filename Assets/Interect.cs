@@ -23,11 +23,12 @@ public class Interect : MonoBehaviour
         {
             Interact();
             AudioManager.Instance.PlaySFX("General_Bark", transform.position);
-            if (_pickupSystem.CurrentItem != null)   
+            GameObject heldItem = _pickupSystem.GetItem();
+            if (heldItem != null)   
             {
-                if(_pickupSystem.CurrentItem.CompareTag(EventObjectTag))
+                if(heldItem.CompareTag(EventObjectTag))
                 {
-                    _pickupSystem.CurrentItem.GetComponent<Interactable>().Interact(this.gameObject);
+                    heldItem.GetComponent<Interactable>().Interact(this.gameObject);
                 }
             }
         }

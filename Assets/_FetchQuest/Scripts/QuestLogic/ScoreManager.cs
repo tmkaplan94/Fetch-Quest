@@ -82,7 +82,7 @@ public class ScoreManager : MonoBehaviour
         // hijacking  this to test
         if (questBus != null)
             questBus.update(new QuestObject(amount, "dogs are good!", 
-                            LevelData.publicEvents.FIREALARM, "helloQuest"));
+                            LevelData.publicEvents.NOEVENT, "helloQuest"));
         else
         {
             print("QUEST BUS IS NULL");

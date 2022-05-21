@@ -14,10 +14,7 @@ using UnityEngine;
 
 public class PickUpSystem : MonoBehaviour
 {
-    public GameObject CurrentItem
-    {
-        get => currentItem;
-    }
+
     [SerializeField] private GameObject currentItem = null;
    
     [SerializeField] private Transform holdPos;
