@@ -5,14 +5,7 @@
  *
  * Description
  * - To use Music: AudioManager.Instance.PlayMusic(<name>);
- * - To use SFX: AudioManager.Instance.PlaySFX(<name>, <pos>);
- * - Music Names: ["Life_of_a_Pet",
-                   "Strolling Along"]
- * - SFX Names: ["Crowd_Background", 
-                 "Cursor_Click_SFX", 
-                 "Cursor_Hover_SFX", 
-                 "Pick_Up_SFX", 
-                 "Score_Up_SFX"]
+ * - To use SFX: AudioManager.Instance.PlaySFX(<name> or AudioNames.<name>, <pos>);
  *
  * Updates
  * - N/A
