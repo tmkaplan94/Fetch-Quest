@@ -36,7 +36,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private RoomOptions _roomOptions = new RoomOptions();
     private List<string> _availableRooms = new List<string>();
     private List<PlayerListing> _playerListings = new List<PlayerListing>();
-    private int _id;
 
     #endregion
 

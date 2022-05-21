@@ -17,6 +17,8 @@ public class Players : ScriptableObject
         {
             _playersReadyToPlay[id] = false;
         }
+
+        Debug.Log("Added player " + id);
     }
     
     // make this player ready
