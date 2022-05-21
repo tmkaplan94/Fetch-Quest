@@ -20,7 +20,8 @@ public class AIController : MonoBehaviour
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
     public bool gotFired = false;
     public bool bossMad = false;
-    private Collider peeObj;
+    public bool destroyed = false;
+    public Collider peeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -51,8 +52,8 @@ public class AIController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        eventSys = LevelStatic.currentLevel.questBus;
-        eventSys.subscribe(HandleEvents);
+        //eventSys = LevelStatic.currentLevel.questBus;
+        //eventSys.subscribe(HandleEvents);
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
@@ -61,7 +62,7 @@ public class AIController : MonoBehaviour
         var workingState = new WorkingState(this); //Setting up WorkingState
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
         var calljanitorState = new CallJanitorState(this, navMeshAgent);
-        var cleaningState = new CleaningState(this, peeObj);
+        var cleaningState = new CleaningState(this);
         var firedState = new FiredState(this, navMeshAgent);
 
         At(idleState, walkingState, HasTarget());
@@ -113,6 +114,11 @@ public class AIController : MonoBehaviour
             idelCount = 0;
         }
     }
+    public void CallDestroy(GameObject obj)
+    {
+        Debug.Log("Destroyed was Called on: " + obj);
+        Destroy(obj);
+    }
 
     IEnumerator Cooldown(float waitTime, ReffBool boolToChange)
     {
@@ -146,7 +152,8 @@ public class AIController : MonoBehaviour
         }
         else
             SetTarget(waypoints[currentWaypoint]);
-    }
+
+    }/*
     private void HandleEvents(QuestObject q)
     {
         switch (q.eventEnum)
@@ -158,7 +165,7 @@ public class AIController : MonoBehaviour
                 break;
         }
     }
-
+    */
     bool ComparePlayerTag(string tag) { 
         return tag == "small" || tag == "big" || tag == "medium" ;
     }
@@ -211,11 +218,6 @@ public class AIController : MonoBehaviour
         {
             gotFired = true;
         }
-    }
-    public void CallDestroy(GameObject obj)
-    {
-        Debug.Log("Destroyed was Called on: " + obj);
-        Destroy(obj);
     }
 
     public void AnimationStart(float _sp)

@@ -8,10 +8,9 @@ public class CleaningState : IState
     private readonly AIController _controller;
     private float waitTime;
     private Collider pee;
-    public CleaningState(AIController c, Collider t)
+    public CleaningState(AIController c)
     {
         _controller = c;
-        pee = t;
     }
 
     public void Tick()
@@ -19,7 +18,7 @@ public class CleaningState : IState
         if (waitTime <= Time.time)
         {
             _controller.peeFound = false;
-            //pee.gameObject.  destroy(); //pee is a Transform and not a gameObject, will fix later
+            _controller.CallDestroy(_controller.peeObj.gameObject);//pee.gameObject.  destroy(); //pee is a Transform and not a gameObject, will fix later
             _controller.GetNewTarget();
         }
     }

@@ -22,7 +22,7 @@ public class FiredState : IState
     {
         if (waitTime <= Time.time)
         {
-            //Destroy(this); (This does not work, I need to call _controller, can fix later after flushing out a few things)
+            _controller.CallDestroy(_controller.gameObject);//Destroy(this); (This does not work, I need to call _controller, can fix later after flushing out a few things)
         }
     }
 
@@ -30,7 +30,7 @@ public class FiredState : IState
     public void OnEnter()
     {
         Debug.Log("Fired Janitor Start");
-        waitTime = Time.time + _controller.AIStats.RestTime * 3;
+        waitTime = Time.time + _controller.AIStats.RestTime * 2;
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_controller.exit.position);
     }
@@ -38,6 +38,5 @@ public class FiredState : IState
     public void OnExit()
     {
         Debug.Log("Fired");
-        //Destroy(this); (Or would it go better here?)
     }
 }
