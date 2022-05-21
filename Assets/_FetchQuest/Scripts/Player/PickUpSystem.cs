@@ -59,7 +59,7 @@ public class PickUpSystem : MonoBehaviour
         {
             foreach (Collider item in items)
             {
-                if (item.gameObject.CompareTag(interactableTag) && item.attachedRigidbody.mass <= maxMass)
+                if (item.attachedRigidbody.mass <= maxMass)
                 {
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
                     
