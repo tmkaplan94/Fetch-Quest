@@ -216,20 +216,15 @@ public class AIController : MonoBehaviour
         {
             gotFired = true;
         }
-        if(other.CompareTag("Bullet"))
-        {
-            Zombify();
-            Destroy(other.gameObject);
-        }
     }
     public void CallDestroy(GameObject obj)
     {
         Debug.Log("Destroyed was Called on: " + obj);
         Destroy(obj);
     }
-    private void Zombify()
+    public void Zombify()
     {
-
+        print("zombie");
     }
 
     public void AnimationStart(float _sp)

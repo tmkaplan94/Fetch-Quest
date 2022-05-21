@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 23998837077714328}
   - component: {fileID: 64692249107000500}
   - component: {fileID: 1772330110391218752}
-  - component: {fileID: 356889584334987764}
-  m_Layer: 0
+  - component: {fileID: 236606739}
+  m_Layer: 7
   m_Name: SM_Wep_ToyGun_SMG_01
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038252086934968}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -115,7 +115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 8944847085430794297}
---- !u!54 &356889584334987764
+  _bullet: {fileID: 5709129099626374683, guid: afd5b7efe03c89f4cb33d21db8e8f981, type: 3}
+  _lethalBullet: {fileID: 5709129099626374683, guid: 1e1788db86992cc47a522fdd4efaf6f9, type: 3}
+  _lethal: 0
+--- !u!54 &236606739
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +145,7 @@ GameObject:
   - component: {fileID: 4033123412783426}
   - component: {fileID: 33397693551177872}
   - component: {fileID: 23636779238707330}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_ToyGun_SMG_01_Magazine_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +226,7 @@ GameObject:
   - component: {fileID: 4611491033967028}
   - component: {fileID: 33037810016270008}
   - component: {fileID: 23378279613540474}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_ToyGun_SMG_01_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +307,7 @@ GameObject:
   - component: {fileID: 4508556010174846}
   - component: {fileID: 33029477846706752}
   - component: {fileID: 23246181273177694}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_ToyGun_SMG_01_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

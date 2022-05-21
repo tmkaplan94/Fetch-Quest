@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 23574067656890844}
   - component: {fileID: 64898105290190294}
   - component: {fileID: 5474560815687265702}
-  - component: {fileID: 2618209685682751221}
-  m_Layer: 0
+  - component: {fileID: 1308712835}
+  m_Layer: 7
   m_Name: SM_Wep_ToyGun_OneShot_01
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4835601386434040
 Transform:
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022056941132780}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -115,7 +115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 6308051675746417593}
---- !u!54 &2618209685682751221
+  _bullet: {fileID: 5709129099626374683, guid: afd5b7efe03c89f4cb33d21db8e8f981, type: 3}
+  _lethalBullet: {fileID: 5709129099626374683, guid: 1e1788db86992cc47a522fdd4efaf6f9, type: 3}
+  _lethal: 0
+--- !u!54 &1308712835
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,12 +145,12 @@ GameObject:
   - component: {fileID: 4973175866584646}
   - component: {fileID: 33838477533267802}
   - component: {fileID: 23783782003327718}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_ToyGun_OneShot_01_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4973175866584646
 Transform:
@@ -223,12 +226,12 @@ GameObject:
   - component: {fileID: 4854137871586556}
   - component: {fileID: 33393067024553522}
   - component: {fileID: 23532828638835786}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_ToyGun_OneShot_01_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4854137871586556
 Transform:
@@ -304,12 +307,12 @@ GameObject:
   - component: {fileID: 4754180378236788}
   - component: {fileID: 33743935346489236}
   - component: {fileID: 23279581542641018}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_ToyGun_OneShot_01_Barrel_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4754180378236788
 Transform:

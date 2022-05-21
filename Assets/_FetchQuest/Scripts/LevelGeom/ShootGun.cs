@@ -6,21 +6,37 @@ using Photon.Pun;
 public class ShootGun : MonoBehaviour, Interactable
 {
     [SerializeField] private Transform firePos;
-
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject _bullet;
+    [SerializeField] private GameObject _lethalBullet;
+    [SerializeField] private bool _lethal;
+    private bool _isNetworked;
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            _isNetworked = false;
+        }
+        else
+        {
+            _isNetworked = true;
+        }
     }
 
     public void Interact(GameObject interacter)
     {
-        PhotonNetwork.Instantiate("Bullet", firePos.position, firePos.rotation);
+        if (_isNetworked)
+        {
+            if(!_lethal)
+                PhotonNetwork.Instantiate("Bullet", firePos.position, firePos.rotation);
+            else
+                PhotonNetwork.Instantiate("LethalBullet", firePos.position, firePos.rotation);
+        }
+        else
+        {
+            if (!_lethal)
+                Instantiate(_bullet, firePos.position, firePos.rotation);
+            else
+                Instantiate(_lethalBullet, firePos.position, firePos.rotation);
+        }
     }
 }

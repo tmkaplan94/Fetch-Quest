@@ -52,11 +52,11 @@ public class ScoreManager : MonoBehaviour
         {
             questBus = LevelStatic.currentLevel.questBus; 
             questBus.subscribe(UpdateFromQuestObject);
-            print("HOOKED UP TO QUEST BUS");
+            Debug.Log("HOOKED UP TO QUEST BUS");
         }
         else
         {
-            print("FAILED TO FIND LEVELDATA: " + LevelStatic.currentLevel);
+            Debug.Log("FAILED TO FIND LEVELDATA: " + LevelStatic.currentLevel);
         }
         
         

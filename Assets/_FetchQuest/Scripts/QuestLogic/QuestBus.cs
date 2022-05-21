@@ -20,14 +20,14 @@ public class QuestBus : MonoBehaviour
     public void update(QuestObject quest)
     {
         publish(quest);
-        print("PUBLISHED QUEST: " + quest.message);
+        Debug.Log("PUBLISHED QUEST: " + quest.message);
     }
 
     // call to subscribe to updates
     public void subscribe(QuestUpdatedDelegate subscriber)
     {
         questUpdatedDelegate += subscriber;
-        print("NEW SUBSCRIBER: " + subscriber);
+        Debug.Log("NEW SUBSCRIBER: " + subscriber);
     }
 
     #endregion

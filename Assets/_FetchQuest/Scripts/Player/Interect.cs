@@ -28,7 +28,6 @@ public class Interect : MonoBehaviour
             {
                 if(heldItem.TryGetComponent(out Interactable interactable))
                     interactable.Interact(this.gameObject);
-                
             }
         }
     }

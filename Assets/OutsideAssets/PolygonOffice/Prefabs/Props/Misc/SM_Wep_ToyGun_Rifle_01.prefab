@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 23640977737357174}
   - component: {fileID: 64314991873706452}
   - component: {fileID: 3211966559571318749}
-  - component: {fileID: 5285601258952871954}
-  m_Layer: 0
+  - component: {fileID: 2590047247036531488}
+  m_Layer: 7
   m_Name: SM_Wep_ToyGun_Rifle_01
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106554550272888}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -115,7 +115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 5744012617151128414}
---- !u!54 &5285601258952871954
+  _bullet: {fileID: 5709129099626374683, guid: afd5b7efe03c89f4cb33d21db8e8f981, type: 3}
+  _lethalBullet: {fileID: 5709129099626374683, guid: 1e1788db86992cc47a522fdd4efaf6f9, type: 3}
+  _lethal: 1
+--- !u!54 &2590047247036531488
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -19,6 +19,6 @@ public class LevelData : MonoBehaviour
     private void Awake()
     {
         LevelStatic.currentLevel = this;
-        print("INJECTED LEVEL DATA INTO STATIC");
+        Debug.Log("INJECTED LEVEL DATA INTO STATIC");
     }
 }
