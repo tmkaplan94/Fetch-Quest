@@ -51,8 +51,7 @@ public class AIController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        eventSys = LevelStatic.currentLevel.questBus;
-        eventSys.subscribe(HandleEvents);
+        
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
@@ -85,6 +84,12 @@ public class AIController : MonoBehaviour
 
         _stateMachine.SetState(idleState);
     }
+    void Start()
+    {
+        eventSys = LevelStatic.currentLevel.questBus;
+        eventSys.subscribe(HandleEvents);
+    }
+
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
     void Aat(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition); //Shorthand for AddAnyTransition
     

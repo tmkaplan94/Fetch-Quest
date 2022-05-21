@@ -13,10 +13,16 @@ public class FireAlarm : MonoBehaviour, Interactable
 
     public void Interact(GameObject interacter)
     {
+        Debug.Log("Firealarm");
         if (!active)
         {
             eventSys.update(new QuestObject(20, "Started a Fire!", LevelData.publicEvents.FIREALARM));
             AudioManager.Instance.PlaySFX(AudioNames.FireAlarm, transform.position);
+            active = true;
+        }
+        else
+        {
+
         }
     }
 }

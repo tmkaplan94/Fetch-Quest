@@ -18,6 +18,7 @@ public class PickUpSystem : MonoBehaviour
    
     [SerializeField] private Transform holdPos;
     [SerializeField] private Transform dropPos;
+    [SerializeField] private Transform interactPos;
     [SerializeField] private Vector3 pickUpBox;
     [SerializeField] private LayerMask pickUpsLayer;
 
@@ -39,16 +40,17 @@ public class PickUpSystem : MonoBehaviour
     {
          if (Input.GetKeyDown(KeyCode.E))
          {
-            PickUp();
+            Interact();
          }
     }
     public GameObject GetItem()
     {
         return currentItem;
     }
-    private void PickUp()
+    
+    private void Interact()
     {
-        Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer );
+        Collider[] items = Physics.OverlapBox(interactPos.position, pickUpBox, interactPos.rotation, pickUpsLayer );
         Drop();
         if (items.Length > 0)
         {
