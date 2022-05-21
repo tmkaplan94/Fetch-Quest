@@ -150,17 +150,19 @@ public class AudioManager : MonoBehaviour
     // Sets the master volume in the mixer with slider values.
     public void SetMasterVolume(float volume)
     {
+        PlayerPrefs.SetFloat("MasterSliderPref", volume);
         _mixer.SetFloat("Master", Mathf.Log10(volume)*20);
     }
     // Sets the music volume in the mixer with slider values.
     public void SetMusicVolume(float volume)
     {
+        PlayerPrefs.SetFloat("MusicSliderPref", volume);
         _mixer.SetFloat("Music", Mathf.Log10(volume)*20);
     }
     // Sets the SFX volume in the mixer with slider values.
-    // Currently doesn't correspond to the mixer because it's using _sfxVol to control volume instead.
     public void SetSFXVolume(float volume) // 0.0001 - 1.0
     {
+        PlayerPrefs.SetFloat("SFXSliderPref", volume);
         _mixer.SetFloat("SFX", Mathf.Log10(volume)*20);
     }
     // Master-muting function that, by design, disables all slider volume controls.

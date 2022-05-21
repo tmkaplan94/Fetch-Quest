@@ -10,8 +10,6 @@ public class SetupAudioOptions : MonoBehaviour
     [SerializeField] private Toggle muteSFX;
     [SerializeField] private Toggle muteMaster;
     [SerializeField] private Toggle muteMusic;
-    
-    
 
     void Start()
     {
@@ -30,6 +28,8 @@ public class SetupAudioOptions : MonoBehaviour
         AudioManager.Instance.sliderMusic = musicSlider;
         AudioManager.Instance.sliderSFX = SFXSlider;
 
+        masterSlider.value = PlayerPrefs.GetFloat("MasterSliderPref");
+        musicSlider.value = PlayerPrefs.GetFloat("MusicSliderPref");
+        SFXSlider.value = PlayerPrefs.GetFloat("SFXSliderPref");
     }
-
 }
