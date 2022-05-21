@@ -130,7 +130,7 @@ public class DogSelectionManager : MonoBehaviourPunCallbacks
         // if game is networked, go back to lobby scene
         if (_isNetworked)
         {
-            SceneManager.LoadScene("Lobby");
+            PhotonNetwork.LoadLevel("Lobby");
         }
         // otherwise, go back to the main menu
         else
