@@ -1082,6 +1082,7 @@ GameObject:
   - component: {fileID: 439955071792828053}
   - component: {fileID: 2380026020750417484}
   - component: {fileID: 5001475608229051789}
+  - component: {fileID: 4304963968920719196}
   m_Layer: 3
   m_Name: Dog
   m_TagString: Player
@@ -1222,6 +1223,23 @@ MonoBehaviour:
   _smallMass_setting: 5
   _mediumMass_setting: 10
   _bigMass_setting: 15
+--- !u!114 &4304963968920719196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602682488703216561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3feb1a916cebb3c44b4f80623e32da86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactPos: {fileID: 0}
+  pickUpBox: {x: 0, y: 0, z: 0}
+  interactLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &4706332110636127867
 PrefabInstance:
   m_ObjectHideFlags: 0
