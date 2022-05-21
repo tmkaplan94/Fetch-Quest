@@ -5,16 +5,15 @@ using UnityEngine;
 public class Interect : MonoBehaviour
 {
     [SerializeField] private Transform interactPos;
-
-    private string EventObjectTag = "EventObj";
     [SerializeField] private Vector3 _interactBox;
     [SerializeField] private LayerMask _interactLayer;
-
+    private string EventObjectTag = "EventObj";
+    private PickUpSystem _pickupSystem;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _pickupSystem = GetComponent<PickUpSystem>();
     }
 
     // Update is called once per frame
@@ -22,8 +21,15 @@ public class Interect : MonoBehaviour
     {
         if (Input.GetButtonDown("f"))
         {
-            AudioManager.Instance.PlaySFX("General_Bark", transform.position);
             Interact();
+            AudioManager.Instance.PlaySFX("General_Bark", transform.position);
+            if (_pickupSystem.CurrentItem != null)   
+            {
+                if(_pickupSystem.CurrentItem.CompareTag(EventObjectTag))
+                {
+                    _pickupSystem.CurrentItem.GetComponent<Interactable>().Interact(this.gameObject);
+                }
+            }
         }
     }
     private void Interact()
