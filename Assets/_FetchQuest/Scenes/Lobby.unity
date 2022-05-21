@@ -1559,7 +1559,7 @@ GameObject:
   - component: {fileID: 1040893568}
   m_Layer: 0
   m_Name: NetworkManager
-  m_TagString: Untagged
+  m_TagString: NetworkManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1588,7 +1588,6 @@ MonoBehaviour:
   roomListing: {fileID: 7188636159084432124, guid: d982b05f690aae948be7555ea76c0677, type: 3}
   playersContent: {fileID: 427251267}
   playerListing: {fileID: 2902587300875196254, guid: e9ded818c0d9c3d45aadc936a859c3fb, type: 3}
-  playerList: {fileID: 0}
 --- !u!4 &1040893567
 Transform:
   m_ObjectHideFlags: 0

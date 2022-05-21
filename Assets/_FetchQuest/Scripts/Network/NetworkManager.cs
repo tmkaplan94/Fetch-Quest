@@ -44,7 +44,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         // persist in scenes
         DontDestroyOnLoad(this);
-        
+
+        // find and destroy duplicates
+        GameObject[] duplicateNetworkManagers = GameObject.FindGameObjectsWithTag("NetworkManager");
+        foreach (GameObject networkManager in duplicateNetworkManagers)
+        {
+            // if duplicate is not me, destroy it
+            if (gameObject != networkManager.gameObject)
+            {
+                Destroy(networkManager);
+            }
+        }
+
         // all clients in the same room will automatically sync level
         PhotonNetwork.AutomaticallySyncScene = true;
         
