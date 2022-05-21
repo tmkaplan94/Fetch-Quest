@@ -54,11 +54,7 @@ public class TempMove_unused : MonoBehaviour
             speed = _speed;
             _isSprint = false;
         }
-        // bark
-        if(Input.GetButtonDown("f"))
-        {
-            AudioManager.Instance.PlaySFX("General_Bark", _pos.position);
-        }
+        
         //jump
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
