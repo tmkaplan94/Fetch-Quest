@@ -11,6 +11,8 @@ public class AIController : MonoBehaviour
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private Transform workplace; //Workplace coords
     [SerializeField] private Animator personAnimator;
+    [SerializeField] private Mesh zombieMesh;
+    [SerializeField] private Material zombieMaterial;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
@@ -225,6 +227,15 @@ public class AIController : MonoBehaviour
     public void Zombify()
     {
         print("zombie");
+        SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach(SkinnedMeshRenderer rend in renderers)
+        {
+            if (rend.enabled)
+            {
+                rend.material = zombieMaterial;
+                rend.sharedMesh = zombieMesh;
+            }
+        }
     }
 
     public void AnimationStart(float _sp)
