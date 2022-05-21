@@ -156,8 +156,9 @@ public class AIController : MonoBehaviour
     {
         switch (q.eventEnum)
         {
-            case LevelData.publicEvents.FIREALARM:
+            case LevelData.publicEvents.NOEVENT:
                 {
+                    print("booty");
                     fireAlarm = !fireAlarm;
                 }
                 break;
