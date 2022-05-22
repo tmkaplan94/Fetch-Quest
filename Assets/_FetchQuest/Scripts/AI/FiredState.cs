@@ -22,7 +22,7 @@ public class FiredState : IState
     {
         if (waitTime <= Time.time)
         {
-            _controller.CallDestroy(_controller.gameObject);//Destroy(this); (This does not work, I need to call _controller, can fix later after flushing out a few things)
+            //_controller.CallDestroy(_controller.gameObject);//Destroy(this); (This does not work, I need to call _controller, can fix later after flushing out a few things)
         }
     }
 

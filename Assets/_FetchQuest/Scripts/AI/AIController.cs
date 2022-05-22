@@ -52,8 +52,8 @@ public class AIController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        //eventSys = LevelStatic.currentLevel.questBus;
-        //eventSys.subscribe(HandleEvents);
+        eventSys = LevelStatic.currentLevel.questBus;
+        eventSys.subscribe(HandleEvents);
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
@@ -160,7 +160,7 @@ public class AIController : MonoBehaviour
         else
             SetTarget(waypoints[currentWaypoint]);
 
-    }/*
+    }
     private void HandleEvents(QuestObject q)
     {
         switch (q.eventEnum)
@@ -172,15 +172,18 @@ public class AIController : MonoBehaviour
                 break;
         }
     }
-    */
     bool ComparePlayerTag(string tag) { 
         return tag == "small" || tag == "big" || tag == "medium" ;
     }
     public void OnTriggerEnter(Collider other)
     {
+        if (_stats.IsJanitor && gotFired && other.CompareTag("Exit"))
+        {
+            Destroy(this.gameObject);
+        }
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
-        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm && !gotFired)
+        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             if(bone.CompareTag("Special") && _stats.IsBoss)
