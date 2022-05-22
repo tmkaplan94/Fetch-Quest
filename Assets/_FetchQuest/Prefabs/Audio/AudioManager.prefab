@@ -58,9 +58,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9f3e98a24eb61c949a8ec5958ba643b0, type: 3}
   currentMusic: {fileID: 6713806861356117955}
   currentSFX: {fileID: 6713806861356117952}
-  muteMaster: {fileID: 0}
-  muteMusic: {fileID: 0}
-  muteSFX: {fileID: 0}
   sliderMaster: {fileID: 0}
   sliderMusic: {fileID: 0}
   sliderSFX: {fileID: 0}
