@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 /*
  * Author: Grant Reed
@@ -12,7 +13,7 @@ using UnityEngine;
  * - N/A
  */
 
-public class PickUpSystem : MonoBehaviour
+public class PickUpSystem : MonoBehaviourPun
 {
 
     [SerializeField] private GameObject currentItem = null;
@@ -51,8 +52,19 @@ public class PickUpSystem : MonoBehaviour
     {
         return currentItem;
     }
-    
+
     private void PickUp()
+    {
+        photonView.RPC("PickUpRPC", RpcTarget.All);
+    }
+    private void Drop()
+    {
+        photonView.RPC("DropRPC", RpcTarget.All);
+    }
+    
+
+    [PunRPC]
+    private void PickUpRPC()
     {
         Collider[] items = Physics.OverlapBox(interactPos.position, pickUpBox, interactPos.rotation, pickUpsLayer );
         if (items.Length > 0)
@@ -80,7 +92,8 @@ public class PickUpSystem : MonoBehaviour
         
     }
 
-    private void Drop()
+    [PunRPC]
+    private void DropRPC()
     {
         if (currentItem != null)
         {
