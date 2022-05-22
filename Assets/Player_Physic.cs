@@ -48,7 +48,7 @@ public class Player_Physic : MonoBehaviour
 
     // Set for push power when dog and object have the save level 
     [SerializeField]
-    float pushPower = 2.0f;
+    float pushPower = 0.5f;
 
 
     [SerializeField]
