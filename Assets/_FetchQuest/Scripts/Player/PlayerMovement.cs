@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController _myCharacterController;
     [SerializeField] private Transform _cam;
     [SerializeField] private Animator _anime;
+    [SerializeField] private Animator _anime_pee;
+
 
     [SerializeField] private float _speed = 6;
     [SerializeField] private float _sprintspeed = 10;
@@ -32,12 +34,21 @@ public class PlayerMovement : MonoBehaviour
     private float _turnSmoothVelocity;
     private Vector3 _moveDirection = Vector3.zero;
     private bool _isSprint;
+    private bool _isPee;
     #endregion
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            _anime_pee.Play("Pissing");
+        }
+        else
+        {
+            Move();
+        }
+        
     }
 
     private void Move()
@@ -105,4 +116,6 @@ public class PlayerMovement : MonoBehaviour
         //Applying actual movement forward for player.
         _myCharacterController.Move(_moveDirection * Time.deltaTime);
     } 
+
+
 }

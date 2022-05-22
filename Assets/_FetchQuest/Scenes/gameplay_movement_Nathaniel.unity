@@ -396,11 +396,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 693364537264780902, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.17210132
+      value: -0.17210129
       objectReference: {fileID: 0}
     - target: {fileID: 693364537264780902, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0042871116
+      value: -0.0042871134
       objectReference: {fileID: 0}
     - target: {fileID: 693364537264780902, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.y
@@ -408,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 693364537264780902, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.02453087
+      value: -0.024530884
       objectReference: {fileID: 0}
     - target: {fileID: 768158204909552607, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_TagString
@@ -432,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2326747381192323208, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000576412
+      value: -0.00057641155
       objectReference: {fileID: 0}
     - target: {fileID: 2326747381192323208, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.y
@@ -454,6 +454,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2.6839952
       objectReference: {fileID: 0}
+    - target: {fileID: 5263986850461841620, guid: fa8d64218d01b76489a332a06685881b, type: 3}
+      propertyPath: _anime_pee
+      value: 
+      objectReference: {fileID: 1875888938}
+    - target: {fileID: 5263986850461841620, guid: fa8d64218d01b76489a332a06685881b, type: 3}
+      propertyPath: _dogPissing
+      value: 
+      objectReference: {fileID: 7400000, guid: 1aa0d2a60d7a7004bbde0e928ec830e9, type: 2}
     - target: {fileID: 5560281591964948639, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_Name
       value: Beagle
@@ -536,7 +544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798267430957605044, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0019672879
+      value: 0.0019672874
       objectReference: {fileID: 0}
     - target: {fileID: 7798267430957605044, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.y
@@ -544,10 +552,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798267430957605044, guid: fa8d64218d01b76489a332a06685881b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.011256831
+      value: 0.011256829
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8d64218d01b76489a332a06685881b, type: 3}
+--- !u!95 &1875888938 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4367249100914416277, guid: fa8d64218d01b76489a332a06685881b, type: 3}
+  m_PrefabInstance: {fileID: 1719988021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2046943096
 GameObject:
   m_ObjectHideFlags: 0

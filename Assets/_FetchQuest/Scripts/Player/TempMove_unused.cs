@@ -22,9 +22,17 @@ public class TempMove_unused : MonoBehaviour
     [SerializeField] private float _sprintSpeed;
     [SerializeField] private float _gravity = -9.81f;
     [SerializeField] private float _jumpHeight = 3;
+
+    [SerializeField] private bool _isPee = false;
+    [SerializeField] private string _strPissing = "Pissing";
+    [SerializeField] private Animation _animation_pee;
+    [SerializeField] private AnimationClip _dogPissing; 
+
+
     private Vector3 _velocity;
     private bool _isGrounded;
     private bool _isSprint;
+    
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundDistance = 0.4f;
@@ -38,11 +46,18 @@ public class TempMove_unused : MonoBehaviour
     void Awake()
     {
         _pos = gameObject.GetComponent<Transform>();
+        
+    }
+    private void Start()
+    {
+        _animation_pee = GetComponent<Animation>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        _anime.SetBool("_isPissing", false);
+
         float speed;
         if(Input.GetKey(KeyCode.LeftShift))
         {
@@ -92,15 +107,25 @@ public class TempMove_unused : MonoBehaviour
         _anime.SetFloat("Input Mag", inputMag);
         // ----------------------------------------------------------
 
-        if (direction.magnitude >= 0.1f)
+        if (Input.GetKeyDown(KeyCode.R) && _anime != null)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            _anime.SetBool("_isPissing", true);
+            Debug.Log("playing animation");
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            _controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
+        else {
+            if (direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                _controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            }
+        }
+       
+        
     }
 
 
