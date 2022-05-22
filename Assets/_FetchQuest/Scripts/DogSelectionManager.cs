@@ -27,6 +27,7 @@ public class DogSelectionManager : MonoBehaviourPunCallbacks
     
     #region Private Fields
 
+    private GameObject _rotationManager;
     private bool _isNetworked;
     private bool _guestIsReady;
     private bool _hostIsReady;
@@ -38,6 +39,8 @@ public class DogSelectionManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        _rotationManager = GameObject.Find("RotationManager");
+        
         // if the game is not networked
         if (FindObjectOfType<NetworkManager>() == null)
         {
@@ -85,6 +88,7 @@ public class DogSelectionManager : MonoBehaviourPunCallbacks
         
         // notify that guest player is ready to play
         photonView.RPC("GuestIsReady", RpcTarget.All);
+        _rotationManager.GetComponent<RotationManager>().HasSelected = true;
 
         // enable/disable proper UI elements
         guestPanel.transform.GetChild(0).gameObject.SetActive(false);
@@ -98,6 +102,7 @@ public class DogSelectionManager : MonoBehaviourPunCallbacks
 
         // host is now ready
         _hostIsReady = true;
+        _rotationManager.GetComponent<RotationManager>().HasSelected = true;
         
         // enable/disable proper UI elements
         hostPanel.transform.GetChild(0).gameObject.SetActive(false);
