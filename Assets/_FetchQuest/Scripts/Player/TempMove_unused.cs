@@ -111,7 +111,6 @@ public class TempMove_unused : MonoBehaviour
         {
             _anime.SetBool("_isPissing", true);
             Debug.Log("playing animation");
-
         }
         else {
             if (direction.magnitude >= 0.1f)
