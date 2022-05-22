@@ -25,10 +25,21 @@ public class PickUpSystem : MonoBehaviourPun
     [SerializeField] private LayerMask pickUpsLayer;
 
     private string interactableTag = "Interactable";
+    private bool isNetworked;
     
     private float maxMass;
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            isNetworked = false;
+        }
+        else
+            isNetworked = true;
+    }
     private void Start()
     {
+        
         switch (gameObject.tag) 
         {
             case "big": maxMass = 15; break;
@@ -43,9 +54,19 @@ public class PickUpSystem : MonoBehaviourPun
          if (Input.GetKeyDown(KeyCode.E))
          {
             if (currentItem == null)
-                PickUp();
+            {
+                if (isNetworked)
+                    PickUp();
+                else
+                    PickUpRPC();
+            }
             else
-                Drop();
+            {
+                if (isNetworked)
+                    Drop();
+                else
+                    DropRPC();
+            }
          }
     }
     public GameObject GetItem()

@@ -45,6 +45,7 @@ MonoBehaviour:
   - GuestIsReady
   - DropRPC
   - PickUpRPC
+  - ZombifyRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

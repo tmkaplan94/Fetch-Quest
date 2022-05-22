@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 using Random = UnityEngine.Random;
 
 public class AIController : MonoBehaviour
@@ -37,6 +38,7 @@ public class AIController : MonoBehaviour
     public Transform? Target { get; private set; }
     public Transform? Work { get; private set; }
     private NavMeshAgent? navMeshAgent;
+    private bool isNetworked;
 
     public AIStats AIStats => _stats;
     public class ReffBool
@@ -53,8 +55,14 @@ public class AIController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        
 
+
+        if (FindObjectOfType<NetworkManager>() == null)
+            isNetworked = false;
+        else
+            isNetworked = true;
+        
+        
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
         var pettingState = new PettingState(this); //Setting up PettingState
@@ -225,6 +233,17 @@ public class AIController : MonoBehaviour
         Destroy(obj);
     }
     public void Zombify()
+    {
+        if (isNetworked)
+        {
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("ZombifyRPC", RpcTarget.All);
+        }
+        else
+            ZombifyRPC();
+    }
+    [PunRPC]
+    public void ZombifyRPC()
     {
         print("zombie");
         SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
