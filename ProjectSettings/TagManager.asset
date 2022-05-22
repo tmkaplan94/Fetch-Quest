@@ -15,6 +15,7 @@ TagManager:
   - big
   - Pee
   - EventObj
+  - Special
   layers:
   - Default
   - TransparentFX

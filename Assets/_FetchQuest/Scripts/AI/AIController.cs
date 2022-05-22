@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class AIController : MonoBehaviour
 {
-    [SerializeField] private AIStats _stats;
+    public AIStats _stats;
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private Transform workplace; //Workplace coords
     [SerializeField] private Animator personAnimator;
@@ -113,6 +113,13 @@ public class AIController : MonoBehaviour
             hasWorkToDo = true;
             idelCount = 0;
         }
+        if (gotFired)
+        {
+            dogNearby = false;
+            personNearby = false;
+            hasWorkToDo = false;
+            idelCount = 0;
+        }
     }
     public void CallDestroy(GameObject obj)
     {
@@ -173,13 +180,18 @@ public class AIController : MonoBehaviour
     {
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
-        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
+        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm && !gotFired)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
+            if(bone.CompareTag("Special") && _stats.IsBoss)
+            {
+                bossMad = true;
+                Destroy(bone);
+            }
             
             if (canPet.value)
             {
-                if (bone != null)
+                if (bone != null && !bone.CompareTag("Special"))
                 {
                     scoreInc = 10;
                     Destroy(bone);
@@ -214,7 +226,7 @@ public class AIController : MonoBehaviour
             peeFound = true;
             peeObj = other;
         }
-        if (_stats.IsJanitor == true && other.gameObject.name == "Boss" && bossMad == true)
+        if (_stats.IsJanitor == true && other.gameObject.GetComponent<AIController>()._stats.IsBoss && other.gameObject.GetComponent<AIController>().bossMad == true)
         {
             gotFired = true;
         }
