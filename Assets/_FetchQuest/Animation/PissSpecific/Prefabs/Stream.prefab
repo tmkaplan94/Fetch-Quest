@@ -3876,7 +3876,7 @@ ParticleSystem:
     enabled: 1
     subEmitters:
     - serializedVersion: 3
-      emitter: {fileID: 0}
+      emitter: {fileID: 1086339852860119458}
       type: 2
       properties: 0
       emitProbability: 1
