@@ -44,6 +44,7 @@ public class PissHandler : MonoBehaviour
 
     private void StartPiss()
     {
+        _anime.SetBool("isPissing", true);
         print("start");
         currPiss = CreatePiss();
         currPiss.Begin();
@@ -51,13 +52,13 @@ public class PissHandler : MonoBehaviour
 
     private void EndPiss()
     {
-
+        _anime.SetBool("isPissing", false);
+        print("end");
     }
 
     private float CalcAngle()
     {
         float currF = transform.forward.y * Mathf.Rad2Deg;
-        print(currF);
         return currF;
     }
 

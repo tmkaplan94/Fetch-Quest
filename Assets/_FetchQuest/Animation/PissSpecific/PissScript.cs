@@ -38,6 +38,7 @@ public class PissScript : MonoBehaviour
 
     private IEnumerator BeginPiss()
     {
+        yield return new WaitForSeconds(1);
         while (gameObject.activeSelf)
         {
             targetPosition = FindFloor();
@@ -52,7 +53,9 @@ public class PissScript : MonoBehaviour
     private Vector3 FindFloor()
     {
         RaycastHit hit;
-        Ray ray = new Ray(transform.position, Vector3.down);
+        GameObject pissSpot = GameObject.Find("PissSpot");
+        Vector3 dir = (pissSpot.transform.position - transform.position).normalized;
+        Ray ray = new Ray(transform.position, dir);
 
         Physics.Raycast(ray, out hit, 2.0f);
         Vector3 endpoint = hit.collider ? hit.point : ray.GetPoint(10.0f);
