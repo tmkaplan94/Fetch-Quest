@@ -195,7 +195,7 @@ public class AIController : MonoBehaviour
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
-            if (bone.CompareTag("Special") && _stats.IsBoss)
+            if (bone!= null && bone.CompareTag("Special") && _stats.IsBoss)
             {
                 bossMad = true;
                 Destroy(bone);

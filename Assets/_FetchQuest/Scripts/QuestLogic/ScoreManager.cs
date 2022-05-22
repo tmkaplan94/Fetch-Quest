@@ -18,7 +18,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-
+using Photon.Pun;
 public class ScoreManager : MonoBehaviour
 {
     #region Private Serialized Fields
@@ -37,12 +37,21 @@ public class ScoreManager : MonoBehaviour
     #region Properties
     
     public int Score { get; private set; }
-    
+    private bool isNetworked;
+
     #endregion
 
 
     #region MonoBehavior Callbacks
-
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            isNetworked = false;
+        }
+        else
+            isNetworked = true;
+    }
     // initialize score board
     private void Start()
     {
@@ -78,6 +87,12 @@ public class ScoreManager : MonoBehaviour
 
     // updates score and visual feedback based on amount
     public void IncrementScore(int amount)
+    {
+        PhotonView v = GetComponent<PhotonView>();
+        v.RPC("IncrementScoreRPC", RpcTarget.All, amount);
+    }
+    [PunRPC]
+    public void IncrementScoreRPC(int amount)
     {
         // hijacking  this to test
         if (questBus != null)
