@@ -21,7 +21,7 @@ public class PissHandler : MonoBehaviour
 
     [SerializeField] private Animator _anime;
     private bool isPissing = false;
-    //private Stream currentStream = null;
+    private PissScript currPiss = null;
 
     // Update is called once per frame
     void Update()
@@ -45,7 +45,8 @@ public class PissHandler : MonoBehaviour
     private void StartPiss()
     {
         print("start");
-        GameObject streamObject = Instantiate(streamPrefab, pissPoint.position, Quaternion.identity, transform);
+        currPiss = CreatePiss();
+        currPiss.Begin();
     }
 
     private void EndPiss()
@@ -55,14 +56,16 @@ public class PissHandler : MonoBehaviour
 
     private float CalcAngle()
     {
-        return transform.forward.y * Mathf.Rad2Deg;
+        float currF = transform.forward.y * Mathf.Rad2Deg;
+        print(currF);
+        return currF;
     }
 
-    /*
-    private Stream CreatePiss()
+    
+    private PissScript CreatePiss()
     {
         GameObject streamObject = Instantiate(streamPrefab, pissPoint.position, Quaternion.identity, transform);
-        return streamObject.GetComponent<Stream>();
+        return streamObject.GetComponent<PissScript>();
     }
-    */
+    
 }

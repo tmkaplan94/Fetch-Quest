@@ -55,7 +55,7 @@ public class PissScript : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
 
         Physics.Raycast(ray, out hit, 2.0f);
-        Vector3 endpoint = hit.collider ? hit.point : ray.GetPoint(2.0f);
+        Vector3 endpoint = hit.collider ? hit.point : ray.GetPoint(10.0f);
 
         return endpoint;
     }
