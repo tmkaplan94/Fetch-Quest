@@ -56,6 +56,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 304186b3eea79cc4cafaa0ec92c42d5c, type: 3}
   - {fileID: 8300000, guid: 236fefe7e736fc54796cdc5b1d38f5a1, type: 3}
   - {fileID: 8300000, guid: 9f3e98a24eb61c949a8ec5958ba643b0, type: 3}
+  - {fileID: 8300000, guid: 6bf28d245eec01843bfd8d91c0845789, type: 3}
+  - {fileID: 8300000, guid: 9b357c4e06c18184b9385cf0886239c3, type: 3}
   currentMusic: {fileID: 6713806861356117955}
   currentSFX: {fileID: 6713806861356117952}
   sliderMaster: {fileID: 0}
