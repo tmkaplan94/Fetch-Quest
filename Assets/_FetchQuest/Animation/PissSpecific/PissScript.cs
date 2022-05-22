@@ -20,9 +20,13 @@ public class PissScript : MonoBehaviour
     private LineRenderer rendLine = null;
     private Vector3 targetPosition = Vector3.zero;
 
+    private ParticleSystem splash = null;
+    private Coroutine pissRoutine = null;
+
     private void Awake() 
     {
         rendLine = GetComponent<LineRenderer>();
+        splash = GetComponentInChildren<ParticleSystem>();
     }
 
     private void Start()
@@ -50,6 +54,25 @@ public class PissScript : MonoBehaviour
         }
     }
 
+    public void End()
+    {
+        StopCoroutine(pissRoutine);
+        pissRoutine = StartCoroutine(EndPiss());
+    }
+
+    private IEnumerator EndPiss()
+    {
+        while (!HasReachedPos(0, targetPosition))
+        {
+            AnimateToPos(0, targetPosition);
+            AnimateToPos(1, targetPosition);
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
+
     private Vector3 FindFloor()
     {
         RaycastHit hit;
@@ -66,5 +89,31 @@ public class PissScript : MonoBehaviour
     private void MoveToPosition(int index, Vector3 targetPosition)
     {
         rendLine.SetPosition(index, targetPosition);
+    }
+
+    private void AnimateToPos(int index, Vector3 targetPosition)
+    {
+        Vector3 currentPoint = rendLine.GetPosition(index);
+        Vector3 newPos = Vector3.MoveTowards(currentPoint, targetPosition, Time.deltaTime * 1.75f);
+        rendLine.SetPosition(index, newPos);
+    }
+
+    private bool HasReachedPos(int index, Vector3 targetPosition)
+    {
+        Vector3 currentPos = rendLine.GetPosition(index);
+        return currentPos == targetPosition;
+    }
+
+    private IEnumerator UpdateParticles()
+    {
+        while (gameObject.activeSelf)
+        {
+            splash.gameObject.transform.position = targetPosition;
+
+            bool isHitting = HasReachedPos(1, targetPosition);
+            splash.gameObject.SetActive(isHitting);
+
+            yield return null;
+        }
     }
 }
