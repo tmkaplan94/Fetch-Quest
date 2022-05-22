@@ -23,7 +23,7 @@ public class AIController : MonoBehaviour
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
     public bool gotFired = false;
     public bool bossMad = false;
-    private Collider peeObj;
+    public Collider peeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -127,6 +127,13 @@ public class AIController : MonoBehaviour
             hasWorkToDo = true;
             idelCount = 0;
         }
+        if (gotFired)
+        {
+            dogNearby = false;
+            personNearby = false;
+            hasWorkToDo = false;
+            idelCount = 0;
+        }
     }
 
     IEnumerator Cooldown(float waitTime, ReffBool boolToChange)
@@ -179,15 +186,23 @@ public class AIController : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+        if (_stats.IsJanitor && gotFired && other.CompareTag("Exit"))
+        {
+            Destroy(this.gameObject);
+        }
         Debug.LogWarning(canPet.value);
         Debug.LogWarning(other.gameObject.tag);
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
-            
+            if (bone.CompareTag("Special") && _stats.IsBoss)
+            {
+                bossMad = true;
+                Destroy(bone);
+            }
             if (canPet.value)
             {
-                if (bone != null)
+                if (bone != null && !bone.CompareTag("Special"))
                 {
                     scoreInc = 10;
                     Destroy(bone);
@@ -222,7 +237,7 @@ public class AIController : MonoBehaviour
             peeFound = true;
             peeObj = other;
         }
-        if (_stats.IsJanitor == true && other.gameObject.name == "Boss" && bossMad == true)
+        if (_stats.IsJanitor == true && other.gameObject.GetComponent<AIController>()._stats.IsBoss && other.gameObject.GetComponent<AIController>().bossMad == true)
         {
             gotFired = true;
         }

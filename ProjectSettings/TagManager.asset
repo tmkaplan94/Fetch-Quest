@@ -16,6 +16,8 @@ TagManager:
   - Pee
   - EventObj
   - NetworkManager
+  - Special
+  - Exit
   layers:
   - Default
   - TransparentFX
