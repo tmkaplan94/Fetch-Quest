@@ -54,6 +54,8 @@ public class PissHandler : MonoBehaviour
     {
         _anime.SetBool("isPissing", false);
         print("end");
+        currPiss.End();
+        currPiss = null;
     }
 
     private float CalcAngle()

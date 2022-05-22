@@ -37,7 +37,8 @@ public class PissScript : MonoBehaviour
 
     public void Begin()
     {
-        StartCoroutine(BeginPiss());
+        StartCoroutine(UpdateParticles());
+        pissRoutine = StartCoroutine(BeginPiss());
     }
 
     private IEnumerator BeginPiss()
