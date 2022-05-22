@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Players", menuName = "ScriptableObject/List/Players")]
@@ -7,6 +8,7 @@ public class Players : ScriptableObject
     private Dictionary<int, bool> _playersReadyToPlay = new Dictionary<int, bool>();
 
     // if item is not in list, it gets added
+    [PunRPC]
     public void Add(int id)
     {
         if (!_playersReadyToPlay.ContainsKey(id))
@@ -17,9 +19,12 @@ public class Players : ScriptableObject
         {
             _playersReadyToPlay[id] = false;
         }
+
+        Debug.Log("Added player " + id);
     }
     
     // make this player ready
+    [PunRPC]
     public void ImReady(int id)
     {
         if (_playersReadyToPlay.ContainsKey(id))
@@ -29,6 +34,7 @@ public class Players : ScriptableObject
     }
 
     // if item is in list, it gets removed
+    [PunRPC]
     public void Remove(int id)
     {
         if (_playersReadyToPlay.ContainsKey(id))
