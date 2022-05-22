@@ -243,7 +243,7 @@ public class AIController : MonoBehaviour
             ZombifyRPC();
     }
     [PunRPC]
-    public void ZombifyRPC()
+    private void ZombifyRPC()
     {
         print("zombie");
         SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
