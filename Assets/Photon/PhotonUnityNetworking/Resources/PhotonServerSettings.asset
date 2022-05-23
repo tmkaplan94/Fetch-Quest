@@ -47,6 +47,11 @@ MonoBehaviour:
   - PickUpRPC
   - ZombifyRPC
   - IncrementScoreRPC
+  - updateRPC
+  - TriggerEnteredRPC
+  - TriggerExitedRPC
+  - LoseRPC
+  - WinRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

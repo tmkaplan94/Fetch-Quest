@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Pool : MonoBehaviour
 {
     private int ballCount = 0;
     private bool loss = false;
     QuestBus eventSys;
+    private bool isNetworked;
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() != null)
+            isNetworked = true;
+        else
+            isNetworked = false;
+    }
     void Start()
     {
         eventSys = LevelStatic.currentLevel.questBus;
@@ -51,10 +60,32 @@ public class Pool : MonoBehaviour
     }
     private void Win()
     {
+        if (isNetworked)
+        {
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("WinRPC", RpcTarget.All);
+        }
+        else
+            WinRPC();
+    }
+    [PunRPC]
+    private void WinRPC()
+    {
         eventSys.update(new QuestObject(200, "You Won a game of Pool!", LevelData.publicEvents.POOL));
         AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
     }
     private void Lose()
+    {
+        if (isNetworked)
+        {
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("LoseRPC", RpcTarget.All);
+        }
+        else
+            LoseRPC();
+    }
+    [PunRPC]
+    private void LoseRPC()
     {
         eventSys.update(new QuestObject(0, "8Ball goes last! Start over!", LevelData.publicEvents.POOL));
         loss = true;
