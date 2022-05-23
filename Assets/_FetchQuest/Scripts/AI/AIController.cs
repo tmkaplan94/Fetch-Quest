@@ -22,7 +22,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private Animator personAnimator;
     [SerializeField] private Mesh zombieMesh;
     [SerializeField] private Material zombieMaterial;
-    [SerializeField] private GameObject _janitor;
+    private GameObject _janitor;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
@@ -103,6 +103,7 @@ public class AIController : MonoBehaviour
     }
     void Start()
     {
+        _janitor = GameObject.Find("Janitor");
         //eventSys = LevelStatic.currentLevel.questBus;
        // eventSys.subscribe(HandleEvents);
     }
