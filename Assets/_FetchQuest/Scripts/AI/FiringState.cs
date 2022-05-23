@@ -34,7 +34,7 @@ public class FiringState : IState
     public void OnExit()
     {
         _controller.bossMad = false;
-        _controller.SetTarget(null);
+        _controller.gotFired = false;
         _navMeshAgent.enabled = false;
         _controller.AnimationStop();
     }

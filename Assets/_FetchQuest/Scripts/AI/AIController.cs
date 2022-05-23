@@ -198,11 +198,9 @@ public class AIController : MonoBehaviour
     {
         if (_stats.IsJanitor && gotFired && other.CompareTag("Exit"))
         {
-            Debug.LogWarning("Death");
             Destroy(this.gameObject);
         }
-        
-        Debug.LogWarning(other.gameObject.tag);
+
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
@@ -236,7 +234,7 @@ public class AIController : MonoBehaviour
         if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
         {
             gotFired = true;
-            ai.gotFired = true;
+            ai.bossMad = false;
         }
         else if (!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
         {
