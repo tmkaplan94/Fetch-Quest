@@ -62,9 +62,10 @@ public class PissScript : MonoBehaviour
     }
     private IEnumerator waitToEndPP()
     {
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
         StopCoroutine(pissRoutine);
         pissRoutine = StartCoroutine(EndPiss());
+        yield return null;
     }
 
     private IEnumerator EndPiss()
