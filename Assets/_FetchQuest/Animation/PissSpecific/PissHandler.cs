@@ -17,9 +17,11 @@ public class PissHandler : MonoBehaviour
 {
     public int pissThreshold = 45;
     public Transform pissPoint = null;
+    public Transform pissSpotOnFloor = null;
     public GameObject streamPrefab = null;
 
     [SerializeField] private Animator _anime;
+    [SerializeField] private GameObject pissPuddle;
     private bool isPissing = false;
     private PissScript currPiss = null;
 
@@ -69,6 +71,11 @@ public class PissHandler : MonoBehaviour
     {
         GameObject streamObject = Instantiate(streamPrefab, pissPoint.position, Quaternion.identity, transform);
         return streamObject.GetComponent<PissScript>();
+    }
+
+    public void CreatePuddle()
+    {
+        Instantiate(pissPuddle, pissSpotOnFloor.position, Quaternion.Euler(new Vector3(90, 0, Random.Range(0, 180))));
     }
     
 }
