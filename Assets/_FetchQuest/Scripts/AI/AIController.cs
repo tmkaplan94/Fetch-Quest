@@ -32,8 +32,9 @@ public class AIController : MonoBehaviour
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
     public bool gotFired = false;
     public bool bossMad = false;
-    public bool peeSearch = false;
+ 
     public GameObject peeObj;
+    public List< GameObject> JanitorPeeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -126,7 +127,7 @@ public class AIController : MonoBehaviour
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
     Func<bool> Fired() => () => _stats.IsJanitor == true && gotFired == true;
     Func<bool> Firing() => () => _stats.IsBoss == true && bossMad == true;
-    Func<bool> SearchPee() => () => _stats.IsJanitor == true && peeSearch == true;
+    Func<bool> SearchPee() => () => _stats.IsJanitor == true && JanitorPeeObj.Count > 0;
 
 
 
@@ -237,18 +238,21 @@ public class AIController : MonoBehaviour
         }
         
         AIController ai = other.gameObject.GetComponent<AIController>();
-        if(ai !=null&& peeObj!= null && !_stats.IsJanitor && ai._stats.IsJanitor)
+        if (ai != null && !_stats.IsJanitor && ai._stats.IsJanitor)
         {
-            ai.peeObj = this.peeObj;
+            if(peeObj != null)
+            { 
+                if(!ai.JanitorPeeObj.Contains(this.peeObj))
+                    ai.JanitorPeeObj.Add(this.peeObj);
+            }
             peeFound = false;
-            ai.peeSearch = true;
         }
         if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
         {
             gotFired = true;
             ai.bossMad = false;
         }
-        else if (!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
+        else if (!isTalking.value && ai != null && !ai._stats.IsJanitor && !fireAlarm && !hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
@@ -262,9 +266,13 @@ public class AIController : MonoBehaviour
         }
         if (other.CompareTag("Pee"))
         {
-            peeSearch = false;
-            peeFound = true;
-            peeObj = other.gameObject;
+            ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
+            if (_stats.IsJanitor || !piss.spotted)
+            {
+                piss.spotted = true;
+                peeFound = true;
+                peeObj = other.gameObject;
+            }
         }
         
     }

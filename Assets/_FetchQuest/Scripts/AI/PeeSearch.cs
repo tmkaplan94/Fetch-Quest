@@ -19,8 +19,9 @@ public class PeeSearch : IState
     }
     public void OnEnter()
     {
+        Vector3 peePos = _controller.JanitorPeeObj[0].transform.position;
         _navMeshAgent.enabled = true;
-        _navMeshAgent.SetDestination(_controller.peeObj.transform.position);
+        _navMeshAgent.SetDestination(peePos);
         _controller.AnimationWalking();
     }
 
