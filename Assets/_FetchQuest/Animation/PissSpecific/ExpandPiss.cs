@@ -17,7 +17,5 @@ public class ExpandPiss : MonoBehaviour
         tx += 0.1f * Time.deltaTime;
         ty += 0.1f * Time.deltaTime;
         tz += 0.05f * Time.deltaTime;
-
-        Debug.Log(transform.position);
     }
 }
