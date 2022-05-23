@@ -14,6 +14,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private Animator personAnimator;
     [SerializeField] private Mesh zombieMesh;
     [SerializeField] private Material zombieMaterial;
+    [SerializeField] private GameObject _janitor;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
@@ -72,6 +73,8 @@ public class AIController : MonoBehaviour
         var calljanitorState = new CallJanitorState(this, navMeshAgent);
         var cleaningState = new CleaningState(this, peeObj);
         var firedState = new FiredState(this, navMeshAgent);
+        var firingState = new FiringState(this, navMeshAgent);
+
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
@@ -81,14 +84,17 @@ public class AIController : MonoBehaviour
         At(cleaningState, walkingState, HasTarget());
         At(calljanitorState, walkingState, HasTarget());
         At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
+        At(firingState, walkingState, HasTarget()); //Adding way to exit evacuation state that does not trigger everytime
+
+        Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
+        Aat(firedState, Fired());
+        Aat(firingState, Firing());
+        Aat(calljanitorState, FoundPeeEmp());
+        Aat(cleaningState, FoundPeeJan());   
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
         Aat(workingState, HasWork()); //Adding petting state as an any
-        Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
-        Aat(calljanitorState, FoundPeeEmp());
-        Aat(cleaningState, FoundPeeJan());
-        Aat(firedState, Fired());
-
+        
 
 
 
@@ -109,11 +115,12 @@ public class AIController : MonoBehaviour
     Func<bool> AlarmOn() => () => fireAlarm == true;
     Func<bool> AlarmOff() => () => fireAlarm == false;
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
-    Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
+    Func<bool> PersonNear() => () => personNearby == true && !(_stats.IsBoss && bossMad) && !(_stats.IsJanitor && gotFired); //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
     Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
     Func<bool> Fired() => () => _stats.IsJanitor == true && gotFired == true;
+    Func<bool> Firing() => () => _stats.IsBoss == true && bossMad == true;
 
 
 
@@ -151,7 +158,10 @@ public class AIController : MonoBehaviour
         Target = t;
         
     }
-
+    public Vector3 GetJanitorPos()
+    {
+        return _janitor.transform.position;
+    }
     public void GetNewTarget()
     {
         
@@ -220,7 +230,14 @@ public class AIController : MonoBehaviour
 
             }
         }
-        if(!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
+        AIController ai = other.gameObject.GetComponent<AIController>();
+        Debug.LogWarning(other.gameObject.name);
+        if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
+        {
+            gotFired = true;
+            ai.gotFired = true;
+        }
+        else if (!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
@@ -237,10 +254,7 @@ public class AIController : MonoBehaviour
             peeFound = true;
             peeObj = other;
         }
-        if (_stats.IsJanitor == true && other.gameObject.GetComponent<AIController>()._stats.IsBoss && other.gameObject.GetComponent<AIController>().bossMad == true)
-        {
-            gotFired = true;
-        }
+        
     }
     public void CallDestroy(GameObject obj)
     {

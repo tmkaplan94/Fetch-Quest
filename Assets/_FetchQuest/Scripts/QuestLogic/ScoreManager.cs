@@ -88,8 +88,13 @@ public class ScoreManager : MonoBehaviour
     // updates score and visual feedback based on amount
     public void IncrementScore(int amount)
     {
-        PhotonView v = GetComponent<PhotonView>();
-        v.RPC("IncrementScoreRPC", RpcTarget.All, amount);
+        if (isNetworked)
+        {
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("IncrementScoreRPC", RpcTarget.All, amount);
+        }
+        else
+            IncrementScoreRPC(amount);
     }
     [PunRPC]
     public void IncrementScoreRPC(int amount)
