@@ -1562,12 +1562,19 @@ MonoBehaviour:
   waypoints: []
   workplace: {fileID: 0}
   personAnimator: {fileID: 2259241183140126521}
+  zombieMesh: {fileID: 0}
+  zombieMaterial: {fileID: 0}
+  _janitor: {fileID: 0}
   exit: {fileID: 0}
   dogNearby: 0
   personNearby: 0
   hasWorkToDo: 0
   fireAlarm: 0
   turnAlarmOff: 0
+  peeFound: 0
+  gotFired: 0
+  bossMad: 0
+  peeObj: {fileID: 0}
   idelCount: 0
 --- !u!1 &2165259293704986987
 GameObject:

@@ -22,7 +22,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private Animator personAnimator;
     [SerializeField] private Mesh zombieMesh;
     [SerializeField] private Material zombieMaterial;
-    [SerializeField] private GameObject _janitor;
+    private GameObject _janitor;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
@@ -32,7 +32,9 @@ public class AIController : MonoBehaviour
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
     public bool gotFired = false;
     public bool bossMad = false;
-    public Collider peeObj;
+ 
+    public GameObject peeObj;
+    public List< GameObject> JanitorPeeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -72,9 +74,10 @@ public class AIController : MonoBehaviour
         var workingState = new WorkingState(this); //Setting up WorkingState
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
         var calljanitorState = new CallJanitorState(this, navMeshAgent);
-        var cleaningState = new CleaningState(this, peeObj);
+        var cleaningState = new CleaningState(this);
         var firedState = new FiredState(this, navMeshAgent);
         var firingState = new FiringState(this, navMeshAgent);
+        var peeSearch = new PeeSearch(this, navMeshAgent);
 
 
         At(idleState, walkingState, HasTarget());
@@ -95,6 +98,7 @@ public class AIController : MonoBehaviour
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
         Aat(workingState, HasWork()); //Adding petting state as an any
+        Aat(peeSearch, SearchPee()); //Adding petting state as an any
         
 
 
@@ -103,8 +107,9 @@ public class AIController : MonoBehaviour
     }
     void Start()
     {
-       // eventSys = LevelStatic.currentLevel.questBus;
-        //eventSys.subscribe(HandleEvents);
+        _janitor = GameObject.Find("Janitor");
+        eventSys = LevelStatic.currentLevel.questBus;
+        eventSys.subscribe(HandleEvents);
     }
 
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
@@ -122,6 +127,7 @@ public class AIController : MonoBehaviour
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
     Func<bool> Fired() => () => _stats.IsJanitor == true && gotFired == true;
     Func<bool> Firing() => () => _stats.IsBoss == true && bossMad == true;
+    Func<bool> SearchPee() => () => _stats.IsJanitor == true && JanitorPeeObj.Count > 0;
 
 
 
@@ -230,13 +236,23 @@ public class AIController : MonoBehaviour
 
             }
         }
+        
         AIController ai = other.gameObject.GetComponent<AIController>();
+        if (ai != null && !_stats.IsJanitor && ai._stats.IsJanitor)
+        {
+            if(peeObj != null)
+            { 
+                if(!ai.JanitorPeeObj.Contains(this.peeObj))
+                    ai.JanitorPeeObj.Add(this.peeObj);
+            }
+            peeFound = false;
+        }
         if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
         {
             gotFired = true;
             ai.bossMad = false;
         }
-        else if (!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
+        else if (!isTalking.value && ai != null && !ai._stats.IsJanitor && !fireAlarm && !hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
@@ -250,8 +266,13 @@ public class AIController : MonoBehaviour
         }
         if (other.CompareTag("Pee"))
         {
-            peeFound = true;
-            peeObj = other;
+            ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
+            if (_stats.IsJanitor || !piss.spotted)
+            {
+                piss.spotted = true;
+                peeFound = true;
+                peeObj = other.gameObject;
+            }
         }
         
     }

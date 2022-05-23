@@ -23,10 +23,13 @@ public class PissScript : MonoBehaviour
     private ParticleSystem splash = null;
     private Coroutine pissRoutine = null;
 
+    private PissHandler Phandle = null;
+
     private void Awake() 
     {
         rendLine = GetComponent<LineRenderer>();
         splash = GetComponentInChildren<ParticleSystem>();
+        Phandle = GetComponentInParent<PissHandler>();
     }
 
     private void Start()
@@ -46,6 +49,7 @@ public class PissScript : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (gameObject.activeSelf)
         {
+            Phandle.CreatePuddle();
             targetPosition = FindFloor();
 
             MoveToPosition(0, transform.position);
@@ -66,7 +70,8 @@ public class PissScript : MonoBehaviour
         yield return new WaitForSeconds(1);
         StopCoroutine(pissRoutine);
         pissRoutine = StartCoroutine(EndPiss());
-        pp.value = false;
+        if(pp != null)
+            pp.value = false;
         yield return null;
     }
 
@@ -86,8 +91,7 @@ public class PissScript : MonoBehaviour
     private Vector3 FindFloor()
     {
         RaycastHit hit;
-        GameObject pissSpot = GameObject.Find("PissSpot");
-        Vector3 dir = (pissSpot.transform.position - transform.position).normalized;
+        Vector3 dir = (Phandle.pissSpotOnFloor.position - transform.position).normalized;
         Ray ray = new Ray(transform.position, dir);
 
         Physics.Raycast(ray, out hit, 2.0f);

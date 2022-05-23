@@ -1380,8 +1380,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pissThreshold: 45
   pissPoint: {fileID: 5747195818700522811}
+  pissSpotOnFloor: {fileID: 4490371548345497838}
   streamPrefab: {fileID: 5238570228697279498, guid: 687fe5b6c1388c34882009636030b3c7, type: 3}
   _anime: {fileID: 4706332110643442427}
+  pissPuddle: {fileID: 4521293650107146426, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
 --- !u!1001 &4706332110636127867
 PrefabInstance:
   m_ObjectHideFlags: 0

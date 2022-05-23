@@ -8556,8 +8556,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pissThreshold: 45
   pissPoint: {fileID: 760922729}
+  pissSpotOnFloor: {fileID: 0}
   streamPrefab: {fileID: 5238570228697279498, guid: 687fe5b6c1388c34882009636030b3c7, type: 3}
   _anime: {fileID: 1159152886}
+  pissPuddle: {fileID: 0}
 --- !u!1001 &1191257456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9986,7 +9988,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236588037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.266, y: 0.5311202, z: -3.812}
+  m_LocalPosition: {x: -6.97, y: 0.5311202, z: 2.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1159152884}
@@ -19081,3 +19083,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 426750, guid: 957efc93c4488964582c89c0bf939bf0, type: 3}
   m_PrefabInstance: {fileID: 2133750296}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4521293649609620884
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146406, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521293650107146426, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
+      propertyPath: m_Name
+      value: PissPuddle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 52f9227945579b3498a84bc79f0fe7b9, type: 3}
