@@ -32,7 +32,7 @@ public class AIController : MonoBehaviour
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
     public bool gotFired = false;
     public bool bossMad = false;
-    public Collider peeObj;
+    public GameObject peeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -72,7 +72,7 @@ public class AIController : MonoBehaviour
         var workingState = new WorkingState(this); //Setting up WorkingState
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
         var calljanitorState = new CallJanitorState(this, navMeshAgent);
-        var cleaningState = new CleaningState(this, peeObj);
+        var cleaningState = new CleaningState(this);
         var firedState = new FiredState(this, navMeshAgent);
         var firingState = new FiringState(this, navMeshAgent);
 
@@ -103,8 +103,8 @@ public class AIController : MonoBehaviour
     }
     void Start()
     {
-       // eventSys = LevelStatic.currentLevel.questBus;
-        //eventSys.subscribe(HandleEvents);
+        //eventSys = LevelStatic.currentLevel.questBus;
+       // eventSys.subscribe(HandleEvents);
     }
 
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
@@ -251,7 +251,7 @@ public class AIController : MonoBehaviour
         if (other.CompareTag("Pee"))
         {
             peeFound = true;
-            peeObj = other;
+            peeObj = other.gameObject;
         }
         
     }
