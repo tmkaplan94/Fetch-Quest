@@ -108,7 +108,7 @@ public class PissHandler : MonoBehaviour
     private PissScript CreatePiss()
     {
         GameObject streamObject;
-       /* if (isNetworked)
+        /*if (isNetworked)
         {
             streamObject = PhotonNetwork.Instantiate("Stream", pissPoint.position, Quaternion.identity);
             streamObject.transform.parent = transform;
@@ -121,9 +121,9 @@ public class PissHandler : MonoBehaviour
 
     public void CreatePuddle()
     {
-        /*if (isNetworked)
+        if (isNetworked)
             PhotonNetwork.Instantiate("PissPuddle", pissSpotOnFloor.position, Quaternion.Euler(new Vector3(90, 0, Random.Range(0, 180))));
-        else*/
+        else
             Instantiate(pissPuddle, pissSpotOnFloor.position, Quaternion.Euler(new Vector3(90, 0, Random.Range(0, 180))));
     }
     
