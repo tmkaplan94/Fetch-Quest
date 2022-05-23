@@ -1,8 +1,9 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class SetupAudioOptions : MonoBehaviour
+public class SetupAudioOptions : MonoBehaviourPun
 {
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
