@@ -29,7 +29,7 @@ public class FaceCamera : MonoBehaviour
     void LateUpdate()
     {
         Camera camera = Camera.main;
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        transform.LookAt(Camera.main.transform.position, Vector3.up);
 
     }
     public void ChangeText(string a)
