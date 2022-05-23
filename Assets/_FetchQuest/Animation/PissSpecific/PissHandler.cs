@@ -26,11 +26,7 @@ public class PissHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StartPiss();
-        }
-       /* bool pissCheck = CalcAngle() < pissThreshold;
+        /*bool pissCheck = CalcAngle() < pissThreshold;
 
         if (isPissing != pissCheck)
         {
@@ -46,7 +42,7 @@ public class PissHandler : MonoBehaviour
         }*/
     }
 
-    private void StartPiss()
+    public void StartPiss()
     {
         _anime.SetBool("isPissing", true);
         print("start");
@@ -54,7 +50,7 @@ public class PissHandler : MonoBehaviour
         currPiss.Begin();
     }
 
-    private void EndPiss()
+    public void EndPiss()
     {
         _anime.SetBool("isPissing", false);
         print("end");

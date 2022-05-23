@@ -1229,6 +1229,7 @@ MonoBehaviour:
   _controller: {fileID: 6969390475020677538}
   _cam: {fileID: 6737826633270860006}
   _anime: {fileID: 4706332110643442427}
+  pp: {fileID: 3111074010732373755}
   _speed: 6
   _sprintSpeed: 0
   _gravity: -20

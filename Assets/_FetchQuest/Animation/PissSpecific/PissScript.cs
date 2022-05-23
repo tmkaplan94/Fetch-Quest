@@ -44,7 +44,7 @@ public class PissScript : MonoBehaviour
     private IEnumerator BeginPiss()
     {
         yield return new WaitForSeconds(1);
-        while (gameObject.activeSelf)
+        if (gameObject.activeSelf)
         {
             targetPosition = FindFloor();
 
@@ -57,6 +57,12 @@ public class PissScript : MonoBehaviour
 
     public void End()
     {
+        StartCoroutine(waitToEndPP());
+        StopCoroutine(waitToEndPP());
+    }
+    private IEnumerator waitToEndPP()
+    {
+        yield return new WaitForSeconds(1);
         StopCoroutine(pissRoutine);
         pissRoutine = StartCoroutine(EndPiss());
     }
