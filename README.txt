@@ -6,6 +6,7 @@ NPCs will give you more points when you give them items!
 
 // Controls:
 Movement: W,A,S,D (up, left, down, right)
-Bark: F
+Bark: F, interact with world objects and use held items.
 Jump: Spacebar
-PickUp Items: E
+PickUp/drop Items: E
+Pee: R
