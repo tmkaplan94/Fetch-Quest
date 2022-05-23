@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CallJanitorState : IState
+public class PeeSearch : IState
 {
     private readonly AIController _controller;
     private readonly NavMeshAgent _navMeshAgent;
- 
-    public CallJanitorState(AIController c, NavMeshAgent n)
+    public PeeSearch(AIController c, NavMeshAgent n)
     {
         _controller = c;
         _navMeshAgent = n;
@@ -16,21 +15,20 @@ public class CallJanitorState : IState
 
     public void Tick()
     {
-        if(_controller.peeFound)
-            _navMeshAgent.SetDestination(_controller.GetJanitorPos());
-        else
-            _controller.GetNewTarget();
+
     }
     public void OnEnter()
     {
         _navMeshAgent.enabled = true;
+        _navMeshAgent.SetDestination(_controller.peeObj.transform.position);
         _controller.AnimationWalking();
     }
 
     public void OnExit()
     {
-        _controller.peeFound = false;
+        _controller.SetTarget(null);
         _navMeshAgent.enabled = false;
         _controller.AnimationStop();
+
     }
 }
