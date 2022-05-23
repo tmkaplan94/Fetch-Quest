@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    
+
     [Tooltip("The name of the scene to load when the Multiplayer Button is selected.")]
     [SerializeField] private string MultiplayerScene;
 
@@ -17,7 +17,9 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private GameObject audioCanvas;
     [SerializeField] private GameObject mainUICanvas;
+    [SerializeField] private GameObject controlCanvas;
     [SerializeField] private Transform centerScene;
+
 
 
     public void LoadMultiplayerScene()
@@ -30,7 +32,7 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.PlaySFX(AudioNames.click, centerScene.position);
         SceneManager.LoadScene(SingleplayerScene);
     }
-    
+
     public void Quit()
     {
         AudioManager.Instance.PlaySFX(AudioNames.click, centerScene.position);
@@ -43,16 +45,44 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.PlaySFX(AudioNames.hover, centerScene.position);
     }
 
-    public void SetAudioOptionsVisibility(){
-        if(audioCanvas.activeSelf){
+    public void SetAudioOptionsVisibility()
+    {
+        if (audioCanvas.activeSelf)
+        {
             audioCanvas.SetActive(false);
-        }else{
+        }
+        else
+        {
             audioCanvas.SetActive(true);
         }
 
-        if(mainUICanvas.activeSelf){
+        if (mainUICanvas.activeSelf)
+        {
             mainUICanvas.SetActive(false);
-        }else{
+        }
+        else
+        {
+            mainUICanvas.SetActive(true);
+        }
+    }
+
+    public void SetControlsVisibility()
+    {
+        if (controlCanvas.activeSelf)
+        {
+            controlCanvas.SetActive(false);
+        }
+        else
+        {
+            controlCanvas.SetActive(true);
+        }
+
+        if (mainUICanvas.activeSelf)
+        {
+            mainUICanvas.SetActive(false);
+        }
+        else
+        {
             mainUICanvas.SetActive(true);
         }
     }
