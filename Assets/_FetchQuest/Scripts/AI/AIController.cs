@@ -108,8 +108,8 @@ public class AIController : MonoBehaviour
     void Start()
     {
         _janitor = GameObject.Find("Janitor");
-        //eventSys = LevelStatic.currentLevel.questBus;
-       // eventSys.subscribe(HandleEvents);
+        eventSys = LevelStatic.currentLevel.questBus;
+        eventSys.subscribe(HandleEvents);
     }
 
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
