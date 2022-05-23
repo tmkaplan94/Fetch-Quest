@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   petAttraction: 0
   movementSpeed: 8
-  restTime: 25
+  restTime: 10
   talkTime: 15
   pettingDistance: 5
   pettingCooldown: 100
