@@ -102,8 +102,8 @@ public class AIController : MonoBehaviour
     }
     void Start()
     {
-        eventSys = LevelStatic.currentLevel.questBus;
-        eventSys.subscribe(HandleEvents);
+       // eventSys = LevelStatic.currentLevel.questBus;
+        //eventSys.subscribe(HandleEvents);
     }
 
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
@@ -198,9 +198,10 @@ public class AIController : MonoBehaviour
     {
         if (_stats.IsJanitor && gotFired && other.CompareTag("Exit"))
         {
+            Debug.LogWarning("Death");
             Destroy(this.gameObject);
         }
-        Debug.LogWarning(canPet.value);
+        
         Debug.LogWarning(other.gameObject.tag);
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
