@@ -14,7 +14,7 @@ public class Pool : MonoBehaviour
                 return;
             if (other.gameObject.name == "8Ball")
             {
-                if (ballCount == 8 && !loss)
+                if (ballCount == 9 && !loss)
                     Win();
                 else
                     Lose();
