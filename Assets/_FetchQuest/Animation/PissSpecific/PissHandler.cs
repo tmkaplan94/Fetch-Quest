@@ -50,11 +50,11 @@ public class PissHandler : MonoBehaviour
         currPiss.Begin();
     }
 
-    public void EndPiss()
+    public void EndPiss(ReffBool isPissing)
     {
         _anime.SetBool("isPissing", false);
         print("end");
-        currPiss.End();
+        currPiss.End(isPissing);
         currPiss = null;
     }
 

@@ -26,7 +26,7 @@ public class TempMove_unused : MonoBehaviour
     private Vector3 _velocity;
     private bool _isGrounded;
     private bool _isSprint;
-    private bool _isPissing;
+    private ReffBool _isPissing = new ReffBool(false);
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundDistance = 0.4f;
@@ -92,10 +92,10 @@ public class TempMove_unused : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            _isPissing = true;
+            _isPissing.value = true;
             pp.StartPiss();
         }
-        else if (direction.magnitude >= 0.1f && !_isPissing)
+        else if (direction.magnitude >= 0.1f && !_isPissing.value)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _turnSmoothTime);
@@ -105,9 +105,8 @@ public class TempMove_unused : MonoBehaviour
             _controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
         if(Input.GetKeyUp(KeyCode.R))
-        {
-            _isPissing = false;
-            pp.EndPiss();
+        {         
+            pp.EndPiss(_isPissing);
         }
     }
 

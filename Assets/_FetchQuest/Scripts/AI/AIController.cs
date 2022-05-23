@@ -6,6 +6,14 @@ using UnityEngine.AI;
 using Photon.Pun;
 using Random = UnityEngine.Random;
 
+public class ReffBool
+{
+    public bool value;
+    public ReffBool(bool defult)
+    {
+        value = defult;
+    }
+}
 public class AIController : MonoBehaviour
 {
     [SerializeField] private AIStats _stats;
@@ -42,14 +50,7 @@ public class AIController : MonoBehaviour
     private bool isNetworked;
 
     public AIStats AIStats => _stats;
-    public class ReffBool
-    {
-        public bool value;
-        public ReffBool(bool defult)
-        {
-            value = defult;
-        }
-    }
+    
 
     private void Awake()
     {

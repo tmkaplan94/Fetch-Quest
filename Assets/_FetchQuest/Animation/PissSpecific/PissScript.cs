@@ -55,16 +55,18 @@ public class PissScript : MonoBehaviour
         }
     }
 
-    public void End()
+    public void End(ReffBool isPissing)
     {
-        StartCoroutine(waitToEndPP());
-        StopCoroutine(waitToEndPP());
+        StartCoroutine(waitToEndPP(isPissing));
+        StopCoroutine(waitToEndPP(isPissing));
+        
     }
-    private IEnumerator waitToEndPP()
+    private IEnumerator waitToEndPP(ReffBool pp)
     {
-        //yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1);
         StopCoroutine(pissRoutine);
         pissRoutine = StartCoroutine(EndPiss());
+        pp.value = false;
         yield return null;
     }
 
