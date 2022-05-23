@@ -231,7 +231,6 @@ public class AIController : MonoBehaviour
             }
         }
         AIController ai = other.gameObject.GetComponent<AIController>();
-        Debug.LogWarning(other.gameObject.name);
         if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
         {
             gotFired = true;
