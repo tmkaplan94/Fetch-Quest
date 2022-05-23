@@ -70,8 +70,12 @@ public class PissHandler : MonoBehaviour
     private PissScript CreatePiss()
     {
         GameObject streamObject = Instantiate(streamPrefab, pissPoint.position, Quaternion.identity, transform);
-        Instantiate(pissPuddle, pissSpotOnFloor.position, Quaternion.Euler(new Vector3(90, 0, 0)));
         return streamObject.GetComponent<PissScript>();
+    }
+
+    public void CreatePuddle()
+    {
+        Instantiate(pissPuddle, pissSpotOnFloor.position, Quaternion.Euler(new Vector3(90, 0, Random.Range(0, 180))));
     }
     
 }

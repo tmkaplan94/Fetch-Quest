@@ -23,10 +23,13 @@ public class PissScript : MonoBehaviour
     private ParticleSystem splash = null;
     private Coroutine pissRoutine = null;
 
+    private PissHandler Phandle = null;
+
     private void Awake() 
     {
         rendLine = GetComponent<LineRenderer>();
         splash = GetComponentInChildren<ParticleSystem>();
+        Phandle = GetComponentInParent<PissHandler>();
     }
 
     private void Start()
@@ -46,6 +49,7 @@ public class PissScript : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (gameObject.activeSelf)
         {
+            Phandle.CreatePuddle();
             targetPosition = FindFloor();
 
             MoveToPosition(0, transform.position);
