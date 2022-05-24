@@ -93,7 +93,6 @@ public class AudioManager : MonoBehaviourPun
     {
         if(PhotonNetwork.IsConnected)
         {
-            Debug.Log("I'M IN NETWORK!");
             PhotonView v = GetComponent<PhotonView>();
             v.RPC("PlaySFXRPC", RpcTarget.All,n,pos);
         }
