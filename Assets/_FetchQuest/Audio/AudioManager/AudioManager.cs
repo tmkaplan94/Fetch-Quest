@@ -91,6 +91,21 @@ public class AudioManager : MonoBehaviourPun
     // A function that plays the SFX audio with given name.
     public void PlaySFX(String n, Vector3 pos)
     {
+        if(PhotonNetwork.IsConnected)
+        {
+            Debug.Log("I'M IN NETWORK!");
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("PlaySFXRPC", RpcTarget.All,n,pos);
+        }
+        else
+        {
+            PlaySFXRPC(n,pos);
+        }
+
+    }
+    [PunRPC]
+    public void PlaySFXRPC(String n, Vector3 pos)
+    {
         foreach(AudioClip _clip in _SFXClips)
         {
             if(_clip.name == n)
