@@ -12,4 +12,6 @@ public static class AudioNames
     public static string click = "Cursor_Click_SFX";
     public static string hover = "Cursor_Hover_SFX";
     public static string FireAlarm = "Fire_Alarm";
+    public static string Achievement = "Achievement";
+    public static string Gunshot = "Gunshot";
 }
