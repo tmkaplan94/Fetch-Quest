@@ -18,6 +18,7 @@ TagManager:
   - NetworkManager
   - Special
   - Exit
+  - Billiard
   layers:
   - Default
   - TransparentFX

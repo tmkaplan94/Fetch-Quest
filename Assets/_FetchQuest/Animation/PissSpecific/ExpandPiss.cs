@@ -10,6 +10,7 @@ public class ExpandPiss : MonoBehaviour
     private float tx = 0.0f, ty = 0.0f, tz = 0.0f;
 
     private float _timeRemaining = 1f;
+    public bool spotted = false;
 
     private void Update()
     {

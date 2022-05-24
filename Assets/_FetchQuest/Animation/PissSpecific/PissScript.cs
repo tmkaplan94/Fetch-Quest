@@ -59,16 +59,19 @@ public class PissScript : MonoBehaviour
         }
     }
 
-    public void End()
+    public void End(ReffBool isPissing)
     {
-        StartCoroutine(waitToEndPP());
-        StopCoroutine(waitToEndPP());
+        StartCoroutine(waitToEndPP(isPissing));
+        StopCoroutine(waitToEndPP(isPissing));
+        
     }
-    private IEnumerator waitToEndPP()
+    private IEnumerator waitToEndPP(ReffBool pp)
     {
-        //yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1);
         StopCoroutine(pissRoutine);
         pissRoutine = StartCoroutine(EndPiss());
+        if(pp != null)
+            pp.value = false;
         yield return null;
     }
 
@@ -88,8 +91,7 @@ public class PissScript : MonoBehaviour
     private Vector3 FindFloor()
     {
         RaycastHit hit;
-        GameObject pissSpot = GameObject.Find("PissSpot");
-        Vector3 dir = (pissSpot.transform.position - transform.position).normalized;
+        Vector3 dir = (Phandle.pissSpotOnFloor.position - transform.position).normalized;
         Ray ray = new Ray(transform.position, dir);
 
         Physics.Raycast(ray, out hit, 2.0f);

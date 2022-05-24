@@ -423,7 +423,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5780662180832364158}
-  m_LocalRotation: {x: 0.24035, y: 0.000000018680186, z: -0.000000004621976, w: 0.9706863}
+  m_LocalRotation: {x: 0.24035, y: 0.000000018680172, z: -0.0000000046219246, w: 0.9706863}
   m_LocalPosition: {x: 0, y: 0.77534556, z: -0.087557554}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -987,7 +987,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7596176171417380692}
-  m_LocalRotation: {x: 0.22270079, y: 0.000000008387136, z: -0.000000001915937, w: 0.97488683}
+  m_LocalRotation: {x: 0.22270079, y: -0.000000008387138, z: 0.0000000019159372, w: 0.97488683}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1843,7 +1843,7 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Input Mag
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isPissing
   m_SynchronizeLayers:
   - SynchronizeType: 1
