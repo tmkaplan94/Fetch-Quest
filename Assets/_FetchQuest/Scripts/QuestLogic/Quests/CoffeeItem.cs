@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Daichi M
+
+// communicates with the coffee quest when interacted with
 public class CoffeeItem : QuestItem
 {
     // calls delegate when coffee hits an npc
@@ -20,8 +23,6 @@ public class CoffeeItem : QuestItem
     public override void hitNPC(GameObject npc)
     {
         base.hitNPC(npc);
-        print("coffee hit NPC");
-
         mainQuest.onCoffeeHit(this, npc);
     }
 }

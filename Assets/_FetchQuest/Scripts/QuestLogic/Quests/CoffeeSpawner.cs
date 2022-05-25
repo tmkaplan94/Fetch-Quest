@@ -19,8 +19,11 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
         GameObject coffee = Instantiate(coffeePrefab, pos, Quaternion.identity);
         
         // inject quest into spawned coffees
-        CoffeeItem script = coffee.GetComponent<CoffeeItem>();
-        script.mainQuest = coffeeQuest;
+        CoffeeItem coffeeScript = coffee.GetComponent<CoffeeItem>();
+        coffeeScript.mainQuest = coffeeQuest;
 
+        // to notify you
+        // (and to ensure the editor field is set)
+        coffeeQuest.coffeeSpawned(coffeeScript);
     }
 }

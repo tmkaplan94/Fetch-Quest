@@ -30,15 +30,14 @@ public class CoffeeQuest : Quest
             Destroy(coffee.gameObject);
         }
     }
+
+    public void coffeeSpawned(CoffeeItem coffee)
+    {
+        
+    }
     
     public override void Start()
     {
         base.Start();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
