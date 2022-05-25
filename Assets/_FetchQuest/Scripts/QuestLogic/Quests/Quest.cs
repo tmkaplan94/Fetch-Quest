@@ -14,6 +14,7 @@ public class Quest : MonoBehaviour
     [HideInInspector] public QuestBus questBus;
     [HideInInspector] public QuestManager questManager;
     [SerializeField] public string questName = "Quest";
+    [SerializeField] public int reward = 0; // points given
     public bool completed = false;
     public bool started = false;
     

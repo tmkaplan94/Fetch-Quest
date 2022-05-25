@@ -10,9 +10,7 @@ using UnityEngine;
 public class FishQuest : Quest
 {
     [SerializeField] private FishQuestParticles fishQuestParticles;
-    [SerializeField] public int startingFish = 10;
-    [SerializeField] private int reward = 50;
-    
+    [SerializeField] public int startingFish = 10;    
     private int fishRemaining = 0;
     
     public override void Start()

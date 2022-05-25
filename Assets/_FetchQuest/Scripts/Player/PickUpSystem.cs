@@ -56,10 +56,12 @@ public class PickUpSystem : MonoBehaviour
             {
                 if(item.gameObject.CompareTag(EventObjectTag))
                 {
+                    print("TRYING TO INTERACT");
                     item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
                 }
                 if (item.gameObject.CompareTag(interactableTag) && item.attachedRigidbody.mass <= maxMass)
                 {
+                    print("asjflksd");
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
                     
                     currentItem = item.gameObject;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6661902176156101123}
   - component: {fileID: 6661902177248683363}
   - component: {fileID: 6661902177248683367}
+  - component: {fileID: 6021904996830872177}
   m_Layer: 7
   m_Name: Bone
   m_TagString: Interactable
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6528888, y: 0.12128265, z: 0.29866806}
   m_Center: {x: 0, y: 0.060641326, z: 0}
+--- !u!114 &6021904996830872177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6661902176153924807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89a0cbec691db24d9481bad5d0e2b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

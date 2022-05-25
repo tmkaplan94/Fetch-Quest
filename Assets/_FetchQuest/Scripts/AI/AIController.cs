@@ -172,12 +172,13 @@ public class AIController : MonoBehaviour
             
             if (canPet.value)
             {
-                if (bone != null)
+                if (bone)
                 {
-                    scoreInc = 10;
-                    Destroy(bone);
-                    SpawnBones.Instance.SpawnNewBone();
-                    AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
+                    QuestItem questItem = bone.GetComponent<QuestItem>();
+                    if (questItem) 
+                    {
+                        questItem.hitNPC(gameObject);
+                    }
                 }
                 else
                 {

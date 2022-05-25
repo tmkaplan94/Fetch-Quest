@@ -15,6 +15,7 @@ TagManager:
   - big
   - Pee
   - EventObj
+  - Bone
   layers:
   - Default
   - TransparentFX
