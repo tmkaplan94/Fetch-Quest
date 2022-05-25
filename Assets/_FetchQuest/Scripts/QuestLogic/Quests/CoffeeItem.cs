@@ -19,10 +19,44 @@ public class CoffeeItem : QuestItem
 
     // lazy but eh
     [SerializeField] public CoffeeQuest mainQuest;
+    [SerializeField] private ParticleSystem splashParticles;
+    [SerializeField] private float splashVelocity = 1f;
 
+    void Start()
+    {
+        splashParticles.Play();
+    }
+
+    void Update()
+    {
+        Rigidbody body = GetComponent<Rigidbody>();
+        if (body.velocity.magnitude > splashVelocity)
+        {
+            splash();
+        }
+    }
+
+    public void splash()
+    {
+        splashParticles.Play();
+    }
+    
     public override void hitNPC(GameObject npc)
     {
         base.hitNPC(npc);
         mainQuest.onCoffeeHit(this, npc);
     }
+
+    public override void pickedUp()
+    {
+        base.pickedUp();
+        splash();
+    }
+
+    public override void dropped()
+    {
+        base.dropped();
+        splash();
+    }
+
 }

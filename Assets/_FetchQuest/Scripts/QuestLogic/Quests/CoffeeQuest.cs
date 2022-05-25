@@ -27,6 +27,7 @@ public class CoffeeQuest : Quest
             QuestObject update = new QuestObject(reward, "Coffee! Thanks doggerino!");
             questBus.update(update);
 
+            coffee.splash();
             Destroy(coffee.gameObject);
         }
     }

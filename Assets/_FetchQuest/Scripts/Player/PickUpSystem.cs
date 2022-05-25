@@ -4,18 +4,20 @@ using UnityEngine;
 
 /*
  * Author: Grant Reed
- * Contributors: 
+ * Contributors: Daichi M
  * Summary: Allows dog to pickup items
  *
  * Description:
  * Updates
- * - N/A
+ * - Daichi 5/25
+ *    - moved bone logic to bone script
+ *    - added calls to questItem functions in pickup and drop
  */
 
 public class PickUpSystem : MonoBehaviour
 {
     [SerializeField] private GameObject currentItem = null;
-   
+    [SerializeField] private QuestItem questItem = null;
     [SerializeField] private Transform holdPos;
     [SerializeField] private Transform dropPos;
     [SerializeField] private Vector3 pickUpBox;
@@ -56,12 +58,10 @@ public class PickUpSystem : MonoBehaviour
             {
                 if(item.gameObject.CompareTag(EventObjectTag))
                 {
-                    print("TRYING TO INTERACT");
                     item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
                 }
                 if (item.gameObject.CompareTag(interactableTag) && item.attachedRigidbody.mass <= maxMass)
                 {
-                    print("asjflksd");
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
                     
                     currentItem = item.gameObject;
@@ -74,6 +74,13 @@ public class PickUpSystem : MonoBehaviour
                     currentItem.transform.parent = holdPos;
                     currentItem.transform.position = holdPos.position;
                     currentItem.transform.rotation = holdPos.rotation;
+
+                    questItem = currentItem.GetComponent<QuestItem>();
+                    if (questItem)
+                    {
+                        questItem.pickedUp();
+                    }
+
                     break;
                 }
             }
@@ -94,6 +101,13 @@ public class PickUpSystem : MonoBehaviour
                 col.enabled = true;
             }
             currentItem.GetComponent<Rigidbody>().isKinematic = false;
+
+            if (questItem)
+            {
+                questItem.dropped();
+            }
+
+            questItem = null;
             currentItem = null;
         }
     }
