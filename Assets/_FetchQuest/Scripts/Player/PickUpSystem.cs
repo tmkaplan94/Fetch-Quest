@@ -92,6 +92,11 @@ public class PickUpSystem : MonoBehaviourPun
         {
             foreach (Collider item in items)
             {
+                if (item.gameObject.CompareTag(EventObjectTag))
+                {
+                    item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
+                    break;
+                }
                 if (item.attachedRigidbody.mass <= maxMass)
                 {
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
@@ -108,11 +113,7 @@ public class PickUpSystem : MonoBehaviourPun
                     currentItem.transform.rotation = holdPos.rotation;
                     break;
                 }
-                if (item.gameObject.CompareTag(EventObjectTag))
-                {
-                    item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
-                     break;
-                }
+                
             }
         }
         

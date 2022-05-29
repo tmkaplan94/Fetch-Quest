@@ -55,6 +55,7 @@ MonoBehaviour:
   - StartPissRPC
   - EndPissRPC
   - PlaySFXRPC
+  - EatRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
