@@ -16,7 +16,7 @@ public class DisplayAchievement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+      /*  if (Input.GetKeyDown(KeyCode.J))
         {
             ChangeText("hello");
             panel.SetActive(true);
@@ -25,7 +25,7 @@ public class DisplayAchievement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.L))
         {
             panel.SetActive(false);
-        }
+        }*/
 
         
     }
