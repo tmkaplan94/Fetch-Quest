@@ -61,7 +61,7 @@ public class AIController : MonoBehaviour
         var talkingState = new TalkingState(this); //Setting up TalkingState
         var workingState = new WorkingState(this); //Setting up WorkingState
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
-        var calljanitorState = new CallJanitorState(this, navMeshAgent);
+        //var calljanitorState = new CallJanitorState(this, navMeshAgent);
         var cleaningState = new CleaningState(this);
         var firedState = new FiredState(this, navMeshAgent);
 
@@ -71,13 +71,13 @@ public class AIController : MonoBehaviour
         At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
         At(workingState, walkingState, HasTarget());
         At(cleaningState, walkingState, HasTarget());
-        At(calljanitorState, walkingState, HasTarget());
+        //At(calljanitorState, walkingState, HasTarget());
         At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
         Aat(workingState, HasWork()); //Adding petting state as an any
         Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
-        Aat(calljanitorState, FoundPeeEmp());
+        //Aat(calljanitorState, FoundPeeEmp());
         Aat(cleaningState, FoundPeeJan());
         Aat(firedState, Fired());
 
@@ -97,7 +97,7 @@ public class AIController : MonoBehaviour
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
     Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
-    Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
+    //Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
     Func<bool> Fired() => () => _stats.IsJanitor == true && gotFired == true;
 
@@ -113,11 +113,12 @@ public class AIController : MonoBehaviour
             hasWorkToDo = true;
             idelCount = 0;
         }
-        if (gotFired)
+        if (fireAlarm || gotFired)
         {
             dogNearby = false;
             personNearby = false;
             hasWorkToDo = false;
+            peeFound = false;
             idelCount = 0;
         }
     }
@@ -177,6 +178,10 @@ public class AIController : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+        if (fireAlarm && other.CompareTag("Exit"))
+        {
+            AnimationStop();
+        }
         if (_stats.IsJanitor && gotFired && other.CompareTag("Exit"))
         {
             Destroy(this.gameObject);

@@ -15,6 +15,10 @@ public class TalkingState : IState
 
     public void Tick()
     {
+        if (_controller.fireAlarm)
+        {
+            waitTime = 0;
+        }
         if (waitTime <= Time.time)
         {
             _controller.GetNewTarget();

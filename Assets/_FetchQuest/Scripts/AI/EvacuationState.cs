@@ -24,7 +24,6 @@ public class EvacuationState : IState
         }
     }
 
-
     public void OnEnter()
     {
         Debug.Log("Evacuation Enter");
@@ -41,6 +40,5 @@ public class EvacuationState : IState
         _controller.fireAlarm = false;
         _controller.turnAlarmOff = false;
         _controller.GetNewTarget();
-        _controller.AnimationStop();
     }
 }
