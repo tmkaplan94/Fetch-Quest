@@ -52,8 +52,8 @@ public class AIController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        eventSys = LevelStatic.currentLevel.questBus;
-        eventSys.subscribe(HandleEvents);
+        //eventSys = LevelStatic.currentLevel.questBus;
+        //eventSys.subscribe(HandleEvents);
 
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);

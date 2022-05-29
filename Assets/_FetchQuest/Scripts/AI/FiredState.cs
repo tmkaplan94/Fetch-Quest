@@ -33,6 +33,7 @@ public class FiredState : IState
         waitTime = Time.time + _controller.AIStats.RestTime * 2;
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_controller.exit.position);
+        _controller.AnimationWalking();
     }
 
     public void OnExit()
