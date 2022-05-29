@@ -31,6 +31,7 @@ public class EvacuationState : IState
         waitTime = Time.time + _controller.AIStats.RestTime * 3;
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_controller.exit.position);
+        _controller.AnimationWalking();
     }
 
     public void OnExit()
@@ -40,5 +41,6 @@ public class EvacuationState : IState
         _controller.fireAlarm = false;
         _controller.turnAlarmOff = false;
         _controller.GetNewTarget();
+        _controller.AnimationStop();
     }
 }
