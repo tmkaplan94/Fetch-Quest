@@ -5,24 +5,19 @@ using Photon.Pun;
 
 public class Interect : MonoBehaviour
 {
-    [SerializeField] private Transform interactPos;
-    [SerializeField] private Vector3 _interactBox;
-    [SerializeField] private LayerMask _interactLayer;
-    private string EventObjectTag = "EventObj";
     private PickUpSystem _pickupSystem;
-    GameObject heldItem;
     private bool isNetworked;
-    private PhotonView v;
-
+    GameObject heldItem;
+    PhotonView v;
 
     private void Awake()
     {
-        v = GetComponent<PhotonView>();
         if (FindObjectOfType<NetworkManager>() == null)
             isNetworked = false;
         else
             isNetworked = true;
 
+        v = GetComponent<PhotonView>();
     }
     // Start is called before the first frame update
     void Start()
@@ -30,16 +25,15 @@ public class Interect : MonoBehaviour
         _pickupSystem = GetComponent<PickUpSystem>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("f"))
         {
             AudioManager.Instance.PlaySFX("General_Bark", transform.position);
-            GameObject heldItem = _pickupSystem.GetItem();
-            if (heldItem != null)   
+            heldItem = _pickupSystem.GetItem();
+            if (heldItem != null)
             {
-                if(heldItem.TryGetComponent(out Interactable interactable))
+                if (heldItem.TryGetComponent(out Interactable interactable))
                     interactable.Interact(this.gameObject);
                 else
                 {
@@ -48,7 +42,6 @@ public class Interect : MonoBehaviour
                     else
                         Eat();
                 }
-    
             }
         }
     }

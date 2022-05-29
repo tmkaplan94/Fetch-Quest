@@ -23,6 +23,7 @@ public class PickUpSystem : MonoBehaviourPun
     [SerializeField] private Transform interactPos;
     [SerializeField] private Vector3 pickUpBox;
     [SerializeField] private LayerMask pickUpsLayer;
+    private string EventObjectTag = "EventObj";
 
     private string interactableTag = "Interactable";
     private bool isNetworked;
@@ -83,7 +84,6 @@ public class PickUpSystem : MonoBehaviourPun
         photonView.RPC("DropRPC", RpcTarget.All);
     }
     
-
     [PunRPC]
     private void PickUpRPC()
     {
@@ -107,6 +107,11 @@ public class PickUpSystem : MonoBehaviourPun
                     currentItem.transform.position = holdPos.position;
                     currentItem.transform.rotation = holdPos.rotation;
                     break;
+                }
+                if (item.gameObject.CompareTag(EventObjectTag))
+                {
+                    item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
+                     break;
                 }
             }
         }
