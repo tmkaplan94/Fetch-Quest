@@ -9,6 +9,7 @@ public class Interect : MonoBehaviour
     private bool isNetworked;
     GameObject heldItem;
     PhotonView v;
+    QuestBus eventSys;
 
     private void Awake()
     {
@@ -23,6 +24,8 @@ public class Interect : MonoBehaviour
     void Start()
     {
         _pickupSystem = GetComponent<PickUpSystem>();
+        LevelData l = FindObjectOfType<LevelData>();
+        eventSys = l.questBus;
     }
 
     void Update()
@@ -38,9 +41,18 @@ public class Interect : MonoBehaviour
                 else
                 {
                     if (isNetworked)
+                    {
                         v.RPC("EatRPC", RpcTarget.All);
+                        if (PhotonNetwork.IsMasterClient)
+                            PhotonNetwork.Destroy(heldItem);
+                        else
+                            v.RPC("NetworkDestroy", RpcTarget.All);
+                    }
                     else
-                        Eat();
+                    {
+                        eventSys.update(new QuestObject(5, "MMM.. Delicious!!!", LevelData.publicEvents.NOEVENT));
+                        Destroy(heldItem);
+                    }
                 }
             }
         }
@@ -49,11 +61,14 @@ public class Interect : MonoBehaviour
     [PunRPC]
     private void EatRPC()
     {
-        Eat();
+        eventSys.update(new QuestObject(5, "MMM.. Delicious!!!", LevelData.publicEvents.NOEVENT));        
     }
-    private void Eat()
+    [PunRPC]
+    private void NetworkDestroy()
     {
-        LevelStatic.currentLevel.questBus.update(new QuestObject(5, "MMM.. Delicious! I love " + heldItem.name + "!!", LevelData.publicEvents.NOEVENT));
-        Destroy(heldItem);
-    }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(_pickupSystem.GetItem());
+        }
+    }   
 }
