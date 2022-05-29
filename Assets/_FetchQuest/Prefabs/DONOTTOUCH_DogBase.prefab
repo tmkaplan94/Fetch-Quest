@@ -1366,6 +1366,7 @@ MonoBehaviour:
   _interect: {fileID: 4304963968920719196}
   _physics: {fileID: 5001475608229051789}
   _pickUpSystem: {fileID: 2380026020750417484}
+  _hilightBox: {fileID: 1864782633481502117}
 --- !u!114 &3111074010732373755
 MonoBehaviour:
   m_ObjectHideFlags: 0
