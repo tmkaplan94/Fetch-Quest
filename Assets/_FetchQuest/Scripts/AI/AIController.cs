@@ -95,8 +95,8 @@ public class AIController : MonoBehaviour
     Func<bool> HasWork() => () => fireAlarm != true && isWorking.value == true;
     Func<bool> AlarmOn() => () => fireAlarm == true;
     Func<bool> AlarmOff() => () => fireAlarm == false;
-    Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
-    Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
+    Func<bool> DogNear() => () => fireAlarm != true && dogNearby == true; //Is dog near?
+    Func<bool> PersonNear() => () => fireAlarm != true && personNearby == true; //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
     //Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
