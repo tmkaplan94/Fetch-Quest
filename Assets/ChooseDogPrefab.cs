@@ -31,7 +31,14 @@ public class ChooseDogPrefab : MonoBehaviour
 
         if (_isNetworked)
         {
-            PhotonNetwork.Instantiate(dogPrefab[dogIndex].name, dogPosition, dogRotation);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Instantiate(dogPrefab[dogIndex].name, dogPosition + new Vector3(0, 0, -2), dogRotation);
+            }
+            else
+            {
+                PhotonNetwork.Instantiate(dogPrefab[dogIndex].name, dogPosition + new Vector3(0, 0, 2), dogRotation);
+            }
         }
         else
         {

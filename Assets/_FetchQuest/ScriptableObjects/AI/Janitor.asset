@@ -18,6 +18,7 @@ MonoBehaviour:
   talkTime: 15
   pettingDistance: 5
   pettingCooldown: 3
-  talkingCooldown: 6
+  talkingCooldown: 60
   workingCooldown: 12
   isJanitor: 1
+  isBoss: 0

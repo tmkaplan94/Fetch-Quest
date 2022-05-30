@@ -9,6 +9,9 @@ using TMPro;
 
 public class RotationManager : MonoBehaviour
 {
+    public static int _currentDogIndex;
+    
+    
     #region Private Serialized Fields
     
     [SerializeField] private GameObject dogList;
@@ -26,12 +29,18 @@ public class RotationManager : MonoBehaviour
     private GameObject[] _dogs;
     private GameObject _currentDog;
     private GameObject _previousDog;
-   
+    private bool _hasSelected;
 
     #endregion
 
-    public static int _currentDogIndex;
 
+    #region Properties
+
+    public bool HasSelected { get => _hasSelected; set => _hasSelected = value; }
+
+    #endregion
+    
+    
     #region MonoBehavior Callbacks
 
     private void Awake()
@@ -40,12 +49,7 @@ public class RotationManager : MonoBehaviour
         InitializeDogsAndPositions();
         _currentDogIndex = 0;
         _currentDog = _dogs[_currentDogIndex];
-    }
-
-    private void Start()
-    {
-        // have the first dog look at target point on camera
-        //_currentDog.transform.LookAt(lookAtTarget);
+        _hasSelected = false;
     }
 
     void Update(){
@@ -75,72 +79,78 @@ public class RotationManager : MonoBehaviour
 
     #endregion
 
+    
     #region Public Methods
 
     public void RotateLeft()
     {
-        AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
-        // rotate dog wheel left
-        //Debug.Log("RotateLeft()");
-        //dogList.transform.Rotate(new Vector3(0, -30, 0));
-        foreach(Transform child in dogList.transform){
-            child.gameObject.transform.RotateAround(dogList.transform.position, new Vector3(0,-1,0), 30);
-        }
-        
-        //get previous dog to reset their rotate value
-        _previousDog = _currentDog;
-        correctOrientationForLeftRotation(_previousDog);
-        
-        // change current dog
-        _currentDogIndex -= 1;
-        if (_currentDogIndex < 0)
+        if (!_hasSelected)
         {
-            _currentDogIndex = dogList.transform.childCount - 1;
-        }
-
-        _currentDog = _dogs[_currentDogIndex];
-        changeUIText();
+            AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
+            // rotate dog wheel left
+            //Debug.Log("RotateLeft()");
+            //dogList.transform.Rotate(new Vector3(0, -30, 0));
+            foreach(Transform child in dogList.transform){
+                child.gameObject.transform.RotateAround(dogList.transform.position, new Vector3(0,-1,0), 30);
+            }
         
+            //get previous dog to reset their rotate value
+            _previousDog = _currentDog;
+            CorrectOrientationForLeftRotation(_previousDog);
+        
+            // change current dog
+            _currentDogIndex -= 1;
+            if (_currentDogIndex < 0)
+            {
+                _currentDogIndex = dogList.transform.childCount - 1;
+            }
+
+            _currentDog = _dogs[_currentDogIndex];
+            ChangeUIText();
+        }
     }
 
     public void RotateRight()
     {
-        AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
-        // rotate dog wheel right
-
-        //children rotate with parent
-        //dogList.transform.Rotate(new Vector3(0, 30, 0));
-
-        //children rotate around parent
-        //each child rotates around parent 30 degrees
-        foreach(Transform child in dogList.transform){
-            child.gameObject.transform.RotateAround(dogList.transform.position, new Vector3(0,1,0), 30);
-        }
-
-        //get previous dog to reset their rotate value
-        //currentDog has not changed yet
-        _previousDog = _currentDog;
-        correctOrientationForRightRotation(_previousDog);
-
-        // change current dog
-        _currentDogIndex += 1;
-        if (_currentDogIndex > dogList.transform.childCount - 1)
+        if (!_hasSelected)
         {
-            _currentDogIndex = 0;
+            AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
+            // rotate dog wheel right
+
+            //children rotate with parent
+            //dogList.transform.Rotate(new Vector3(0, 30, 0));
+
+            //children rotate around parent
+            //each child rotates around parent 30 degrees
+            foreach(Transform child in dogList.transform){
+                child.gameObject.transform.RotateAround(dogList.transform.position, new Vector3(0,1,0), 30);
+            }
+
+            //get previous dog to reset their rotate value
+            //currentDog has not changed yet
+            _previousDog = _currentDog;
+            CorrectOrientationForRightRotation(_previousDog);
+
+            // change current dog
+            _currentDogIndex += 1;
+            if (_currentDogIndex > dogList.transform.childCount - 1)
+            {
+                _currentDogIndex = 0;
+            }
+
+            _currentDog = _dogs[_currentDogIndex];
+            ChangeUIText();
         }
-
-        _currentDog = _dogs[_currentDogIndex];
-        changeUIText();
-
     }
 
     #endregion
 
+    
     #region Private Methods
 
     //changes text of DogNameText UI element to match the currently selected dog
     //changes text of DogSizeText UI element to match the currently selected dog
-    private void changeUIText(){
+    private void ChangeUIText(){
 
         dogNameText.text = _currentDog.name;
 
@@ -192,15 +202,14 @@ public class RotationManager : MonoBehaviour
             dogSizeText.text = "mid";
         }
     }
-
-
+    
     //For right rotates, previous dog needs to be set to a rotateY of 30 to maintain correct orientation
-    private void correctOrientationForRightRotation(GameObject previousDog){
+    private void CorrectOrientationForRightRotation(GameObject previousDog){
         previousDog.transform.eulerAngles = new Vector3(0, 30, 0);
     }
 
     //For left rotates, previous dog needs to be set to a rotateY of -30 to maintain correct orientation
-    private void correctOrientationForLeftRotation(GameObject previousDog){
+    private void CorrectOrientationForLeftRotation(GameObject previousDog){
         previousDog.transform.eulerAngles = new Vector3(0, -30, 0);
     }
 
@@ -222,4 +231,5 @@ public class RotationManager : MonoBehaviour
     }
 
     #endregion
+    
 }

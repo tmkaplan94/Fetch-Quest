@@ -1698,13 +1698,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228cd6bb59ae51c478806a1433e179bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 11400000, guid: aaa5e960fea955946ab36a67b366d686, type: 2}
-  waypoints: []
+  _stats: {fileID: 11400000, guid: e1f1631db28c4b443aab798276da11ca, type: 2}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   workplace: {fileID: 0}
   personAnimator: {fileID: 6944402716104183446}
+  zombieMesh: {fileID: 4300040, guid: b20a3c10714a6ac439af479e3273de65, type: 3}
+  zombieMaterial: {fileID: 2100000, guid: 75dfe1e02a971524789ee9d6e57feec4, type: 2}
+  exit: {fileID: 0}
   dogNearby: 0
   personNearby: 0
   hasWorkToDo: 0
+  fireAlarm: 0
+  turnAlarmOff: 0
+  peeFound: 0
+  gotFired: 0
+  bossMad: 0
   idelCount: 0
 --- !u!1 &6992252805512850508
 GameObject:
@@ -1885,7 +1896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6990472559502797300
 Transform:
   m_ObjectHideFlags: 0
@@ -3526,7 +3537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6990362426151233942
 Transform:
   m_ObjectHideFlags: 0

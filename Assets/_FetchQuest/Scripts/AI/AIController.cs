@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 using Random = UnityEngine.Random;
 
+public class ReffBool
+{
+    public bool value;
+    public ReffBool(bool defult)
+    {
+        value = defult;
+    }
+}
 public class AIController : MonoBehaviour
 {
     [SerializeField] private AIStats _stats;
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private Transform workplace; //Workplace coords
     [SerializeField] private Animator personAnimator;
+    [SerializeField] private Mesh zombieMesh;
+    [SerializeField] private Material zombieMaterial;
+    private GameObject _janitor;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
@@ -20,7 +32,9 @@ public class AIController : MonoBehaviour
     public bool peeFound = false; //Set Bool for calling janitor if pee is found
     public bool gotFired = false;
     public bool bossMad = false;
-    private Collider peeObj;
+ 
+    public GameObject peeObj;
+    public List< GameObject> JanitorPeeObj;
     private ReffBool canPet = new ReffBool(true);
     private ReffBool isTalking = new ReffBool(false);
     private ReffBool isWorking = new ReffBool(false);
@@ -35,25 +49,24 @@ public class AIController : MonoBehaviour
     public Transform? Target { get; private set; }
     public Transform? Work { get; private set; }
     private NavMeshAgent? navMeshAgent;
+    private bool isNetworked;
 
     public AIStats AIStats => _stats;
-    public class ReffBool
-    {
-        public bool value;
-        public ReffBool(bool defult)
-        {
-            value = defult;
-        }
-    }
+    
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         scoreManager = FindObjectOfType<ScoreManager>();
         _stateMachine = new StateMachine();
-        eventSys = LevelStatic.currentLevel.questBus;
-        eventSys.subscribe(HandleEvents);
 
+
+        if (FindObjectOfType<NetworkManager>() == null)
+            isNetworked = false;
+        else
+            isNetworked = true;
+        
+        
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
         var pettingState = new PettingState(this); //Setting up PettingState
@@ -61,8 +74,11 @@ public class AIController : MonoBehaviour
         var workingState = new WorkingState(this); //Setting up WorkingState
         var evacuationState = new EvacuationState(this, navMeshAgent); //Setting up the EvacuationState
         var calljanitorState = new CallJanitorState(this, navMeshAgent);
-        var cleaningState = new CleaningState(this, peeObj);
+        var cleaningState = new CleaningState(this);
         var firedState = new FiredState(this, navMeshAgent);
+        var firingState = new FiringState(this, navMeshAgent);
+        var peeSearch = new PeeSearch(this, navMeshAgent);
+
 
         At(idleState, walkingState, HasTarget());
         At(walkingState, idleState, ReachedDestination());
@@ -72,19 +88,30 @@ public class AIController : MonoBehaviour
         At(cleaningState, walkingState, HasTarget());
         At(calljanitorState, walkingState, HasTarget());
         At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
+        At(firingState, walkingState, HasTarget()); //Adding way to exit evacuation state that does not trigger everytime
+
+        Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
+        Aat(firedState, Fired());
+        Aat(firingState, Firing());
+        Aat(calljanitorState, FoundPeeEmp());
+        Aat(cleaningState, FoundPeeJan());   
         Aat(pettingState, DogNear()); //Adding petting state as an any
         Aat(talkingState, PersonNear()); //Adding talking state as an any (Bump into them at work)
         Aat(workingState, HasWork()); //Adding petting state as an any
-        Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
-        Aat(calljanitorState, FoundPeeEmp());
-        Aat(cleaningState, FoundPeeJan());
-        Aat(firedState, Fired());
-
+        Aat(peeSearch, SearchPee()); //Adding petting state as an any
+        
 
 
 
         _stateMachine.SetState(idleState);
     }
+    void Start()
+    {
+        _janitor = GameObject.Find("Janitor");
+        eventSys = LevelStatic.currentLevel.questBus;
+        eventSys.subscribe(HandleEvents);
+    }
+
     void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
     void Aat(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition); //Shorthand for AddAnyTransition
     
@@ -94,11 +121,13 @@ public class AIController : MonoBehaviour
     Func<bool> AlarmOn() => () => fireAlarm == true;
     Func<bool> AlarmOff() => () => fireAlarm == false;
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
-    Func<bool> PersonNear() => () => personNearby == true; //Is there a person near?
+    Func<bool> PersonNear() => () => personNearby == true && !(_stats.IsBoss && bossMad) && !(_stats.IsJanitor && gotFired); //Is there a person near?
     Func<bool> ReachedDestination() => () => Target != null && Vector3.Distance(transform.position, Target.position) < 1f;
     Func<bool> FoundPeeEmp() => () => peeFound == true && !_stats.IsJanitor == true;
     Func<bool> FoundPeeJan() => () => peeFound == true && _stats.IsJanitor == true;
     Func<bool> Fired() => () => _stats.IsJanitor == true && gotFired == true;
+    Func<bool> Firing() => () => _stats.IsBoss == true && bossMad == true;
+    Func<bool> SearchPee() => () => _stats.IsJanitor == true && JanitorPeeObj.Count > 0;
 
 
 
@@ -110,6 +139,13 @@ public class AIController : MonoBehaviour
         if (idelCount == 5)
         {
             hasWorkToDo = true;
+            idelCount = 0;
+        }
+        if (gotFired)
+        {
+            dogNearby = false;
+            personNearby = false;
+            hasWorkToDo = false;
             idelCount = 0;
         }
     }
@@ -129,7 +165,10 @@ public class AIController : MonoBehaviour
         Target = t;
         
     }
-
+    public Vector3 GetJanitorPos()
+    {
+        return _janitor.transform.position;
+    }
     public void GetNewTarget()
     {
         
@@ -164,15 +203,22 @@ public class AIController : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning(canPet.value);
-        Debug.LogWarning(other.gameObject.tag);
+        if (_stats.IsJanitor && gotFired && other.CompareTag("Exit"))
+        {
+            Destroy(this.gameObject);
+        }
+
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
-            
+            if (bone!= null && bone.CompareTag("Special") && _stats.IsBoss)
+            {
+                bossMad = true;
+                Destroy(bone);
+            }
             if (canPet.value)
             {
-                if (bone != null)
+                if (bone != null && !bone.CompareTag("Special"))
                 {
                     scoreInc = 10;
                     Destroy(bone);
@@ -190,7 +236,23 @@ public class AIController : MonoBehaviour
 
             }
         }
-        if(!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
+        
+        AIController ai = other.gameObject.GetComponent<AIController>();
+        if (ai != null && !_stats.IsJanitor && ai._stats.IsJanitor)
+        {
+            if(peeObj != null)
+            { 
+                if(!ai.JanitorPeeObj.Contains(this.peeObj))
+                    ai.JanitorPeeObj.Add(this.peeObj);
+            }
+            peeFound = false;
+        }
+        if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
+        {
+            gotFired = true;
+            ai.bossMad = false;
+        }
+        else if (!isTalking.value && ai != null && !ai._stats.IsJanitor && !fireAlarm && !hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
@@ -204,18 +266,44 @@ public class AIController : MonoBehaviour
         }
         if (other.CompareTag("Pee"))
         {
-            peeFound = true;
-            peeObj = other;
+            ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
+            if (_stats.IsJanitor || !piss.spotted)
+            {
+                piss.spotted = true;
+                peeFound = true;
+                peeObj = other.gameObject;
+            }
         }
-        if (_stats.IsJanitor == true && other.gameObject.name == "Boss" && bossMad == true)
-        {
-            gotFired = true;
-        }
+        
     }
     public void CallDestroy(GameObject obj)
     {
         Debug.Log("Destroyed was Called on: " + obj);
         Destroy(obj);
+    }
+    public void Zombify()
+    {
+        if (isNetworked)
+        {
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("ZombifyRPC", RpcTarget.All);
+        }
+        else
+            ZombifyRPC();
+    }
+    [PunRPC]
+    private void ZombifyRPC()
+    {
+        print("zombie");
+        SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach(SkinnedMeshRenderer rend in renderers)
+        {
+            if (rend.enabled)
+            {
+                rend.material = zombieMaterial;
+                rend.sharedMesh = zombieMesh;
+            }
+        }
     }
 
     public void AnimationStart(float _sp)

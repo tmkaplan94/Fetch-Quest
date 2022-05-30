@@ -13,12 +13,12 @@ public class LevelData : MonoBehaviour
     public QuestBus questBus;
     public QuestManager questManager;
 
-    public enum publicEvents {NOEVENT, QUESTSTARTED, QUESTFINISHED, FIREALARM};
+    public enum publicEvents {NOEVENT, QUESTSTARTED, QUESTFINISHED, FIREALARM, POOL};
 
     // on (level) load, puts itself in the level static
     private void Awake()
     {
         LevelStatic.currentLevel = this;
-        print("INJECTED LEVEL DATA INTO STATIC");
+        Debug.Log("INJECTED LEVEL DATA INTO STATIC");
     }
 }

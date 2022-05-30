@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 /*
  * Author: Grant Reed
@@ -12,20 +13,34 @@ using UnityEngine;
  * - N/A
  */
 
-public class PickUpSystem : MonoBehaviour
+public class PickUpSystem : MonoBehaviourPun
 {
+
     [SerializeField] private GameObject currentItem = null;
    
     [SerializeField] private Transform holdPos;
     [SerializeField] private Transform dropPos;
+    [SerializeField] private Transform interactPos;
     [SerializeField] private Vector3 pickUpBox;
     [SerializeField] private LayerMask pickUpsLayer;
+    private string EventObjectTag = "EventObj";
 
     private string interactableTag = "Interactable";
-    private string EventObjectTag = "EventObj";
+    private bool isNetworked;
+    
     private float maxMass;
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            isNetworked = false;
+        }
+        else
+            isNetworked = true;
+    }
     private void Start()
     {
+        
         switch (gameObject.tag) 
         {
             case "big": maxMass = 15; break;
@@ -39,26 +54,50 @@ public class PickUpSystem : MonoBehaviour
     {
          if (Input.GetKeyDown(KeyCode.E))
          {
-            PickUp();
+            if (currentItem == null)
+            {
+                if (isNetworked)
+                    PickUp();
+                else
+                    PickUpRPC();
+            }
+            else
+            {
+                if (isNetworked)
+                    Drop();
+                else
+                    DropRPC();
+            }
          }
     }
     public GameObject GetItem()
     {
         return currentItem;
     }
+
     private void PickUp()
     {
-        Collider[] items = Physics.OverlapBox(dropPos.position, pickUpBox, dropPos.rotation, pickUpsLayer );
-        Drop();
+        photonView.RPC("PickUpRPC", RpcTarget.All);
+    }
+    private void Drop()
+    {
+        photonView.RPC("DropRPC", RpcTarget.All);
+    }
+    
+    [PunRPC]
+    private void PickUpRPC()
+    {
+        Collider[] items = Physics.OverlapBox(interactPos.position, pickUpBox, interactPos.rotation, pickUpsLayer );
         if (items.Length > 0)
         {
             foreach (Collider item in items)
             {
-                if(item.gameObject.CompareTag(EventObjectTag))
+                if (item.gameObject.CompareTag(EventObjectTag))
                 {
                     item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
+                    break;
                 }
-                if (item.gameObject.CompareTag(interactableTag) && item.attachedRigidbody.mass <= maxMass)
+                if (item.attachedRigidbody.mass <= maxMass)
                 {
                     AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
                     
@@ -74,12 +113,14 @@ public class PickUpSystem : MonoBehaviour
                     currentItem.transform.rotation = holdPos.rotation;
                     break;
                 }
+                
             }
         }
         
     }
 
-    private void Drop()
+    [PunRPC]
+    private void DropRPC()
     {
         if (currentItem != null)
         {
