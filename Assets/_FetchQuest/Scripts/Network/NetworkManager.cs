@@ -13,8 +13,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Private Serialized Fields
 
     [SerializeField] private GameSettings gameSettings;
-    [SerializeField] private TMP_InputField playerName;
-    [SerializeField] private TMP_InputField roomName;
+    [SerializeField] private InputField playerName;
+    [SerializeField] private InputField roomName;
     [SerializeField] private GameObject createButton;
     [SerializeField] private GameObject joinButton;
 
@@ -146,19 +146,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player newPlayer)
     {
         UpdatePlayerList();
-
-        // if (SceneManager.GetActiveScene().name == "Grant")
-        // {
-        //     try
-        //     {
-        //         PhotonNetwork.Disconnect();
-        //         SceneManager.LoadScene("MainMenu");
-        //     }
-        //     catch(ErrorCode e)
-        //     {
-        //         print(e.Message);
-        //     }
-        // }
     }
 
     #endregion
