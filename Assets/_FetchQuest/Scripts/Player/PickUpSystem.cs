@@ -54,19 +54,32 @@ public class PickUpSystem : MonoBehaviourPun
     {
          if (Input.GetKeyDown(KeyCode.E))
          {
-            if (currentItem == null)
-            {
-                if (isNetworked)
-                    PickUp();
-                else
-                    PickUpRPC();
-            }
-            else
+            if (currentItem != null)
             {
                 if (isNetworked)
                     Drop();
                 else
                     DropRPC();
+            }
+            else
+            {
+                Collider[] items = Physics.OverlapBox(interactPos.position, pickUpBox, interactPos.rotation, pickUpsLayer);
+                if (items.Length > 0)
+                {
+                    foreach (Collider item in items)
+                    {
+                        if (item.gameObject.CompareTag(EventObjectTag))
+                        {
+                            item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
+                            break;
+                        }
+                        if (item.attachedRigidbody.mass <= maxMass)
+                        {
+                            PickUp(item.gameObject);
+                            break;
+                        }
+                    }
+                }
             }
          }
     }
@@ -75,9 +88,25 @@ public class PickUpSystem : MonoBehaviourPun
         return currentItem;
     }
 
-    private void PickUp()
+    private void PickUp(GameObject item)
     {
-        photonView.RPC("PickUpRPC", RpcTarget.All);
+        if(isNetworked)
+            photonView.RPC("PickUpRPC", RpcTarget.All, item.GetComponent<PhotonView>().ViewID);
+        else
+        {
+            AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
+
+            currentItem = item;
+            Collider[] cols = currentItem.GetComponentsInChildren<Collider>();
+            foreach (Collider col in cols)
+            {
+                col.enabled = false;
+            }
+            currentItem.GetComponent<Rigidbody>().isKinematic = true;
+            currentItem.transform.parent = holdPos;
+            currentItem.transform.position = holdPos.position;
+            currentItem.transform.rotation = holdPos.rotation;
+        }
     }
     private void Drop()
     {
@@ -85,38 +114,20 @@ public class PickUpSystem : MonoBehaviourPun
     }
     
     [PunRPC]
-    private void PickUpRPC()
+    private void PickUpRPC(int id)
     {
-        Collider[] items = Physics.OverlapBox(interactPos.position, pickUpBox, interactPos.rotation, pickUpsLayer );
-        if (items.Length > 0)
+        AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
+
+        currentItem = PhotonView.Find(id).gameObject;
+        Collider[] cols = currentItem.GetComponentsInChildren<Collider>();
+        foreach (Collider col in cols)
         {
-            foreach (Collider item in items)
-            {
-                if (item.gameObject.CompareTag(EventObjectTag))
-                {
-                    item.gameObject.GetComponent<Interactable>().Interact(this.gameObject);
-                    break;
-                }
-                if (item.attachedRigidbody.mass <= maxMass)
-                {
-                    AudioManager.Instance.PlaySFX(AudioNames.PickUp, transform.position);
-                    
-                    currentItem = item.gameObject;
-                    Collider[] cols = currentItem.GetComponentsInChildren<Collider>();
-                    foreach (Collider col in cols)
-                    {
-                        col.enabled = false;
-                    }
-                    currentItem.GetComponent<Rigidbody>().isKinematic = true;
-                    currentItem.transform.parent = holdPos;
-                    currentItem.transform.position = holdPos.position;
-                    currentItem.transform.rotation = holdPos.rotation;
-                    break;
-                }
-                
-            }
+            col.enabled = false;
         }
-        
+        currentItem.GetComponent<Rigidbody>().isKinematic = true;
+        currentItem.transform.parent = holdPos;
+        currentItem.transform.position = holdPos.position;
+        currentItem.transform.rotation = holdPos.rotation;
     }
 
     [PunRPC]
