@@ -31,7 +31,7 @@ public class FishQuest : Quest
     {
         base.questStarted();
 
-        string message = "Flying fish! Everywhere! Quickly, clean up the mess! "
+        string message = "Flying fish! Everywhere! Quickly, clean up the mess!   "
                                         + fishRemaining + " remaining";
         QuestObject update = new QuestObject(0, message);
         questBus.update(update);
