@@ -17,7 +17,7 @@ public class WorkingState : IState
     {
         if (_controller.fireAlarm)
         {
-            waitTime = 0;
+            _controller.GetNewTarget();
         }
         if (waitTime <= Time.time)
         {

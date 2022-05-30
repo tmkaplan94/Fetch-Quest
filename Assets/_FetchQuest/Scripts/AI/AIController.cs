@@ -217,7 +217,7 @@ public class AIController : MonoBehaviour
 
             }
         }
-        if(!isTalking.value && other.CompareTag("AI") && !fireAlarm && !hasWorkToDo)
+        if(!isTalking.value && other.CompareTag("AI") && !other.gameObject.GetComponent<AIController>().isTalking.value && !fireAlarm && !hasWorkToDo && !other.gameObject.GetComponent<AIController>().hasWorkToDo)
         {
             isTalking.value = true;
             personNearby = true;
