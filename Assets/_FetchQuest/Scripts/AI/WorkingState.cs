@@ -15,12 +15,15 @@ public class WorkingState : IState
 
     public void Tick()
     {
+        Debug.Log("Working Tick");
         if (_controller.fireAlarm)
         {
+            Debug.Log("Working Tick fireAlarm");
             _controller.GetNewTarget();
         }
         if (waitTime <= Time.time)
         {
+            Debug.Log("Working Tick waitTime");
             _controller.GetNewTarget();
         }
     }
@@ -33,5 +36,6 @@ public class WorkingState : IState
 
     public void OnExit()
     {
+        Debug.Log("Working Done");
     }
 }

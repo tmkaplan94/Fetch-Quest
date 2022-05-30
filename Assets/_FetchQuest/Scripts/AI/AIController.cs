@@ -71,6 +71,7 @@ public class AIController : MonoBehaviour
         At(talkingState, walkingState, HasTarget()); //For now only allow to transition from talking to walking
         At(workingState, walkingState, HasTarget());
         At(cleaningState, walkingState, HasTarget());
+        //At(workingState, evacuationState, AlarmOn());
         //At(calljanitorState, walkingState, HasTarget());
         At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
         Aat(pettingState, DogNear()); //Adding petting state as an any
@@ -91,7 +92,7 @@ public class AIController : MonoBehaviour
     
 
     Func<bool> HasTarget() => () => Target != null;
-    Func<bool> HasWork() => () => isWorking.value == true;
+    Func<bool> HasWork() => () => fireAlarm != true && isWorking.value == true;
     Func<bool> AlarmOn() => () => fireAlarm == true;
     Func<bool> AlarmOff() => () => fireAlarm == false;
     Func<bool> DogNear() => () => dogNearby == true; //Is dog near?
@@ -159,7 +160,10 @@ public class AIController : MonoBehaviour
             SetTarget(workplace);
         }
         else
+        {
             SetTarget(waypoints[currentWaypoint]);
+        }
+
 
     }
     private void HandleEvents(QuestObject q)
