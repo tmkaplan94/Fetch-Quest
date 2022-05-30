@@ -12,8 +12,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Private Serialized Fields
 
     [SerializeField] private GameSettings gameSettings;
-    [SerializeField] private InputField playerName;
-    [SerializeField] private InputField roomName;
+    [SerializeField] private TMP_InputField playerName;
+    [SerializeField] private TMP_InputField roomName;
     [SerializeField] private GameObject createButton;
     [SerializeField] private GameObject joinButton;
 
