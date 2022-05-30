@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -38,10 +39,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
+    #region Properties
+
+    public bool IsNetworked { get; private set; }
+
+    #endregion
+
+
     #region MonoBehavior Callbacks
 
     private void Awake()
     {
+        // game is networked if this object exists
+        IsNetworked = true;
+        
         // persist in scenes
         DontDestroyOnLoad(this);
 
@@ -93,6 +104,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
+        IsNetworked = false;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public override void OnCreatedRoom()
@@ -133,6 +146,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player newPlayer)
     {
         UpdatePlayerList();
+
+        // if (SceneManager.GetActiveScene().name == "Grant")
+        // {
+        //     try
+        //     {
+        //         PhotonNetwork.Disconnect();
+        //         SceneManager.LoadScene("MainMenu");
+        //     }
+        //     catch(ErrorCode e)
+        //     {
+        //         print(e.Message);
+        //     }
+        // }
     }
 
     #endregion

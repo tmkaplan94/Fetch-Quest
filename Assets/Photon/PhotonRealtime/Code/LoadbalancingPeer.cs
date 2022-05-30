@@ -1093,7 +1093,7 @@ namespace Photon.Realtime
     /// <summary>
     /// ErrorCode defines the default codes associated with Photon client/server communication.
     /// </summary>
-    public class ErrorCode
+    public class ErrorCode : Exception
     {
         /// <summary>(0) is always "OK", anything else an error or specific situation.</summary>
         public const int Ok = 0;

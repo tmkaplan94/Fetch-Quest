@@ -10,6 +10,9 @@
  * Updates
  * - Tyler 4/27/22: now calls Resume() on Quit() calls to reset timescale
  */
+
+using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -73,7 +76,24 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Resume();
-        SceneManager.LoadScene("MainMenu");
+        bool networked = false;
+        try
+        {
+            networked = GameObject.Find("NetworkManager").GetComponent<NetworkManager>().IsNetworked;
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        
+        if (networked)
+        {
+            PhotonNetwork.Disconnect();
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
     
     #endregion
