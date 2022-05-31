@@ -72,7 +72,7 @@ public class PissHandler : MonoBehaviour
     public void StartPissRPC()
     {
         PhotonView v = GetComponent<PhotonView>();
-        if (v.Owner.IsMasterClient && v.IsMine)
+        if (v.IsMine)
         {
             _anime.SetBool("isPissing", true);
             print("start");
