@@ -111,6 +111,8 @@ public class PissHandler : MonoBehaviour
         }
         else
         {
+            currPiss.End(isPissing);
+            currPiss = null;
         }
     }
 
