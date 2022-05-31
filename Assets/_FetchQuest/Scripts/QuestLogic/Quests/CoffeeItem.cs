@@ -22,6 +22,11 @@ public class CoffeeItem : QuestItem
     [SerializeField] private ParticleSystem splashParticles;
     [SerializeField] private float splashVelocity = 1f;
 
+    private void Awake()
+    {
+        mainQuest = FindObjectOfType<CoffeeQuest>();
+        mainQuest.coffeeSpawned(this);
+    }
     void Start()
     {
         splashParticles.Play();

@@ -1,11 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CoffeeSpawner : MonoBehaviour, Interactable
 {
     [SerializeField] public GameObject coffeePrefab;
     [SerializeField] public CoffeeQuest coffeeQuest;
+
+    private bool _isNetworked;
+
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            _isNetworked = false;
+        }
+        else
+        {
+            _isNetworked = true;
+        }
+    }
 
     public void Interact(GameObject actor)
     {
@@ -14,16 +29,12 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
 
     private void spawnCoffee()
     {
+        GameObject coffee;
         Vector3 pos = gameObject.transform.position;
         pos += new Vector3(0,0.6f,0);
-        GameObject coffee = Instantiate(coffeePrefab, pos, Quaternion.identity);
-        
-        // inject quest into spawned coffees
-        CoffeeItem coffeeScript = coffee.GetComponent<CoffeeItem>();
-        coffeeScript.mainQuest = coffeeQuest;
-
-        // to notify you
-        // (and to ensure the editor field is set)
-        coffeeQuest.coffeeSpawned(coffeeScript);
+        if (!_isNetworked)
+            coffee = Instantiate(coffeePrefab, pos, Quaternion.identity);
+        else
+            coffee = PhotonNetwork.Instantiate("ScriptedCoffee", pos, Quaternion.identity);
     }
 }
