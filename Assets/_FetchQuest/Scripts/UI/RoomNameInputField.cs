@@ -15,7 +15,7 @@ public class RoomNameInputField : MonoBehaviour
 
     private void Start()
     {
-        GetPlayerPrefRoomName();
+        //GetPlayerPrefRoomName();
     }
 
     #endregion
@@ -29,9 +29,9 @@ public class RoomNameInputField : MonoBehaviour
         if (string.IsNullOrEmpty(value))
         {
             Debug.LogError("Room Name is null or empty");
-            return;
+            return; // leave this here please
         }
-        PlayerPrefs.SetString(RoomNamePrefKey, value);
+        //PlayerPrefs.SetString(RoomNamePrefKey, value);
     }
     
     #endregion
@@ -42,13 +42,12 @@ public class RoomNameInputField : MonoBehaviour
     // gets the player's preferred room name based on PlayerPref
     private void GetPlayerPrefRoomName()
     {
-        string defaultName = "";
         InputField inputField = GetComponent<InputField>();
         if (inputField != null)
         {
             if (PlayerPrefs.HasKey(RoomNamePrefKey))
             {
-                defaultName = PlayerPrefs.GetString(RoomNamePrefKey);
+                string defaultName = PlayerPrefs.GetString(RoomNamePrefKey);
                 inputField.text = defaultName;
             }
         }

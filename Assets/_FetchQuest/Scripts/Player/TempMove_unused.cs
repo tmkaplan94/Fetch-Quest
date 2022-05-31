@@ -17,6 +17,7 @@ public class TempMove_unused : MonoBehaviour
     [SerializeField] private CharacterController _controller;
     [SerializeField] private Transform _cam;
     [SerializeField] private Animator _anime;
+    [SerializeField] private PissHandler pp;
 
     [SerializeField] private float _speed = 6;
     [SerializeField] private float _sprintSpeed;
@@ -25,6 +26,7 @@ public class TempMove_unused : MonoBehaviour
     private Vector3 _velocity;
     private bool _isGrounded;
     private bool _isSprint;
+    private ReffBool _isPissing = new ReffBool(false);
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundDistance = 0.4f;
@@ -54,11 +56,7 @@ public class TempMove_unused : MonoBehaviour
             speed = _speed;
             _isSprint = false;
         }
-        // bark
-        if(Input.GetButtonDown("f"))
-        {
-            AudioManager.Instance.PlaySFX("General_Bark", _pos.position);
-        }
+        
         //jump
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
@@ -92,7 +90,12 @@ public class TempMove_unused : MonoBehaviour
         _anime.SetFloat("Input Mag", inputMag);
         // ----------------------------------------------------------
 
-        if (direction.magnitude >= 0.1f)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _isPissing.value = true;
+            pp.StartPiss();
+        }
+        else if (direction.magnitude >= 0.1f && !_isPissing.value)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _turnSmoothTime);
@@ -100,6 +103,10 @@ public class TempMove_unused : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             _controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
+        if(Input.GetKeyUp(KeyCode.R))
+        {         
+            pp.EndPiss(_isPissing);
         }
     }
 

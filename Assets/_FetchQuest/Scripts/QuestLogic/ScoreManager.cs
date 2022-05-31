@@ -18,7 +18,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-
+using Photon.Pun;
 public class ScoreManager : MonoBehaviour
 {
     #region Private Serialized Fields
@@ -37,12 +37,21 @@ public class ScoreManager : MonoBehaviour
     #region Properties
     
     public int Score { get; private set; }
-    
+    private bool isNetworked;
+
     #endregion
 
 
     #region MonoBehavior Callbacks
-
+    private void Awake()
+    {
+        if (FindObjectOfType<NetworkManager>() == null)
+        {
+            isNetworked = false;
+        }
+        else
+            isNetworked = true;
+    }
     // initialize score board
     private void Start()
     {
@@ -52,11 +61,11 @@ public class ScoreManager : MonoBehaviour
         {
             questBus = LevelStatic.currentLevel.questBus; 
             questBus.subscribe(UpdateFromQuestObject);
-            print("HOOKED UP TO QUEST BUS");
+            Debug.Log("HOOKED UP TO QUEST BUS");
         }
         else
         {
-            print("FAILED TO FIND LEVELDATA: " + LevelStatic.currentLevel);
+            Debug.Log("FAILED TO FIND LEVELDATA: " + LevelStatic.currentLevel);
         }
         
         
@@ -79,10 +88,21 @@ public class ScoreManager : MonoBehaviour
     // updates score and visual feedback based on amount
     public void IncrementScore(int amount)
     {
+        if (isNetworked)
+        {
+            PhotonView v = GetComponent<PhotonView>();
+            v.RPC("IncrementScoreRPC", RpcTarget.All, amount);
+        }
+        else
+            IncrementScoreRPC(amount);
+    }
+    [PunRPC]
+    public void IncrementScoreRPC(int amount)
+    {
         // hijacking  this to test
         if (questBus != null)
             questBus.update(new QuestObject(amount, "dogs are good!", 
-                            LevelData.publicEvents.FIREALARM, "helloQuest"));
+                            LevelData.publicEvents.NOEVENT, "helloQuest"));
         else
         {
             print("QUEST BUS IS NULL");

@@ -1,14 +1,15 @@
-using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    
     #region Private Serialized Fields
 
     [SerializeField] private GameSettings gameSettings;
@@ -26,8 +27,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private Transform playersContent;
     [SerializeField] private PlayerListing playerListing;
 
-    [SerializeField] private Players players;
-
     #endregion
 
 
@@ -36,14 +35,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private RoomOptions _roomOptions = new RoomOptions();
     private List<string> _availableRooms = new List<string>();
     private List<PlayerListing> _playerListings = new List<PlayerListing>();
-    private int _id;
 
     #endregion
 
-    
+
     #region Properties
 
-    public int ID { get; private set; }
+    public bool IsNetworked { get; private set; }
 
     #endregion
 
@@ -52,11 +50,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        ID = GetComponent<PhotonView>().ViewID;
+        // game is networked if this object exists
+        IsNetworked = true;
         
         // persist in scenes
         DontDestroyOnLoad(this);
-        
+
+        // find and destroy duplicates
+        GameObject[] duplicateNetworkManagers = GameObject.FindGameObjectsWithTag("NetworkManager");
+        foreach (GameObject networkManager in duplicateNetworkManagers)
+        {
+            // if duplicate is not me, destroy it
+            if (gameObject != networkManager.gameObject)
+            {
+                Destroy(networkManager);
+            }
+        }
+
         // all clients in the same room will automatically sync level
         PhotonNetwork.AutomaticallySyncScene = true;
         
@@ -94,6 +104,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
+        IsNetworked = false;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public override void OnCreatedRoom()
@@ -108,16 +120,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined room successfully");
-        players.Add(ID);
-        Debug.Log("Player" + ID + " is not ready to play");
         SetUpRoomPanel();
         UpdatePlayerList();
-    }
-
-    public override void OnLeftRoom()
-    {
-        players.Remove(ID);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -138,6 +142,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         UpdatePlayerList();
     }
+    
     public override void OnPlayerLeftRoom(Player newPlayer)
     {
         UpdatePlayerList();

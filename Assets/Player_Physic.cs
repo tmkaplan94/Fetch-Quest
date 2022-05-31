@@ -91,7 +91,7 @@ public class Player_Physic : MonoBehaviour
      **/
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        bool _debug_pyshic_Nate = true;
+        bool _debug_pyshic_Nate = false;
         
         #region detect player type
         if (_player_type == "small")

@@ -15,7 +15,10 @@ TagManager:
   - big
   - Pee
   - EventObj
-  - Bone
+  - NetworkManager
+  - Special
+  - Exit
+  - Billiard
   layers:
   - Default
   - TransparentFX
@@ -28,8 +31,8 @@ TagManager:
   - AI
   - Waypoint
   - Ground
-  - 
-  - 
+  - AIObjects
+  - Window
   - 
   - 
   - 

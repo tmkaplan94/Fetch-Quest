@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class MonoBehaviorPunCallbacksSingleton<T> : MonoBehaviourPunCallbacks where T : Component
 {
+    
     // the one and only instance of type T
     private static T _instance;
     
+    // property of single instance with a getter
     public static T Instance
     {
         get

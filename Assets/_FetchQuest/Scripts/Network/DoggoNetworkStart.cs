@@ -7,6 +7,10 @@ public class DoggoNetworkStart : MonoBehaviour
     [SerializeField] TempMove_unused _movementScript;
     [SerializeField] private GameObject _camera1;
     [SerializeField] GameObject _camera2;
+    [SerializeField] private Interect _interect;
+    [SerializeField] private Player_Physic _physics;
+    [SerializeField] private PickUpSystem _pickUpSystem;
+    [SerializeField] private BoxCollider _hilightBox;
 
     private void Awake()
     {
@@ -20,6 +24,10 @@ public class DoggoNetworkStart : MonoBehaviour
     {
         if (!_view.IsMine)
         {
+            _hilightBox.enabled = false;
+            _interect.enabled = false;
+            _physics.enabled = false;
+            _pickUpSystem.enabled = false;
             _movementScript.enabled = false;
             Destroy(_camera1);
             Destroy(_camera2);

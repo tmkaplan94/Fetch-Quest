@@ -29,7 +29,9 @@ public class Door_open : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isLocked)
+        if (other.CompareTag("AI"))
+            Interact(other.gameObject);
+        else if (isLocked)
         {
             if (other.transform.parent.gameObject.CompareTag("big"))
             {
@@ -44,8 +46,9 @@ public class Door_open : MonoBehaviour
                 isLocked = false;
                 Interact(other.gameObject);
             }
+            
         }
-        else if (ComparePlayerTag(other.gameObject.tag))  
+        else if (ComparePlayerTag(other.gameObject.tag) || other.CompareTag("AI"))
             Interact(other.gameObject);
     }
     bool ComparePlayerTag(string tag)
