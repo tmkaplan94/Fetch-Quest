@@ -36,6 +36,9 @@ public class Interect : MonoBehaviour
             heldItem = _pickupSystem.GetItem();
             if (heldItem != null)
             {
+                string itemTag = heldItem.tag;
+                if (itemTag == "Special" || itemTag == "Coffee")
+                    return;
                 if (heldItem.TryGetComponent(out Interactable interactable))
                     interactable.Interact(this.gameObject);
                 else

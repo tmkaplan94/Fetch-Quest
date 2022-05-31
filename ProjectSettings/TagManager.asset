@@ -19,6 +19,7 @@ TagManager:
   - Special
   - Exit
   - Billiard
+  - Coffee
   layers:
   - Default
   - TransparentFX
