@@ -60,6 +60,8 @@ MonoBehaviour:
   - DestroyCoffee
   - SpawnCoffeeRPC
   - BarkRPC
+  - AlreadyHasCoffee
+  - CoffeeHitRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

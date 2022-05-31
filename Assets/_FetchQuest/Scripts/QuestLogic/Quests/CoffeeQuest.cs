@@ -10,8 +10,7 @@ using Photon.Pun;
 public class CoffeeQuest : Quest
 {
     // holds npcs and their caffienation
-    private Dictionary<GameObject, int> _receivedCoffee = new Dictionary<GameObject, int>();
-    private CoffeeItem currentCoffee;
+    private Dictionary<int, int> _receivedCoffee = new Dictionary<int, int>();
     private bool _isNetworked;
     [SerializeField] private PhotonView v;
     private void Awake()
@@ -28,27 +27,40 @@ public class CoffeeQuest : Quest
 
     public void onCoffeeHit(CoffeeItem coffee, GameObject npc)
     {
-        if (_receivedCoffee.ContainsKey(npc))
+        if (_receivedCoffee.ContainsKey(npc.GetComponent<PhotonView>().ViewID))
         {
-            //_receivedCoffee[npc] ++;
-            // TODO coffee stacks?
-            QuestObject update = new QuestObject(0, "Thanks pupper, but I've already got one!");
-            questBus.update(update);
+            if (_isNetworked)
+                v.RPC("AlreadyHasCoffee", RpcTarget.All);
+            else
+                AlreadyHasCoffee();
+            
         }
         else
         {
-            _receivedCoffee.Add(npc, 1);
-            QuestObject update = new QuestObject(reward, "Coffee! Thanks doggerino!");
-            questBus.update(update);
-            currentCoffee = coffee;
-            currentCoffee.splash();
-            if (!_isNetworked)
-                Destroy(currentCoffee.gameObject);
-            else
+            if (_isNetworked)
             {
+                v.RPC("CoffeeHitRPC", RpcTarget.All, npc.GetComponent<PhotonView>().ViewID);
                 v.RPC("DestroyCoffee", RpcTarget.All, coffee.gameObject.GetComponent<PhotonView>().ViewID);
             }
+            else
+            {
+                CoffeeHitRPC(npc.GetComponent<PhotonView>().ViewID);
+                Destroy(coffee.gameObject);
+            }
         }
+    }
+    [PunRPC]
+    private void CoffeeHitRPC(int id)
+    {
+        _receivedCoffee.Add(id, 1);
+        QuestObject update = new QuestObject(reward, "Coffee! Thanks doggerino!");
+        questBus.update(update);
+    }
+    [PunRPC]
+    private void AlreadyHasCoffee()
+    {
+        QuestObject update = new QuestObject(0, "Thanks pupper, but I've already got one!");
+        questBus.update(update);
     }
 
     [PunRPC]
