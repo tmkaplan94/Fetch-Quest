@@ -8,6 +8,7 @@ public class FaceCamera : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private Text text;
     [SerializeField] private string[] phrases;
+    [SerializeField] private bool isBoss;
 
     void Start()
     {
