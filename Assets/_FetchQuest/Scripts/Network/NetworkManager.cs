@@ -17,6 +17,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private InputField roomName;
     [SerializeField] private GameObject createButton;
     [SerializeField] private GameObject joinButton;
+    [SerializeField] private GameObject connectingText;
 
     [SerializeField] private GameObject launcherPanel;
     [SerializeField] private GameObject roomListingsPanel;
@@ -97,6 +98,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         // enable player to create/join rooms
+        connectingText.SetActive(false);
         createButton.SetActive(true);
         joinButton.SetActive(true);
     }
@@ -224,6 +226,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void LoadDogSelectionScene()
     {
         PhotonNetwork.LoadLevel("DogSelection");
+    }
+
+    public void GoToMainMenu()
+    {
+        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     #endregion
