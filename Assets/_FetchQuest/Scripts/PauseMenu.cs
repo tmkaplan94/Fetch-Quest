@@ -94,6 +94,7 @@ public class PauseMenu : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenu");
         }
+        Destroy(AudioManager.Instance.gameObject);
     }
     
     #endregion
