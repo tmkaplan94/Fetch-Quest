@@ -20,6 +20,10 @@ public class PettingState : IState
 
     public void Tick()
     {
+        if (_controller.fireAlarm)
+        {
+            timeToWaitTil = 0;
+        }
         if (timeToWaitTil <= Time.time)
         {
             Debug.Log("leave");

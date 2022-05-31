@@ -24,13 +24,13 @@ public class EvacuationState : IState
         }
     }
 
-
     public void OnEnter()
     {
         Debug.Log("Evacuation Enter");
         waitTime = Time.time + _controller.AIStats.RestTime * 3;
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(_controller.exit.position);
+        _controller.AnimationWalking();
     }
 
     public void OnExit()
