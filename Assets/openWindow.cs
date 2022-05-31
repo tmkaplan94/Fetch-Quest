@@ -27,13 +27,11 @@ public class openWindow : MonoBehaviour
             {
                 if(ComparePlayerTag(other.tag))
                 {
-                    if (other.TryGetComponent<PickUpSystem>(out PickUpSystem pS))
+                    GameObject item = other.GetComponent<PickUpSystem>().GetItem();
+                    if ( item && item.CompareTag("IDCard"))
                     {
-                        if (pS.GetItem().CompareTag("IDCard"))
-                        {
-                            Open();
-                            LevelStatic.currentLevel.questBus.update(new QuestObject(300, "Found the hidden Room!", LevelData.publicEvents.NOEVENT, "", true, "Ultra Mega Rare"));
-                        }
+                        Open();
+                        LevelStatic.currentLevel.questBus.update(new QuestObject(300, "Found the hidden Room!", LevelData.publicEvents.NOEVENT, "", true, "Ultra Mega Rare"));
                     }
                     else
                     {
