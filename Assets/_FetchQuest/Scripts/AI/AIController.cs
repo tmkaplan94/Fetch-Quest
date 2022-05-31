@@ -207,12 +207,6 @@ public class AIController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
-        {
-            GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
-
-            
-        }
 
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
@@ -230,11 +224,14 @@ public class AIController : MonoBehaviour
                     if (questItem)
                     {
                         questItem.hitNPC(gameObject);
-                    }
+                        AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
+                    }                    
                 }
                 else
                 {
                     AudioManager.Instance.PlaySFX(AudioNames.hover, transform.position);
+                    scoreManager.IncrementScore(scoreInc);
+                    scoreInc = 1;
                 }
                 canPet.value = false;
                 dogNearby = true;
@@ -316,8 +313,6 @@ public class AIController : MonoBehaviour
 
     public void AnimationStart(float _sp)
     {
-        scoreManager.IncrementScore(scoreInc);
-        scoreInc = 1;
         personAnimator.SetFloat("Speed", _sp);
         personAnimator.SetFloat("Forward", -0.5f);
     }

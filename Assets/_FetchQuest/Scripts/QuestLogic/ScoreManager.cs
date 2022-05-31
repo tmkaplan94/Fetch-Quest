@@ -27,7 +27,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject updateText;
     [SerializeField] private TMP_Text updateScore;
     [SerializeField] private int displaySecs;
-
+    private TMP_Text updateTextTxt;
     // bus testing
     private QuestBus questBus;
     
@@ -51,6 +51,7 @@ public class ScoreManager : MonoBehaviour
         }
         else
             isNetworked = true;
+        updateTextTxt = updateText.GetComponent<TMP_Text>();
     }
     // initialize score board
     private void Start()
@@ -101,7 +102,7 @@ public class ScoreManager : MonoBehaviour
     {
         // hijacking  this to test
         if (questBus != null)
-            questBus.update(new QuestObject(amount, "dogs are good!", 
+            questBus.update(new QuestObject(amount, "Who's a good Doggo?!", 
                             LevelData.publicEvents.NOEVENT, "helloQuest"));
         else
         {
@@ -138,7 +139,7 @@ public class ScoreManager : MonoBehaviour
     // shows visual feedback for a certain amount of displaySecs
     private void DisplayUpdateText(string amount)
     {
-        updateScore.text = "+" + amount;
+        updateTextTxt.text =  amount;
         StartCoroutine(BrieflyShowTextCoroutine());
     }
 
