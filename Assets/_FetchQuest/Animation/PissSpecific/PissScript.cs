@@ -16,6 +16,7 @@ using UnityEngine;
 
 public class PissScript : MonoBehaviour
 {
+    private bool _newPiss = false;
 
     private LineRenderer rendLine = null;
     private Vector3 targetPosition = Vector3.zero;
@@ -38,8 +39,9 @@ public class PissScript : MonoBehaviour
         MoveToPosition(1, transform.position);
     }
 
-    public void Begin()
+    public void Begin(bool isNewPiss)
     {
+        _newPiss = isNewPiss;
         StartCoroutine(UpdateParticles());
         pissRoutine = StartCoroutine(BeginPiss());
     }
@@ -49,7 +51,10 @@ public class PissScript : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (gameObject.activeSelf)
         {
-            Phandle.CreatePuddle();
+            if (_newPiss)
+            {
+               Phandle.CreatePuddle(); 
+            }
             targetPosition = FindFloor();
 
             MoveToPosition(0, transform.position);

@@ -77,12 +77,12 @@ public class PissHandler : MonoBehaviour
             _anime.SetBool("isPissing", true);
             print("start");
             currPiss = CreatePiss();
-            currPiss.Begin();
+            currPiss.Begin(true);
         }
         else
         {
             currPiss = CreatePiss();
-            currPiss.Begin();
+            currPiss.Begin(false);
         }
     }
     public void EndPiss(ReffBool pp)
@@ -108,6 +108,9 @@ public class PissHandler : MonoBehaviour
             print("end");
             currPiss.End(isPissing);
             currPiss = null;    
+        }
+        else
+        {
         }
     }
 
