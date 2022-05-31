@@ -131,6 +131,7 @@ public class DogSelectionManager : MonoBehaviourPunCallbacks
         
         // play click sound
         AudioManager.Instance.PlaySFX(AudioNames.click, audioPos.position);
+        Destroy(AudioManager.Instance.gameObject);
         
         // if game is networked, go back to lobby scene
         if (_isNetworked)
