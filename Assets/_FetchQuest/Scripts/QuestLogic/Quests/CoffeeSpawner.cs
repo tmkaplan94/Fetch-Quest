@@ -8,7 +8,9 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
     [SerializeField] public GameObject coffeePrefab;
     [SerializeField] public CoffeeQuest coffeeQuest;
 
+    private PhotonView v;
     private bool _isNetworked;
+    private Vector3 spawnPos;
 
     private void Awake()
     {
@@ -20,6 +22,8 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
         {
             _isNetworked = true;
         }
+        v = GetComponent<PhotonView>();
+        
     }
 
     public void Interact(GameObject actor)
@@ -30,12 +34,20 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
     private void spawnCoffee()
     {
         AudioManager.Instance.PlaySFXRPC(AudioNames.click, transform.position);
-        GameObject coffee;
-        Vector3 pos = gameObject.transform.position;
-        pos += new Vector3(0,0.6f,0);
+        spawnPos = gameObject.transform.position;
+        spawnPos += new Vector3(0, 0.6f, 0);
         if (!_isNetworked)
-            coffee = Instantiate(coffeePrefab, pos, Quaternion.identity);
+            Instantiate(coffeePrefab, spawnPos, Quaternion.identity);
         else
-            coffee = PhotonNetwork.Instantiate("ScriptedCoffee", pos, Quaternion.identity);
+        {
+            v.RPC("SpawnCoffeeRPC", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    private void SpawnCoffeeRPC()
+    {
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Instantiate("ScriptedCoffee", spawnPos, Quaternion.identity);
     }
 }
