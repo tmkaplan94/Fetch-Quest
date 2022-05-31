@@ -71,10 +71,14 @@ public class PissHandler : MonoBehaviour
     [PunRPC]
     public void StartPissRPC()
     {
-        _anime.SetBool("isPissing", true);
-        print("start");
-        currPiss = CreatePiss();
-        currPiss.Begin();
+        PhotonView v = GetComponent<PhotonView>();
+        if (v.Owner.IsMasterClient)
+        {
+            _anime.SetBool("isPissing", true);
+            print("start");
+            currPiss = CreatePiss();
+            currPiss.Begin();
+        }
     }
     public void EndPiss(ReffBool pp)
     {
