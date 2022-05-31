@@ -108,6 +108,7 @@ public class PickUpSystem : MonoBehaviourPun
             currentItem.transform.parent = holdPos;
             currentItem.transform.position = holdPos.position;
             currentItem.transform.rotation = holdPos.rotation;
+            currentItem.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Off;
             questItem = currentItem.GetComponent<QuestItem>();
             if (questItem)
             {
@@ -131,6 +132,7 @@ public class PickUpSystem : MonoBehaviourPun
         {
             col.enabled = false;
         }
+        currentItem.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Off;
         currentItem.GetComponent<Rigidbody>().isKinematic = true;
         currentItem.GetComponent<Outline>().enabled = false;
         currentItem.transform.parent = holdPos;
@@ -148,6 +150,7 @@ public class PickUpSystem : MonoBehaviourPun
     {
         if (currentItem != null)
         {
+            currentItem.GetComponent<PhotonView>().Synchronization = ViewSynchronization.UnreliableOnChange;
             currentItem.transform.parent = null;
             currentItem.transform.position = dropPos.position;
             currentItem.transform.rotation = dropPos.rotation;
