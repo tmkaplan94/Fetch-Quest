@@ -93,18 +93,21 @@ public class AudioManager : MonoBehaviourPun
     {
         if(PhotonNetwork.IsConnected)
         {
+            Debug.Log("INSIDE CONNECTED");
             PhotonView v = GetComponent<PhotonView>();
             v.RPC("PlaySFXRPC", RpcTarget.All,n,pos);
         }
         else
         {
+            Debug.Log("INSIDE ELSE");
             PlaySFXRPC(n,pos);
         }
 
     }
     [PunRPC]
-    public void PlaySFXRPC(String n, Vector3 pos)
+    private void PlaySFXRPC(String n, Vector3 pos)
     {
+        Debug.Log("INSIDE RPC");
         foreach(AudioClip _clip in _SFXClips)
         {
             if(_clip.name == n)
