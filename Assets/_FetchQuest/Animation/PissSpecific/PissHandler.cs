@@ -79,6 +79,11 @@ public class PissHandler : MonoBehaviour
             currPiss = CreatePiss();
             currPiss.Begin();
         }
+        else
+        {
+            currPiss = CreatePiss();
+            currPiss.Begin();
+        }
     }
     public void EndPiss(ReffBool pp)
     {
