@@ -225,7 +225,13 @@ public class AIController : MonoBehaviour
                     {
                         questItem.hitNPC(gameObject);
                         AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
-                    }                    
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlaySFX(AudioNames.hover, transform.position);
+                        scoreManager.IncrementScore(scoreInc);
+                        scoreInc = 1;
+                    }
                 }
                 else
                 {

@@ -105,6 +105,7 @@ public class PickUpSystem : MonoBehaviourPun
                 col.enabled = false;
             }
             currentItem.GetComponent<Rigidbody>().isKinematic = true;
+            currentItem.GetComponent<Outline>().enabled = false;
             currentItem.transform.parent = holdPos;
             currentItem.transform.position = holdPos.position;
             currentItem.transform.rotation = holdPos.rotation;
@@ -132,6 +133,7 @@ public class PickUpSystem : MonoBehaviourPun
             col.enabled = false;
         }
         currentItem.GetComponent<Rigidbody>().isKinematic = true;
+        currentItem.GetComponent<Outline>().enabled = false;
         currentItem.transform.parent = holdPos;
         currentItem.transform.position = holdPos.position;
         currentItem.transform.rotation = holdPos.rotation;
@@ -156,6 +158,7 @@ public class PickUpSystem : MonoBehaviourPun
                 col.enabled = true;
             }
             currentItem.GetComponent<Rigidbody>().isKinematic = false;
+            currentItem.GetComponent<Outline>().enabled = true;
 
             if (questItem)
             {
