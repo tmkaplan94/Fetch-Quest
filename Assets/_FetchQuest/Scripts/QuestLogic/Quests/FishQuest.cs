@@ -29,7 +29,7 @@ public class FishQuest : Quest
     {
         base.questStarted();
 
-        string message = "Flying fish! Everywhere! Quickly, clean up the mess!   "
+        string message = "\n\nFlying fish! Everywhere! Quickly, clean up the mess!   "
                                         + fishRemaining + " remaining";
         QuestObject update = new QuestObject(0, message);
         questBus.update(update);
@@ -39,7 +39,7 @@ public class FishQuest : Quest
     {
         base.questCompleted();
 
-        string message = "Flying fish? Never seen one in my life! (...yum)";
+        string message = "\n\nFlying fish? Never seen one in my life! (...yum)";
         QuestObject update = new QuestObject(reward, message);
         questBus.update(update);
     }
