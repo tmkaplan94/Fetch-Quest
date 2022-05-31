@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: -47760635182533926}
   m_Layer: 7
   m_Name: ScriptedCoffee
-  m_TagString: Interactable
+  m_TagString: Coffee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
