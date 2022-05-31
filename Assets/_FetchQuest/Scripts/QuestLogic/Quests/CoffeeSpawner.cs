@@ -29,6 +29,7 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
 
     private void spawnCoffee()
     {
+        AudioManager.Instance.PlaySFXRPC(AudioNames.click, transform.position);
         GameObject coffee;
         Vector3 pos = gameObject.transform.position;
         pos += new Vector3(0,0.6f,0);
