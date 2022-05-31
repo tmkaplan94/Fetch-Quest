@@ -22,6 +22,9 @@ public class QuestObject
     public string message = "Quest Completed!";
     public LevelData.publicEvents eventEnum = 0;
     public string questName = null;
+    public string rarity = "Common";
+    public bool display = true;
+    
 
 
 }

@@ -12,7 +12,6 @@ public class LevelData : MonoBehaviour
     // the things you want
     public QuestBus questBus;
     public QuestManager questManager;
-
     public enum publicEvents {NOEVENT, QUESTSTARTED, QUESTFINISHED, FIREALARM, POOL};
 
     // on (level) load, puts itself in the level static

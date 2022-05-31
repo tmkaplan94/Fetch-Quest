@@ -12,6 +12,7 @@ public class FishQuest : Quest
     [SerializeField] private FishQuestParticles fishQuestParticles;
     [SerializeField] public int startingFish = 10;
     [SerializeField] private int reward = 50;
+    [SerializeField] private int individualReward = 5;
     
     private int fishRemaining = 0;
     
@@ -31,9 +32,8 @@ public class FishQuest : Quest
     {
         base.questStarted();
 
-        string message = "Flying fish! Everywhere! Quickly, clean up the mess!   "
-                                        + fishRemaining + " remaining";
-        QuestObject update = new QuestObject(0, message);
+        string message = "What's this?";
+        QuestObject update = new QuestObject(individualReward, message);
         questBus.update(update);
     }
 
@@ -43,13 +43,16 @@ public class FishQuest : Quest
 
         string message = "Flying fish? Never seen one in my life! (...yum)";
         QuestObject update = new QuestObject(reward, message);
+        update.rarity = rarity;
         questBus.update(update);
     }
 
     private void updateFish()
     {
         string message = "Fish Collected! " + fishRemaining + " fish left!";
-        questBus.update( new QuestObject(0, message));
+        QuestObject update = new QuestObject(individualReward, message);
+
+        questBus.update(update);
         fishQuestParticles.setNumberOfFish(fishRemaining);
     }
 

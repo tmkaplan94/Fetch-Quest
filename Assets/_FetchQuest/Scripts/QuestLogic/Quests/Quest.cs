@@ -14,6 +14,7 @@ public class Quest : MonoBehaviour
     [HideInInspector] public QuestBus questBus;
     [HideInInspector] public QuestManager questManager;
     [SerializeField] public string questName = "Quest";
+    [SerializeField] public string rarity = "Common";
     public bool completed = false;
     public bool started = false;
     
@@ -22,6 +23,7 @@ public class Quest : MonoBehaviour
         started = true;
         questManager.questStarted(this);
         QuestObject update = new QuestObject(0,"", LevelData.publicEvents.QUESTSTARTED, questName);
+        update.display = false;
         questBus.update(update);
     }
 
@@ -30,6 +32,7 @@ public class Quest : MonoBehaviour
         completed = true;
         questManager.questCompleted(this);
         QuestObject update = new QuestObject(0,"", LevelData.publicEvents.QUESTFINISHED, questName);
+        update.display = false;
         questBus.update(update);
     }
     
