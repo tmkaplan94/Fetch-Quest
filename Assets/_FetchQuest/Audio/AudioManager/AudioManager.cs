@@ -93,9 +93,12 @@ public class AudioManager : MonoBehaviourPun
     {
         if(PhotonNetwork.IsConnected)
         {
-            Debug.Log("INSIDE CONNECTED");
-            PhotonView v = GetComponent<PhotonView>();
-            v.RPC("PlaySFXRPC", RpcTarget.All,n,pos);
+            if(photonView.IsMine)
+            {
+                Debug.Log("INSIDE CONNECTED");
+                PhotonView v = GetComponent<PhotonView>();
+                v.RPC("PlaySFXRPC", RpcTarget.All,n,pos);
+            }
         }
         else
         {
