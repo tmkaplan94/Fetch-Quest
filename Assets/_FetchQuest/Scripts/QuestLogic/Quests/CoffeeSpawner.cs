@@ -33,7 +33,7 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
 
     private void spawnCoffee()
     {
-        AudioManager.Instance.PlaySFXRPC(AudioNames.click, transform.position);
+        AudioManager.Instance.PlaySFX(AudioNames.click, transform.position);
         spawnPos = gameObject.transform.position;
         spawnPos += new Vector3(0, 0.6f, 0);
         if (!_isNetworked)
