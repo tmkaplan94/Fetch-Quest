@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Interect : MonoBehaviour
+public class Interect : MonoBehaviourPun
 {
     private PickUpSystem _pickupSystem;
     private bool isNetworked;
@@ -32,7 +32,14 @@ public class Interect : MonoBehaviour
     {
         if (Input.GetButtonDown("f"))
         {
-            AudioManager.Instance.PlaySFX("General_Bark", transform.position);
+            if(isNetworked)
+            {
+                photonView.RPC("BarkRPC", RpcTarget.All);
+            }
+            else
+            {
+                BarkRPC();
+            }
             heldItem = _pickupSystem.GetItem();
             if (heldItem != null)
             {
@@ -73,5 +80,10 @@ public class Interect : MonoBehaviour
         {
             PhotonNetwork.Destroy(_pickupSystem.GetItem());
         }
+    }
+    [PunRPC]
+    private void BarkRPC()
+    {
+        AudioManager.Instance.PlaySFX("General_Bark", transform.position);
     }   
 }
