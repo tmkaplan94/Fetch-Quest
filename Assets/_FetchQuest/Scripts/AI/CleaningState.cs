@@ -7,7 +7,7 @@ public class CleaningState : IState
 {
     private readonly AIController _controller;
     private float waitTime;
-    private Collider pee;
+    private GameObject pee;
     public CleaningState(AIController c)
     {
         _controller = c;
@@ -18,8 +18,10 @@ public class CleaningState : IState
         if (waitTime <= Time.time)
         {
             _controller.peeFound = false;
+            _controller.JanitorPeeObj.Remove(pee);
             _controller.CallDestroy(_controller.peeObj.gameObject);//pee.gameObject.  destroy(); //pee is a Transform and not a gameObject, will fix later
-            _controller.GetNewTarget();
+            if(_controller.JanitorPeeObj.Count <=0)
+                _controller.GetNewTarget();
         }
     }
 
@@ -27,6 +29,7 @@ public class CleaningState : IState
     {
         Debug.Log("Janitor Cleaning Entered");
         waitTime = Time.time + _controller.AIStats.RestTime * 2;
+        pee = _controller.peeObj;
     }
 
     public void OnExit()

@@ -22,7 +22,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private Animator personAnimator;
     [SerializeField] private Mesh zombieMesh;
     [SerializeField] private Material zombieMaterial;
-    private GameObject _janitor;
+    public GameObject _janitor;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
     public bool personNearby = false; //Set Bool for person nearby
@@ -277,8 +277,9 @@ public class AIController : MonoBehaviour
         }
         if (other.CompareTag("Pee"))
         {
+            
             ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
-            if (_stats.IsJanitor || !piss.spotted)
+            if (_stats.IsJanitor || (!piss.spotted && _janitor != null))
             {
                 piss.spotted = true;
                 peeFound = true;
