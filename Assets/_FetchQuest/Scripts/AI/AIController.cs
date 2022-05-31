@@ -88,7 +88,7 @@ public class AIController : MonoBehaviour
         At(cleaningState, walkingState, HasTarget());
         At(calljanitorState, walkingState, HasTarget());
         At(evacuationState, walkingState, AlarmOff()); //Adding way to exit evacuation state that does not trigger everytime
-        At(firingState, walkingState, HasTarget()); //Adding way to exit evacuation state that does not trigger everytime
+        At(firingState, walkingState, HasTarget()); 
 
         Aat(evacuationState, AlarmOn()); //Adding evcuation state as an any
         Aat(firedState, Fired());
@@ -207,6 +207,12 @@ public class AIController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
+        {
+            GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
+
+            
+        }
 
         if (ComparePlayerTag(other.gameObject.tag) && !fireAlarm)
         {
@@ -218,12 +224,13 @@ public class AIController : MonoBehaviour
             }
             if (canPet.value)
             {
-                if (bone != null && !bone.CompareTag("Special"))
+                if (bone != null)
                 {
-                    scoreInc = 10;
-                    Destroy(bone);
-                    SpawnBones.Instance.SpawnNewBone();
-                    AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
+                    QuestItem questItem = bone.GetComponent<QuestItem>();
+                    if (questItem)
+                    {
+                        questItem.hitNPC(gameObject);
+                    }
                 }
                 else
                 {
@@ -250,6 +257,7 @@ public class AIController : MonoBehaviour
         if (ai != null && _stats.IsJanitor == true && ai._stats.IsBoss && ai.bossMad == true)
         {
             gotFired = true;
+            ai.gotFired = true;
             ai.bossMad = false;
         }
         else if (!isTalking.value && ai != null && !ai._stats.IsJanitor && !fireAlarm && !hasWorkToDo)

@@ -23,6 +23,7 @@ public class PickUpSystem : MonoBehaviourPun
     [SerializeField] private Transform interactPos;
     [SerializeField] private Vector3 pickUpBox;
     [SerializeField] private LayerMask pickUpsLayer;
+    private QuestItem questItem;
     private string EventObjectTag = "EventObj";
 
     private string interactableTag = "Interactable";
@@ -76,6 +77,7 @@ public class PickUpSystem : MonoBehaviourPun
                         if (item.attachedRigidbody.mass <= maxMass)
                         {
                             PickUp(item.gameObject);
+                            
                             break;
                         }
                     }
@@ -106,6 +108,11 @@ public class PickUpSystem : MonoBehaviourPun
             currentItem.transform.parent = holdPos;
             currentItem.transform.position = holdPos.position;
             currentItem.transform.rotation = holdPos.rotation;
+            questItem = currentItem.GetComponent<QuestItem>();
+            if (questItem)
+            {
+                questItem.pickedUp();
+            }
         }
     }
     private void Drop()
@@ -128,6 +135,11 @@ public class PickUpSystem : MonoBehaviourPun
         currentItem.transform.parent = holdPos;
         currentItem.transform.position = holdPos.position;
         currentItem.transform.rotation = holdPos.rotation;
+        questItem = currentItem.GetComponent<QuestItem>();
+        if (questItem)
+        {
+            questItem.pickedUp();
+        }
     }
 
     [PunRPC]
@@ -144,6 +156,12 @@ public class PickUpSystem : MonoBehaviourPun
                 col.enabled = true;
             }
             currentItem.GetComponent<Rigidbody>().isKinematic = false;
+
+            if (questItem)
+            {
+                questItem.dropped();
+            }
+            questItem = null;
             currentItem = null;
         }
     }
