@@ -71,10 +71,19 @@ public class PissHandler : MonoBehaviour
     [PunRPC]
     public void StartPissRPC()
     {
-        _anime.SetBool("isPissing", true);
-        print("start");
-        currPiss = CreatePiss();
-        currPiss.Begin();
+        PhotonView v = GetComponent<PhotonView>();
+        if (v.IsMine || !isNetworked)
+        {
+            _anime.SetBool("isPissing", true);
+            print("start");
+            currPiss = CreatePiss();
+            currPiss.Begin(true);
+        }
+        else
+        {
+            currPiss = CreatePiss();
+            currPiss.Begin(false);
+        }
     }
     public void EndPiss(ReffBool pp)
     {
@@ -92,10 +101,19 @@ public class PissHandler : MonoBehaviour
     [PunRPC]
     public void EndPissRPC()
     {
-        _anime.SetBool("isPissing", false);
-        print("end");
-        currPiss.End(isPissing);
-        currPiss = null;
+        PhotonView v = GetComponent<PhotonView>();
+        if (v.IsMine || !isNetworked)
+        {
+            _anime.SetBool("isPissing", false);
+            print("end");
+            currPiss.End(isPissing);
+            currPiss = null;    
+        }
+        else
+        {
+            currPiss.End(isPissing);
+            currPiss = null;
+        }
     }
 
     private float CalcAngle()
