@@ -19,8 +19,8 @@ public class CleaningState : IState
         {
             _controller.peeFound = false;
             _controller.JanitorPeeObj.Remove(pee);
-            _controller.CallDestroy(pee);// pee is a Transform and not a gameObject, will fix later
-            if (_controller.JanitorPeeObj.Count <= 0)
+            _controller.CallDestroy(_controller.peeObj.gameObject);//pee.gameObject.  destroy(); //pee is a Transform and not a gameObject, will fix later
+            if(_controller.JanitorPeeObj.Count <=0)
                 _controller.GetNewTarget();
         }
     }

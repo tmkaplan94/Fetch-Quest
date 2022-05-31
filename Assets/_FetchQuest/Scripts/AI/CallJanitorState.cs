@@ -16,7 +16,7 @@ public class CallJanitorState : IState
 
     public void Tick()
     {
-        if(_controller.peeFound)
+        if(_controller.peeFound && _controller._janitor != null && _controller.peeObj != null)
             _navMeshAgent.SetDestination(_controller.GetJanitorPos());
         else
             _controller.GetNewTarget();
