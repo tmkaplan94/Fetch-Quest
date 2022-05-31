@@ -275,19 +275,20 @@ public class AIController : MonoBehaviour
             hasWorkToDo = false;
             StartCoroutine(Cooldown(_stats.WorkingCooldown, isWorking));
         }
-        if (other.CompareTag("Pee"))
-        {
-            
-            ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
-            if (_stats.IsJanitor || (!piss.spotted && _janitor != null))
-            {
-                piss.spotted = true;
-                peeFound = true;
-                peeObj = other.gameObject;
-            }
-        }
         
     }
+
+    public void TouchedPee(Collider other)
+    {
+        ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
+        if (_stats.IsJanitor || (!piss.spotted && _janitor != null))
+        {
+            piss.spotted = true;
+            peeFound = true;
+            peeObj = other.gameObject;
+        }
+    }
+
     public void CallDestroy(GameObject obj)
     {
         Debug.Log("Destroyed was Called on: " + obj);
