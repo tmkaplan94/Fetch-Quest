@@ -40,14 +40,14 @@ public class CoffeeSpawner : MonoBehaviour, Interactable
             Instantiate(coffeePrefab, spawnPos, Quaternion.identity);
         else
         {
-            v.RPC("SpawnCoffeeRPC", RpcTarget.All);
+            v.RPC("SpawnCoffeeRPC", RpcTarget.All, spawnPos);
         }
     }
 
     [PunRPC]
-    private void SpawnCoffeeRPC()
+    private void SpawnCoffeeRPC(Vector3 pos)
     {
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.Instantiate("ScriptedCoffee", spawnPos, Quaternion.identity);
+            PhotonNetwork.Instantiate("ScriptedCoffee", pos, Quaternion.identity);
     }
 }

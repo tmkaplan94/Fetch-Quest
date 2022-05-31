@@ -50,7 +50,7 @@ public class AIController : MonoBehaviour
     public Transform? Work { get; private set; }
     private NavMeshAgent? navMeshAgent;
     private bool isNetworked;
-    private PhotonView v;
+    private PhotonView? v;
 
     public AIStats AIStats => _stats;
     
@@ -217,7 +217,7 @@ public class AIController : MonoBehaviour
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             if (bone!= null && bone.CompareTag("Special") && _stats.IsBoss)
             {
-                if (isNetworked)
+                if (isNetworked && v != null)
                     v.RPC("BossMad", RpcTarget.All);
                 else
                     bossMad = true;

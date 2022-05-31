@@ -26,7 +26,6 @@ public class PickUpSystem : MonoBehaviourPun
     private QuestItem questItem;
     private string EventObjectTag = "EventObj";
 
-    private string interactableTag = "Interactable";
     private bool isNetworked;
     
     private float maxMass;
