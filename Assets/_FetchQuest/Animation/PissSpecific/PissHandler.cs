@@ -71,14 +71,14 @@ public class PissHandler : MonoBehaviour
     [PunRPC]
     public void StartPissRPC()
     {
-        //PhotonView v = GetComponent<PhotonView>();
-        //if (v.IsMine)
-        //{
+        PhotonView v = GetComponent<PhotonView>();
+        if (v.IsMine || !isNetworked)
+        {
             _anime.SetBool("isPissing", true);
             print("start");
             currPiss = CreatePiss();
             currPiss.Begin();
-        //}
+        }
     }
     public void EndPiss(ReffBool pp)
     {
@@ -97,7 +97,7 @@ public class PissHandler : MonoBehaviour
     public void EndPissRPC()
     {
         PhotonView v = GetComponent<PhotonView>();
-        if (v.IsMine)
+        if (v.IsMine || !isNetworked)
         {
             _anime.SetBool("isPissing", false);
             print("end");
