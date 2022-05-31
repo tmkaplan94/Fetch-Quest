@@ -228,6 +228,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("DogSelection");
     }
 
+    public void GoToMainMenu()
+    {
+        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.Disconnect();
+    }
+
     #endregion
 
     
