@@ -96,10 +96,14 @@ public class PissHandler : MonoBehaviour
     [PunRPC]
     public void EndPissRPC()
     {
-        _anime.SetBool("isPissing", false);
-        print("end");
-        currPiss.End(isPissing);
-        currPiss = null;
+        PhotonView v = GetComponent<PhotonView>();
+        if (v.IsMine)
+        {
+            _anime.SetBool("isPissing", false);
+            print("end");
+            currPiss.End(isPissing);
+            currPiss = null;    
+        }
     }
 
     private float CalcAngle()
