@@ -50,6 +50,7 @@ public class AIController : MonoBehaviour
     public Transform? Work { get; private set; }
     private NavMeshAgent? navMeshAgent;
     private bool isNetworked;
+    private PhotonView v;
 
     public AIStats AIStats => _stats;
     
@@ -64,7 +65,10 @@ public class AIController : MonoBehaviour
         if (FindObjectOfType<NetworkManager>() == null)
             isNetworked = false;
         else
+        {
+            v = GetComponent<PhotonView>();
             isNetworked = true;
+        }
         
         
         var walkingState = new WalkingState(this, navMeshAgent);
@@ -213,7 +217,10 @@ public class AIController : MonoBehaviour
             GameObject bone = other.GetComponent<PickUpSystem>().GetItem();
             if (bone!= null && bone.CompareTag("Special") && _stats.IsBoss)
             {
-                bossMad = true;
+                if (isNetworked)
+                    v.RPC("BossMad", RpcTarget.All);
+                else
+                    bossMad = true;
                 Destroy(bone);
             }
             if (canPet.value)
@@ -277,7 +284,11 @@ public class AIController : MonoBehaviour
         }
         
     }
-
+    [PunRPC]
+    private void BossMad()
+    {
+        bossMad = true;
+    }
     public void TouchedPee(Collider other)
     {
         ExpandPiss piss = other.gameObject.GetComponent<ExpandPiss>();
