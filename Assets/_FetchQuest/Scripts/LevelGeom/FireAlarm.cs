@@ -28,7 +28,6 @@ public class FireAlarm : MonoBehaviourPun, Interactable
         {
             eventSys.update(new QuestObject(20, "Started a Fire!", LevelData.publicEvents.FIREALARM));
             if(isNetworked){
-                Debug.Log("TESTING ALARM NETWORK");
                 photonView.RPC("AlarmRPC", RpcTarget.All);}
             else{
                 AlarmRPC();}
