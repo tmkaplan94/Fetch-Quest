@@ -125,6 +125,7 @@ public class AIController : MonoBehaviour
     {
         GameObject[] wp = GameObject.FindGameObjectsWithTag("Waypoint");
         GameObject[] works = GameObject.FindGameObjectsWithTag("Workplace");
+        exit = GameObject.FindGameObjectWithTag("Exit").transform;
         int wpAmount = Random.Range(0, wp.Length);
         waypoints = new Transform[wpAmount];
         List<int> chosenVals = new List<int>();
@@ -157,6 +158,7 @@ public class AIController : MonoBehaviour
     [PunRPC]
     private void SetWorkplace(Vector3 pos)
     {
+        exit = GameObject.FindGameObjectWithTag("Exit").transform;
         GameObject newTransform = new GameObject();
         newTransform.transform.position = pos;
         waypoints[waypoints.Length - 1] = newTransform.transform;
