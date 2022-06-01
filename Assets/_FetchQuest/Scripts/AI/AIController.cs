@@ -372,7 +372,7 @@ public class AIController : MonoBehaviour
     [PunRPC]
     private void ZombifyRPC()
     {
-        print("zombie");
+        eventSys.update(new QuestObject(50, "A DISGUISE!"));
         SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         foreach(SkinnedMeshRenderer rend in renderers)
         {
