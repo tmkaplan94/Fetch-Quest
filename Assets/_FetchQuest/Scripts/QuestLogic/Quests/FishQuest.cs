@@ -40,7 +40,7 @@ public class FishQuest : Quest
         base.questCompleted();
 
         string message = "\n\nFlying fish? Never seen one in my life! (...yum)";
-        QuestObject update = new QuestObject(reward, message);
+        QuestObject update = new QuestObject(reward, message, LevelData.publicEvents.NOEVENT, "", true, "Common!");
         questBus.update(update);
     }
 

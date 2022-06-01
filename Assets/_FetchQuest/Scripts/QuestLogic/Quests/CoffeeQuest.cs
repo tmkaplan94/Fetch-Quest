@@ -13,6 +13,7 @@ public class CoffeeQuest : Quest
     private Dictionary<int, int> _receivedCoffee = new Dictionary<int, int>();
     private bool _isNetworked;
     [SerializeField] private PhotonView v;
+    private bool _achievementActivated = false;
     private void Awake()
     {
         if (FindObjectOfType<NetworkManager>() == null)
@@ -52,8 +53,15 @@ public class CoffeeQuest : Quest
     [PunRPC]
     private void CoffeeHitRPC(int id)
     {
+        QuestObject update;
         _receivedCoffee.Add(id, 1);
-        QuestObject update = new QuestObject(reward, "Coffee! Thanks doggerino!");
+        if(!_achievementActivated)
+        {
+            update = new QuestObject(reward, "Coffee! Thanks doggerino!", LevelData.publicEvents.NOEVENT, "", true, "Common!");
+            _achievementActivated = true;
+        }
+        else
+            update = new QuestObject(reward, "Coffee! Thanks doggerino!");
         questBus.update(update);
     }
     [PunRPC]

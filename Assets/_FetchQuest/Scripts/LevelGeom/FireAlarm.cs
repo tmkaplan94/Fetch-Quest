@@ -9,6 +9,7 @@ public class FireAlarm : MonoBehaviourPun, Interactable
     private QuestBus eventSys;
     private bool active;
     private bool isNetworked;
+    private bool _achievementActivated = false;
     private void Awake()
     {
         if (FindObjectOfType<NetworkManager>() == null)
@@ -55,6 +56,12 @@ public class FireAlarm : MonoBehaviourPun, Interactable
     [PunRPC]
     private void ClientAlarmRPC()
     {
-        eventSys.update(new QuestObject(20, "Started a Fire!", LevelData.publicEvents.FIREALARM));
+        if(!_achievementActivated)
+        {
+            eventSys.update(new QuestObject(20, "FIRE! FIRE!", LevelData.publicEvents.FIREALARM, "", true, "Ultra Rare!"));
+            _achievementActivated = true;
+        }
+        else
+            eventSys.update(new QuestObject(20, "YO THERE'S A FIRE!"));
     }
 }
