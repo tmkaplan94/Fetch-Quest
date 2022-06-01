@@ -40,6 +40,26 @@ public class ZombieCloning : MonoBehaviour
         }
     }
 
+    public void ChangeMats()
+    {
+        if (currentClone != null)
+        {
+            if (isNetworked)
+            {
+                v.RPC("CloneRPC", RpcTarget.All);
+            }
+            else
+            {
+                currentClone = Instantiate(clone, clonePos);
+            }
+        }
+    }
+    [PunRPC]
+    private void ChangeMatsRPC()
+    {
+        
+    }
+
     [PunRPC]
     private void CloneRPC()
     {
