@@ -13,7 +13,7 @@ public class AchievementUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _description;
     [SerializeField] private TextMeshProUGUI _rarity;
     [SerializeField] private GameObject _uiGameObject;
-    [SerializeField] private int _displayTime = 1;
+    [SerializeField] private int _displayTime = 3;
     private QuestBus _questBus;
     
     public void Start()
