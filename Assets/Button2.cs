@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button2 : MonoBehaviour
+public class Button2 : MonoBehaviour, Interactable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private ZombieCloning zc;
 
-    // Update is called once per frame
-    void Update()
+    public void Interact(GameObject actor)
     {
-        
+
     }
 }
