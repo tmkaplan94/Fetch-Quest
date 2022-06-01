@@ -7,6 +7,7 @@ public class FaceCamera : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private Text text;
+    [SerializeField] private bool isBoss;
     [SerializeField] private string[] phrases;
 
     void Start()
@@ -59,5 +60,16 @@ public class FaceCamera : MonoBehaviour
         print(phrases.Length - 1);
         ChangeText(phrases[index]);
         panel.SetActive(true);
+    }
+
+    public IEnumerator getFired()
+    {
+        if (isBoss)
+        {
+            ChangeText("I swear I'll fire him!");
+            panel.SetActive(true);
+            yield return new WaitForSeconds(3);
+            panel.SetActive(false);
+        }
     }
 }
