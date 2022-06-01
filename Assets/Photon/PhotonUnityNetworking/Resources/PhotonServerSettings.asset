@@ -67,6 +67,8 @@ MonoBehaviour:
   - SetCurrentClone
   - SetTransforms
   - SetWorkplace
+  - AlarmRPC
+  - ClientAlarmRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
