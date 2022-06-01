@@ -26,13 +26,13 @@ public class FireAlarm : MonoBehaviourPun, Interactable
         Debug.Log("Firealarm");
         if (!active)
         {
-            eventSys.update(new QuestObject(20, "Started a Fire!", LevelData.publicEvents.FIREALARM));
+            
             if(isNetworked){
+                photonView.RPC("ClientAlarmRPC", RpcTarget.All);
                 photonView.RPC("AlarmRPC", RpcTarget.All);}
             else{
+                ClientAlarmRPC();
                 AlarmRPC();}
-            active = true;
-            StartCoroutine("FireAlarmTime");
         }
         else
         {
@@ -49,5 +49,12 @@ public class FireAlarm : MonoBehaviourPun, Interactable
     private void AlarmRPC()
     {
         AudioManager.Instance.PlaySFX(AudioNames.FireAlarm, transform.position);
+        active = true;
+        StartCoroutine("FireAlarmTime");
+    }
+    [PunRPC]
+    private void ClientAlarmRPC()
+    {
+        eventSys.update(new QuestObject(20, "Started a Fire!", LevelData.publicEvents.FIREALARM));
     }
 }
