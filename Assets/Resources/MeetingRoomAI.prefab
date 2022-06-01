@@ -1026,7 +1026,6 @@ GameObject:
   - component: {fileID: 849412771707592203}
   - component: {fileID: 849412771707592202}
   - component: {fileID: 849412771707592201}
-  - component: {fileID: 7176147962748507019}
   m_Layer: 8
   m_Name: MeetingRoomAI
   m_TagString: AI
@@ -1041,8 +1040,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7692359300871171431}
-  m_LocalRotation: {x: -0, y: -0.7071065, z: -0, w: 0.7071071}
-  m_LocalPosition: {x: 14.347, y: 0, z: -16.293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7695504095533682919}
@@ -1066,7 +1065,7 @@ Transform:
   - {fileID: 7695233566125970263}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7752596083179556523
 Animator:
   serializedVersion: 3
@@ -1151,14 +1150,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: e1f1631db28c4b443aab798276da11ca, type: 2}
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoints: []
   workplace: {fileID: 0}
   personAnimator: {fileID: 7752596083179556523}
   zombieMesh: {fileID: 4300040, guid: b20a3c10714a6ac439af479e3273de65, type: 3}
   zombieMaterial: {fileID: 2100000, guid: 75dfe1e02a971524789ee9d6e57feec4, type: 2}
+  isClone: 1
   _janitor: {fileID: 0}
   exit: {fileID: 0}
   dogNearby: 0
@@ -1251,24 +1248,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &7176147962748507019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7692359300871171431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11d89f0ed0017b24c928ebbf38737e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zombieMesh: {fileID: 0}
-  humanMesh: {fileID: 0}
-  zombieMat: {fileID: 0}
-  humanMat: {fileID: 0}
-  clone: {fileID: 0}
-  clonePos: {fileID: 0}
 --- !u!1 &7692359868593155185
 GameObject:
   m_ObjectHideFlags: 0
@@ -3765,7 +3744,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f834016e53f12c42a12baecd4450e34, type: 2}
+  - {fileID: 2100000, guid: 75dfe1e02a971524789ee9d6e57feec4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3790,7 +3769,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300032, guid: 318840a7e38980943bb4c508fa842265, type: 3}
+  m_Mesh: {fileID: 4300040, guid: b20a3c10714a6ac439af479e3273de65, type: 3}
   m_Bones:
   - {fileID: 7695504095533682919}
   - {fileID: 7695109571614541251}

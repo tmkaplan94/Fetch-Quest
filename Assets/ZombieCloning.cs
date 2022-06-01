@@ -11,6 +11,7 @@ public class ZombieCloning : MonoBehaviour
     [SerializeField] GameObject clone;
     [SerializeField] Transform clonePos;
 
+    [SerializeField] private GameObject currentClone;
     private bool isNetworked;
     private PhotonView v;
     private void Awake()
@@ -26,7 +27,7 @@ public class ZombieCloning : MonoBehaviour
 
     public void Clone()
     {
-        if(clone == null)
+        if(currentClone == null)
         {
             if(isNetworked)
             {
@@ -34,7 +35,7 @@ public class ZombieCloning : MonoBehaviour
             }
             else
             {
-                Instantiate(clone, clonePos);
+                currentClone = Instantiate(clone, clonePos);
             }
         }
     }
@@ -43,8 +44,15 @@ public class ZombieCloning : MonoBehaviour
     private void CloneRPC()
     {
         if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.Instantiate("MeetingroomAI", clonePos.position, clonePos.rotation);
+        {
+            GameObject cl = PhotonNetwork.Instantiate("MeetingroomAI", clonePos.position, clonePos.rotation);
+            v.RPC("SetCurrentClone", RpcTarget.All, cl.GetComponent<PhotonView>().ViewID);
+        }
     }
-
+    [PunRPC]
+    private void SetCurrentClone(int id)
+    {
+        currentClone = PhotonView.Find(id).gameObject;
+    }
 
 }
