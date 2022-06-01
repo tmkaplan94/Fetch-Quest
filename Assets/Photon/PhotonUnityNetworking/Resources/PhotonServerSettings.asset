@@ -69,6 +69,8 @@ MonoBehaviour:
   - SetWorkplace
   - AlarmRPC
   - ClientAlarmRPC
+  - ChangeMatsRPC
+  - ActivateRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

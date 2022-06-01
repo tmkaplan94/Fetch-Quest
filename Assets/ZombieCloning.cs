@@ -10,9 +10,14 @@ public class ZombieCloning : MonoBehaviour
     [SerializeField] Material humanMat;
     [SerializeField] GameObject clone;
     [SerializeField] Transform clonePos;
+    [SerializeField] GameObject tube;
+    [SerializeField] Vector3 endPos;
+    [SerializeField] float speed;
 
     [SerializeField] private GameObject currentClone;
     private bool isNetworked;
+    private Coroutine _animationCor;
+    private bool isOpen;
     private PhotonView v;
     private void Awake()
     {
@@ -46,18 +51,41 @@ public class ZombieCloning : MonoBehaviour
         {
             if (isNetworked)
             {
-                v.RPC("CloneRPC", RpcTarget.All);
+                v.RPC("ChangeMatsRPC", RpcTarget.All);
             }
             else
             {
-                currentClone = Instantiate(clone, clonePos);
+                ChangeMatsRPC();
             }
         }
     }
+
+    public void Activate()
+    {
+        if (isNetworked)
+            v.RPC("ActivateRPC", RpcTarget.All);
+        else
+            ActivateRPC();
+    }
+
+    [PunRPC]
+    private void ActivateRPC()
+    {
+        Open();
+    }
+
     [PunRPC]
     private void ChangeMatsRPC()
     {
-        
+        SkinnedMeshRenderer[] renderers = currentClone.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer rend in renderers)
+        {
+            if (rend.enabled)
+            {
+                rend.material = humanMat;
+                rend.sharedMesh = humanMesh;
+            }
+        }
     }
 
     [PunRPC]
@@ -74,5 +102,27 @@ public class ZombieCloning : MonoBehaviour
     {
         currentClone = PhotonView.Find(id).gameObject;
     }
+    private void Open()
+    {
+        isOpen = true;
+        if (_animationCor != null)
+        {
+            StopCoroutine(_animationCor);
+        }
+        _animationCor = StartCoroutine(OpenSlide());
+    }
 
+    private IEnumerator OpenSlide()
+    {
+        float time = 0;
+        while (time < 1)
+        {
+             Vector3 startPos = tube.transform.position;
+             float y = Mathf.Lerp(startPos.y, endPos.y, time);
+             tube.transform.position = new Vector3(tube.transform.position.x, y, tube.transform.position.z);
+             yield return null;
+             time += Time.deltaTime * speed;
+        }
+        currentClone.GetComponent<AIController>().enabled = true;
+    }
 }

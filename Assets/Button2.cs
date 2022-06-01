@@ -8,6 +8,6 @@ public class Button2 : MonoBehaviour, Interactable
 
     public void Interact(GameObject actor)
     {
-
+        zc.ChangeMats();
     }
 }
