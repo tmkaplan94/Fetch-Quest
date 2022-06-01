@@ -71,7 +71,7 @@ public class Pool : MonoBehaviour
     [PunRPC]
     private void WinRPC()
     {
-        eventSys.update(new QuestObject(200, "You Won a game of Pool!", LevelData.publicEvents.POOL));
+        eventSys.update(new QuestObject(10000, "You Won a game of Pool!", LevelData.publicEvents.POOL, "",true, "Uber Rare"));
         AudioManager.Instance.PlaySFX(AudioNames.ScoreUp, transform.position);
     }
     private void Lose()
