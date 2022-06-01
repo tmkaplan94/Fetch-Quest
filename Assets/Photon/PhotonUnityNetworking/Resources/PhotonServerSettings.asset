@@ -64,6 +64,9 @@ MonoBehaviour:
   - CoffeeHitRPC
   - BossMad
   - CloneRPC
+  - SetCurrentClone
+  - SetTransforms
+  - SetWorkplace
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

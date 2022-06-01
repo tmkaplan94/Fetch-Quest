@@ -22,6 +22,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private Animator personAnimator;
     [SerializeField] private Mesh zombieMesh;
     [SerializeField] private Material zombieMaterial;
+    [SerializeField] private bool isClone;
     public GameObject _janitor;
     public Transform exit;
     public bool dogNearby = false; //Set Bool for dog nearby
@@ -70,6 +71,16 @@ public class AIController : MonoBehaviour
             isNetworked = true;
         }
         
+        if(isClone)
+        {
+            AIController[] ais = FindObjectsOfType<AIController>();
+            foreach(AIController a in ais)
+            {
+                if (a._stats.IsJanitor)
+                    _janitor = a.gameObject;
+            }
+            GetTransforms();
+        }
         
         var walkingState = new WalkingState(this, navMeshAgent);
         var idleState = new IdleState(this);
@@ -108,6 +119,47 @@ public class AIController : MonoBehaviour
 
 
         _stateMachine.SetState(idleState);
+    }  
+    
+    private void GetTransforms()
+    {
+        GameObject[] wp = GameObject.FindGameObjectsWithTag("Waypoint");
+        GameObject[] works = GameObject.FindGameObjectsWithTag("Workplace");
+        int wpAmount = Random.Range(0, wp.Length);
+        waypoints = new Transform[wpAmount];
+        List<int> chosenVals = new List<int>();
+        for(int i = 0; i < wpAmount; i++)
+        {
+            int index = Random.Range(0, wp.Length);
+            while (chosenVals.Contains(index))
+                index = Random.Range(0, wp.Length);
+            waypoints[i] = wp[index].transform;
+            chosenVals.Add(index);
+        }
+        workplace = works[ Random.Range(0, works.Length)].transform;
+        if (isNetworked && v != null)
+        {
+            foreach (Transform t in waypoints)
+            {
+                v.RPC("SetTransforms", RpcTarget.Others, t.position);
+            }
+            v.RPC("SetWorkplace", RpcTarget.Others, workplace.position);
+        }         
+    }
+    [PunRPC]
+    private void SetTransforms(Vector3 pos)
+    {
+        GameObject newTransform = new GameObject();
+        newTransform.transform.position = pos;
+        newTransform.tag = "Workplace";
+        waypoints[waypoints.Length - 1] = newTransform.transform;
+    }
+    [PunRPC]
+    private void SetWorkplace(Vector3 pos)
+    {
+        GameObject newTransform = new GameObject();
+        newTransform.transform.position = pos;
+        waypoints[waypoints.Length - 1] = newTransform.transform;
     }
     void Start()
     {
