@@ -33,18 +33,21 @@ public class Door_open : MonoBehaviour
             Interact(other.gameObject);
         else if (isLocked)
         {
+            float dot = Vector3.Dot(_forward, (other.transform.position - transform.position).normalized);
             if (other.transform.parent.gameObject.CompareTag("big"))
             {
                 Debug.Log("booty");
                 isLocked = false;
                 Interact(other.gameObject);
             }
-
-            float dot = Vector3.Dot(_forward, (other.transform.position - transform.position).normalized);
-            if (dot <= _forwardDir)
+            else if (dot <= _forwardDir)
             {
                 isLocked = false;
                 Interact(other.gameObject);
+            }
+            else
+            {
+                LevelStatic.currentLevel.questBus.update(new QuestObject(0, "\n\nYou'll have to find another way in!"));
             }
             
         }

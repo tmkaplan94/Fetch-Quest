@@ -17,8 +17,10 @@ public class ZombieCloning : MonoBehaviour
     [SerializeField] private GameObject currentClone;
     private bool isNetworked;
     private Coroutine _animationCor;
-    private bool isOpen;
+    private bool isOpen = false;
+    private bool isReady = false;
     private PhotonView v;
+    Vector3 initialPos;
     private void Awake()
     {
         if (FindObjectOfType<NetworkManager>() == null)
@@ -28,6 +30,7 @@ public class ZombieCloning : MonoBehaviour
             v = GetComponent<PhotonView>();
             isNetworked = true;
         }
+        initialPos = tube.transform.position;
     }
 
     public void Clone()
@@ -57,15 +60,33 @@ public class ZombieCloning : MonoBehaviour
             {
                 ChangeMatsRPC();
             }
+            isReady = true;
         }
     }
 
     public void Activate()
     {
+        if (isReady)
+        {
+            print("acitvate");
+            if (isNetworked)
+                v.RPC("ActivateRPC", RpcTarget.All);
+            else
+                ActivateRPC();
+            isReady = false;
+        }
+    }
+    public void ResetTube()
+    {
         if (isNetworked)
-            v.RPC("ActivateRPC", RpcTarget.All);
+            v.RPC("ResetRPC", RpcTarget.All);
         else
-            ActivateRPC();
+            ResetRPC();
+    }
+    [PunRPC]
+    private void ResetRPC()
+    {
+        Close();
     }
 
     [PunRPC]
@@ -104,25 +125,58 @@ public class ZombieCloning : MonoBehaviour
     }
     private void Open()
     {
-        isOpen = true;
-        if (_animationCor != null)
+        if (!isOpen)
         {
-            StopCoroutine(_animationCor);
-        }
-        _animationCor = StartCoroutine(OpenSlide());
+            print("activate open");
+            
+            if (_animationCor != null)
+            {
+                StopCoroutine(_animationCor);
+            }
+            _animationCor = StartCoroutine(OpenSlide());
+            isOpen = true;
+        }  
     }
 
     private IEnumerator OpenSlide()
     {
+        print("activate slide");
         float time = 0;
         while (time < 1)
         {
-             Vector3 startPos = tube.transform.position;
-             float y = Mathf.Lerp(startPos.y, endPos.y, time);
+            Vector3 startPos = tube.transform.position;
+            float y = Mathf.Lerp(startPos.y, endPos.y, time);
              tube.transform.position = new Vector3(tube.transform.position.x, y, tube.transform.position.z);
              yield return null;
              time += Time.deltaTime * speed;
         }
         currentClone.GetComponent<AIController>().enabled = true;
+    }
+    private void Close()
+    {
+        if (isOpen)
+        {
+            print("acitvate close");
+            if (_animationCor != null)
+            {
+                StopCoroutine(_animationCor);
+            }
+            _animationCor = StartCoroutine(CloseSlide());
+            isOpen = false;
+        }
+        currentClone = null;
+    }
+    private IEnumerator CloseSlide()
+    {
+        float time = 0;
+        while (time < 1)
+        {
+            Vector3 startPos = tube.transform.position;
+            float y = Mathf.Lerp(startPos.y, initialPos.y, time);
+            tube.transform.position = new Vector3(tube.transform.position.x, y, tube.transform.position.z);
+            yield return null;
+            time += Time.deltaTime * speed;
+        }
+        
     }
 }
