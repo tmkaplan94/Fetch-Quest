@@ -63,7 +63,7 @@ MonoBehaviour:
   - AlreadyHasCoffee
   - CoffeeHitRPC
   - BossMad
-  - AlarmRPC
+  - CloneRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
