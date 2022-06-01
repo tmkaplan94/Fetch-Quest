@@ -26,7 +26,6 @@ public class PickUpSystem : MonoBehaviourPun
     private QuestItem questItem;
     private string EventObjectTag = "EventObj";
 
-    private string interactableTag = "Interactable";
     private bool isNetworked;
     
     private float maxMass;
@@ -158,7 +157,6 @@ public class PickUpSystem : MonoBehaviourPun
                 col.enabled = true;
             }
             currentItem.GetComponent<Rigidbody>().isKinematic = false;
-            currentItem.GetComponent<Outline>().enabled = true;
 
             if (questItem)
             {

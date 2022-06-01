@@ -107,6 +107,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
         IsNetworked = false;
+        Destroy(AudioManager.Instance.gameObject);
+        Destroy(this);
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -230,6 +232,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void GoToMainMenu()
     {
+        Destroy(AudioManager.Instance.gameObject);
+        Destroy(this);
         PhotonNetwork.LeaveLobby();
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("MainMenu");

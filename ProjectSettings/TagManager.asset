@@ -20,6 +20,7 @@ TagManager:
   - Exit
   - Billiard
   - Coffee
+  - IDCard
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - Ground
   - AIObjects
   - Window
-  - 
+  - Pee
   - 
   - 
   - 

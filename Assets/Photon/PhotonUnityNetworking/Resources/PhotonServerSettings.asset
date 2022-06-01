@@ -58,6 +58,12 @@ MonoBehaviour:
   - EatRPC
   - NetworkDestroy
   - DestroyCoffee
+  - SpawnCoffeeRPC
+  - BarkRPC
+  - AlreadyHasCoffee
+  - CoffeeHitRPC
+  - BossMad
+  - CloneRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
